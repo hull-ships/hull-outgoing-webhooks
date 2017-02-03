@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import axios from 'axios';
 
-export default function webhook({ urls, hull, payload = {} }) {
-  return _.map(urls, url => axios.post(url, payload)
+export default function webhook({ webhooks_urls, hull, payload = {} }) {
+  return _.map(webhooks_urls, url => axios.post(url, payload)
     .then(
       ({ data, status, statusText }) => hull.logger.info('webhook.success', {
         userId: payload.user.id,

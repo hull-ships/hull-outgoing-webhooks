@@ -2,6 +2,7 @@ import _ from 'lodash';
 import webhook from './webhook';
 
 function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
+
   const { segments = {} } = changes;
   if (!_.size(segments)) return [];
   const current = segments[action] || [];
@@ -11,7 +12,7 @@ function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
   const filter = _.map(_.filter(webhooks_segments, e => e[action]), 'segment');
 
   // List of User segments matching entered or left
-  return _.filter(current, s => _.includes(filter, s.name));
+  return _.filter(current, s => _.includes(filter, s.id));
 }
 
 export default function updateUser({ message = {} }, { ship = {}, hull = {}, isBatch = false }) {
