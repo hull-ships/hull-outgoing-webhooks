@@ -1,0 +1,86 @@
+{
+  "name": "Webhooks",
+  "description": "Send Hull Users updates as Webhooks",
+  "tags": ["outgoing", "oneColumn", "batch"],
+  "picture": "picture.png",
+  "version": "0.0.1",
+  "private_settings":[
+    {
+      "name": "webhooks_urls",
+      "title": "Webhooks URLs",
+      "default": ["https://example.com.com/webhooks/"],
+      "type": "array",
+      "format": "table",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "segment_filter",
+      "title": "Filtered Segments",
+      "description": "Global filter. Only send if user matches one of these segments",
+      "default": [],
+      "type": "array",
+      "format": "segment"
+    },
+
+    {
+      "name": "webhooks_header",
+      "title": "Send conditions",
+      "type": "string",
+      "format": "title"
+    },
+
+    {
+      "name": "webhooks_segments",
+      "title": "Send User when Segments changes",
+      "type": "array",
+      "format": "table",
+      "default": [{ "segment": "", "channel": "" }],
+      "items": {
+        "type": "object",
+        "required": [ "channel", "segment"],
+        "properties": {
+          "segment": {
+            "title": "Segment Name",
+            "type": "string",
+            "format": "segment"
+          },
+          "entered": {
+            "title": "Send on enter",
+            "type": "boolean",
+            "format": "checkbox"
+          },
+          "left": {
+            "title": "Send on leave",
+            "type": "boolean",
+            "format": "checkbox"
+          }
+        }
+      }
+    },
+    {
+      "name": "webhooks_attributes",
+      "title": "Send User when attributes change",
+      "default": [],
+      "type": "array",
+      "format": "trait"
+    },
+    {
+      "name": "webhooks_events",
+      "title": "Send User when events performed",
+      "default": [],
+      "type": "array",
+      "format": "event"
+    }
+  ],
+  "deployment_settings": [],
+  "resources": [],
+  "readme": "readme.md",
+  "ui": false,
+  "subscriptions": [
+    {
+      "url": "/notify"
+    }
+  ]
+}
