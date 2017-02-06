@@ -5,7 +5,7 @@ import { renderFile } from "ejs";
 import updateUser from "./update-user";
 
 module.exports = function Server(options = {}) {
-  const { port, hostSecret, Hull } = options;
+  const { port, hostSecret, Hull, instrumentationAgent } = options;
   const { NotifHandler, BatchHandler, Routes, Middleware: hullClient } = Hull;
   const { Readme, Manifest } = Routes;
 
@@ -13,7 +13,7 @@ module.exports = function Server(options = {}) {
   app.engine("html", renderFile);
   app.use(express.static(path.resolve(__dirname, "..", "dist")));
   app.use(express.static(path.resolve(__dirname, "..", "assets")));
-
+  app.use(instrumentationAgent.shipAppMiddleware);
   app.get("/manifest.json", Manifest(__dirname));
   app.get("/", Readme);
   app.get("/readme", Readme);

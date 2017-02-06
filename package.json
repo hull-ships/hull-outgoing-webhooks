@@ -26,7 +26,7 @@
     "build": "npm run clean && npm run build:server",
     "build:server": "./node_modules/.bin/babel server -d lib",
     "start": "node ./lib",
-    "start:dev": "NODE_ENV=development ./node_modules/.bin/nodemon -V -w server -x ./node_modules/.bin/babel-node -- server",
+    "start:dev": "babel-watch -L server",
     "test": "npm run test:lint && npm run test:modules",
     "test:lint": "./node_modules/.bin/eslint server",
     "test:modules": "npm outdated --depth=0",
@@ -46,13 +46,12 @@
   ],
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "babel-watch": "^2.0.6",
     "eslint": "^3.14.1",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
-    "nodemon": "^1.11.0",
     "rimraf": "^2.5.4",
-    "updtr": "^0.2.3",
-    "watch": "^1.0.1"
+    "updtr": "^0.2.3"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -64,6 +63,8 @@
     "body-parser": "^1.16.0",
     "bson-objectid": "^1.1.5",
     "chai": "^3.5.0",
+    "datadog-metrics": "^0.3.0",
+    "dogapi": "^2.6.0",
     "ejs": "^2.5.5",
     "express": "^4.14.1",
     "hull": "^0.10.6",
@@ -73,6 +74,8 @@
     "mocha": "^3.2.0",
     "moment": "^2.17.1",
     "moxios": "^0.3.0",
+    "newrelic": "^1.36.2",
+    "raven": "^1.1.1",
     "restler": "^3.4.0",
     "sinon": "^1.17.7",
     "winston-logstash": "^0.3.0"
