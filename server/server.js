@@ -13,7 +13,7 @@ module.exports = function Server(options = {}) {
   app.engine("html", renderFile);
   app.use(express.static(path.resolve(__dirname, "..", "dist")));
   app.use(express.static(path.resolve(__dirname, "..", "assets")));
-  app.use(instrumentationAgent.shipAppMiddleware);
+  app.use(instrumentationAgent.metricMiddleware);
   app.get("/manifest.json", Manifest(__dirname));
   app.get("/", Readme);
   app.get("/readme", Readme);

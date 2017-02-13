@@ -16,5 +16,5 @@ If you want your own instance: [![Deploy](https://www.herokucdn.com/deploy/butto
 
 ```sh
 npm install
-npm start
+npm run start:dev
 ```
