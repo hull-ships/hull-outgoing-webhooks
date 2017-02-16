@@ -2,7 +2,6 @@ import _ from 'lodash';
 import webhook from './webhook';
 
 function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
-
   const { segments = {} } = changes;
   if (!_.size(segments)) return [];
   const current = segments[action] || [];

@@ -1,12 +1,12 @@
-import jwt from "jwt-simple";
 import express from "express";
 import path from "path";
 import { renderFile } from "ejs";
+import { filterUserSegmentsGen2 } from "hull-ship-base/lib/hull";
 import updateUser from "./update-user";
 
 module.exports = function Server(options = {}) {
   const { port, hostSecret, Hull, instrumentationAgent } = options;
-  const { NotifHandler, BatchHandler, Routes, Middleware: hullClient } = Hull;
+  const { NotifHandler, BatchHandler, Routes } = Hull;
   const { Readme, Manifest } = Routes;
 
   const app = express();
@@ -31,9 +31,11 @@ module.exports = function Server(options = {}) {
     hostSecret,
     groupTraits: true,
     batchSize: 100,
-    handler: (notifications = [], { hull, ship }) => {
+    handler: (notifications = [], { req, hull, ship }) => {
       hull.logger.debug("batch.process", { notifications: notifications.length });
-      notifications.map(({ message }) => updateUser({ message }, { hull, ship, isBatch: true }));
+      const filtered = notifications.filter(filterUserSegmentsGen2.bind(null, req));
+      hull.logger.debug("batch.process.filtered", { notifications: filtered.length });
+      filtered.map(({ message }) => updateUser({ message }, { hull, ship, isBatch: true }));
     }
   }));
 

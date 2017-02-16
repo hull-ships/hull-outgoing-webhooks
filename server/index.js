@@ -1,7 +1,8 @@
 import Hull from "hull";
+import InstrumentationAgent from "hull-ship-base/lib/instrumentation";
+
 import Server from "./server";
 import { name } from "../manifest.json";
-import InstrumentationAgent from "hull-ship-base/lib/instrumentation";
 
 const instrumentationAgent = new InstrumentationAgent();
 
