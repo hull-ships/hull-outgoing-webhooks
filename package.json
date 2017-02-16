@@ -1,7 +1,7 @@
 {
   "name": "hull-webhooks",
   "description": "Send Hull user updates as webhooks",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/hull-ships/hull-webhooks",
   "license": "MIT",
   "main": "bin/start",
@@ -67,7 +67,7 @@
     "ejs": "^2.5.5",
     "express": "^4.14.1",
     "hull": "^0.10.6",
-    "hull-ship-base": "git+https://git@github.com/michaloo/hull-ship-base.git",
+    "hull-ship-base": "git+https://git@github.com/michaloo/hull-ship-base.git#c2a1c73",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
