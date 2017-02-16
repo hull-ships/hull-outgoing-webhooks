@@ -2,7 +2,6 @@ import _ from 'lodash';
 import webhook from './webhook';
 
 function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
-
   const { segments = {} } = changes;
   if (!_.size(segments)) return [];
   const current = segments[action] || [];
@@ -19,7 +18,7 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
   const { user = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
   const { webhooks_urls = [], segment_filter = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
-  const { shipApp } = req;
+  const { metric } = req.hull;
 
   hull.logger.info('notification.start', { userId: user.id });
 
@@ -86,7 +85,7 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
   // Event: Send once for each matching event.
   if (matchedEvents.length) {
     _.map(matchedEvents, (event) => {
-      shipApp.instrumentationAgent.metricInc("ship.outgoing.events", 1, hull.configuration());
+      metric.inc("ship.outgoing.events");
       hull.logger.info('notification.send', loggingContext);
       webhook({ hull, webhooks_urls, payload: { ...payload, event } });
     });
@@ -96,7 +95,7 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
   // User
   // Don't send again if already sent through events.
   if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length) {
-    shipApp.instrumentationAgent.metricInc("ship.outgoing.events", 1, hull.configuration());
+    metric.inc("ship.outgoing.events");
     hull.logger.info('notification.send', loggingContext);
     webhook({ hull, webhooks_urls, payload });
     return true;
