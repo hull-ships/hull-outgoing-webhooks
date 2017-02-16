@@ -17,12 +17,12 @@ function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
 export default function updateUser({ message = {} }, { req = {}, ship = {}, hull = {}, isBatch = false }) {
   const { user = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
-  const { webhooks_urls = [], segment_filter = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
+  const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const { metric } = req.hull;
 
   hull.logger.info('notification.start', { userId: user.id });
 
-  if (!user || !user.id || !ship || !webhooks_urls.length || !segment_filter) {
+  if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
     hull.logger.error('notification.error', {
       message: "Missing data",
       user: !!user,
@@ -33,7 +33,7 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
     return false;
   }
 
-  if (!segment_filter.length) {
+  if (!synchronized_segments.length) {
     hull.logger.info('notification.skip', { message: 'No Segments configured. all Users will be skipped' });
     return false;
   }
@@ -56,12 +56,12 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
     return false;
   }
 
-  if (!_.intersection(segment_filter, segmentIds).length) {
+  if (!_.intersection(synchronized_segments, segmentIds).length) {
     hull.logger.info('notification.skip', { message: "User doesn't match filtered segments" });
     return false;
   }
 
-  const filteredSegments = _.intersection(segment_filter, segmentIds);
+  const filteredSegments = _.intersection(synchronized_segments, segmentIds);
   const matchedAttributes = _.intersection(webhooks_attributes, _.keys((changes.user || {})));
   const matchedEnteredSegments = getSegmentChanges(webhooks_segments, changes, 'entered');
   const matchedLeftSegments = getSegmentChanges(webhooks_segments, changes, 'left');

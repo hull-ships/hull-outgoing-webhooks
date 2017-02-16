@@ -16,7 +16,7 @@
       }
     },
     {
-      "name": "segment_filter",
+      "name": "synchronized_segments",
       "title": "Filtered Segments",
       "description": "Global filter. Only send if user matches one of these segments",
       "default": [],
