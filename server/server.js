@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { renderFile } from "ejs";
-import { filterUserSegmentsGen2 } from "hull-ship-base/lib/hull";
+import filterUserSegments from "./filter-user-segments";
 import updateUser from "./update-user";
 
 module.exports = function Server(options = {}) {
@@ -33,9 +33,9 @@ module.exports = function Server(options = {}) {
     batchSize: 100,
     handler: (notifications = [], { req, hull, ship }) => {
       hull.logger.debug("batch.process", { notifications: notifications.length });
-      const filtered = notifications.filter(filterUserSegmentsGen2.bind(null, req));
+      const filtered = notifications.filter(filterUserSegments.bind(null, { ship }));
       hull.logger.debug("batch.process.filtered", { notifications: filtered.length });
-      filtered.map(({ message }) => updateUser({ message }, { hull, ship, isBatch: true }));
+      filtered.map(({ message }) => updateUser({ message }, { req, hull, ship, isBatch: true }));
     }
   }));
 
