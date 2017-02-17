@@ -62,10 +62,16 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
   }
 
   const filteredSegments = _.intersection(synchronized_segments, segmentIds);
-  const matchedAttributes = _.intersection(webhooks_attributes, _.keys((changes.user || {})));
+  let matchedAttributes = _.intersection(webhooks_attributes, _.keys((changes.user || {})));
   const matchedEnteredSegments = getSegmentChanges(webhooks_segments, changes, 'entered');
   const matchedLeftSegments = getSegmentChanges(webhooks_segments, changes, 'left');
   const matchedEvents = _.filter(events, event => _.includes(webhooks_events, event.event));
+
+  // some traits have "traits_" prefix in event payload but not in the settings select field.
+  // we give them another try matching prefixed version
+  if (_.isEmpty(matchedAttributes)) {
+    matchedAttributes = _.intersection(_.map(webhooks_attributes, a => `traits_${a}`), _.keys((changes.user || {})));
+  }
 
   // Payload
   const payload = {

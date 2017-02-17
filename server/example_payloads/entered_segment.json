@@ -1,0 +1,89 @@
+{
+    "user": {
+        "accepts_marketing": false,
+        "anonymous_ids": [
+            "intercom:58371db1408aba0de9ce21ed",
+            "hubspot:17101"
+        ],
+        "created_at": "2017-01-10T12:10:26Z",
+        "domain": "yahoo.com",
+        "email": "123fabian88810@yahoo.com",
+        "first_name": "John",
+        "has_password": false,
+        "id": "5874cf3273d64d280b000ffb",
+        "is_approved": true,
+        "last_known_ip": "178.183.3.29",
+        "last_name": "Quigley",
+        "last_seen_at": "2017-01-13T11:43:05Z",
+        "name": "John Quigley",
+        "hubspot": {
+            "became_marketing_qualified_lead_at": "2017-01-31T16:18:38+00:00",
+            "became_sales_qualified_lead_at": "2017-01-31T16:20:18+00:00",
+            "created_at": "2017-01-31T11:55:14+00:00",
+            "first_name": "John",
+            "id": 17101,
+            "lifecycle_stage": [
+                "salesqualifiedlead"
+            ],
+            "updated_at": "2017-02-01T13:51:51+00:00"
+        },
+        "intercom": {
+            "companies": [],
+            "created_at": "2016-11-24T17:04:49+00:00",
+            "id": "58371db1408aba0de9ce21ed",
+            "name": "Gustave Quigley",
+            "segments": [],
+            "tags": [
+                "Subscribed users",
+                "Users from past 10 days",
+                "Not in mailchimp",
+                "Other Users",
+                "Approved users"
+            ],
+            "updated_at": "2017-01-12T11:33:04+00:00"
+        },
+        "mailchimp": {
+            "mmerge4": [
+                "A",
+                "B"
+            ]
+        },
+        "indexed_at": "2017-02-03T16:20:30+00:00"
+    },
+    "segments": [
+        {
+            "id": "578feb3d44d74b8a4f000054",
+            "name": "Approved users",
+            "type": "users_segment",
+            "created_at": "2016-07-20T21:21:01Z",
+            "updated_at": "2016-07-20T21:21:01Z"
+        },
+        {
+            "id": "579677ff03777d1769000042",
+            "name": "Not in mailchimp",
+            "type": "users_segment",
+            "created_at": "2016-07-25T20:35:11Z",
+            "updated_at": "2017-01-02T08:59:30Z"
+        }
+    ],
+    "changes": {
+        "user": {
+            "is_approved": [
+                false,
+                true
+            ]
+        },
+        "segments": {
+            "entered": [
+                {
+                    "id": "578feb3d44d74b8a4f000054",
+                    "name": "Approved users",
+                    "type": "users_segment",
+                    "created_at": "2016-07-20T21:21:01Z",
+                    "updated_at": "2016-07-20T21:21:01Z"
+                }
+            ]
+        },
+        "is_new": false
+    }
+}
