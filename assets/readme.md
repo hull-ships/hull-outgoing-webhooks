@@ -9,15 +9,15 @@ This Ship sends user updates as Webhooks
 
 ## Configuring the Webhooks connector
 
-There are two sections in Hull's Settings tab to help you define who will be sent as POST webhooks
+There are two sections in Hull's Settings tab to help you define who will be sent as POST webhooks.
 
 The first section has a Segments filter.
 
-It defines who will be sent. An empty list sends no one. To start, create a User segment defining who should be sent.
+It defines who will be sent. An empty list sends no one. To start, create a User segment defining who should be sent. This is a global filter, the second condition would be checked only if the User matches this filter.
 
 The Second section defines additional conditions to send a user. User will be sent as soon as one of these conditions match.
 
-- When entering and/or leaving a given segment
+- When entering and/or leaving a given segment - NOTE: the global segment filter checks user segment information after the segment change event
 - When a specific property changes
 - When A specific event is performed.
 

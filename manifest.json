@@ -34,6 +34,7 @@
     {
       "name": "webhooks_segments",
       "title": "Send User when Segments changes",
+      "description": "NOTE: the global segment filter checks user segment information after the segment change event",
       "type": "array",
       "format": "table",
       "default": [{ "segment": "", "channel": "" }],
