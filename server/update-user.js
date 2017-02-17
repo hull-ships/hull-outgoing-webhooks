@@ -2,7 +2,6 @@ import _ from 'lodash';
 import webhook from './webhook';
 
 function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
-
   const { segments = {} } = changes;
   if (!_.size(segments)) return [];
   const current = segments[action] || [];
@@ -18,12 +17,12 @@ function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
 export default function updateUser({ message = {} }, { req = {}, ship = {}, hull = {}, isBatch = false }) {
   const { user = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
-  const { webhooks_urls = [], segment_filter = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
-  const { shipApp } = req;
+  const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
+  const { metric } = req.hull;
 
   hull.logger.info('notification.start', { userId: user.id });
 
-  if (!user || !user.id || !ship || !webhooks_urls.length || !segment_filter) {
+  if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
     hull.logger.error('notification.error', {
       message: "Missing data",
       user: !!user,
@@ -34,7 +33,7 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
     return false;
   }
 
-  if (!segment_filter.length) {
+  if (!synchronized_segments.length) {
     hull.logger.info('notification.skip', { message: 'No Segments configured. all Users will be skipped' });
     return false;
   }
@@ -57,16 +56,22 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
     return false;
   }
 
-  if (!_.intersection(segment_filter, segmentIds).length) {
+  if (!_.intersection(synchronized_segments, segmentIds).length) {
     hull.logger.info('notification.skip', { message: "User doesn't match filtered segments" });
     return false;
   }
 
-  const filteredSegments = _.intersection(segment_filter, segmentIds);
-  const matchedAttributes = _.intersection(webhooks_attributes, _.keys((changes.user || {})));
+  const filteredSegments = _.intersection(synchronized_segments, segmentIds);
+  let matchedAttributes = _.intersection(webhooks_attributes, _.keys((changes.user || {})));
   const matchedEnteredSegments = getSegmentChanges(webhooks_segments, changes, 'entered');
   const matchedLeftSegments = getSegmentChanges(webhooks_segments, changes, 'left');
   const matchedEvents = _.filter(events, event => _.includes(webhooks_events, event.event));
+
+  // some traits have "traits_" prefix in event payload but not in the settings select field.
+  // we give them another try matching prefixed version
+  if (_.isEmpty(matchedAttributes)) {
+    matchedAttributes = _.intersection(_.map(webhooks_attributes, a => `traits_${a}`), _.keys((changes.user || {})));
+  }
 
   // Payload
   const payload = {
@@ -86,7 +91,7 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
   // Event: Send once for each matching event.
   if (matchedEvents.length) {
     _.map(matchedEvents, (event) => {
-      shipApp.instrumentationAgent.metricInc("ship.outgoing.events", 1, hull.configuration());
+      metric.inc("ship.outgoing.events");
       hull.logger.info('notification.send', loggingContext);
       webhook({ hull, webhooks_urls, payload: { ...payload, event } });
     });
@@ -96,7 +101,7 @@ export default function updateUser({ message = {} }, { req = {}, ship = {}, hull
   // User
   // Don't send again if already sent through events.
   if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length) {
-    shipApp.instrumentationAgent.metricInc("ship.outgoing.events", 1, hull.configuration());
+    metric.inc("ship.outgoing.events");
     hull.logger.info('notification.send', loggingContext);
     webhook({ hull, webhooks_urls, payload });
     return true;

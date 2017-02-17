@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch"],
   "picture": "picture.png",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private_settings":[
     {
       "name": "webhooks_urls",
@@ -16,7 +16,7 @@
       }
     },
     {
-      "name": "segment_filter",
+      "name": "synchronized_segments",
       "title": "Filtered Segments",
       "description": "Global filter. Only send if user matches one of these segments",
       "default": [],
