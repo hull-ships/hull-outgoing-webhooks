@@ -5,6 +5,9 @@ import updateUser from "./update-user";
 
 module.exports = function Server(app) {
   app.use('/notify', notifHandler({
+    userHandlerOptions: {
+      groupTraits: true
+    },
     handlers: {
       "user:update": (ctx, messages) => {
         messages.map(m => updateUser(ctx, m));
