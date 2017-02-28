@@ -1,4 +1,5 @@
 import Hull from "hull";
+import express from "express";
 
 import Server from "./server";
 import { name } from "../manifest.json";
@@ -19,11 +20,13 @@ if (process.env.LOGSTASH_HOST && process.env.LOGSTASH_PORT) {
   Hull.logger.info('logger.start', { transport: 'console' });
 }
 
-const app = new Hull.App({
+const connector = new Hull.Connector({
   port: process.env.PORT || 8082,
   hostSecret: process.env.SECRET || "1234"
 });
+const app = express();
+connector.setupApp(app);
 
-Server(app.server());
+Server(app);
 
-app.start();
+connector.startApp(app);
