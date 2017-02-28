@@ -1,10 +1,8 @@
 import Hull from "hull";
-import InstrumentationAgent from "hull-ship-base/lib/instrumentation";
+import express from "express";
 
 import Server from "./server";
 import { name } from "../manifest.json";
-
-const instrumentationAgent = new InstrumentationAgent();
 
 if (process.env.LOG_LEVEL) {
   Hull.logger.transports.console.level = process.env.LOG_LEVEL;
@@ -22,12 +20,13 @@ if (process.env.LOGSTASH_HOST && process.env.LOGSTASH_PORT) {
   Hull.logger.info('logger.start', { transport: 'console' });
 }
 
-Server({
-  Hull,
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  hostSecret: process.env.SECRET || "1234",
-  devMode: process.env.NODE_ENV === "development",
+const connector = new Hull.Connector({
   port: process.env.PORT || 8082,
-  instrumentationAgent
+  hostSecret: process.env.SECRET || "1234"
 });
+const app = express();
+connector.setupApp(app);
+
+Server(app);
+
+connector.startApp(app);
