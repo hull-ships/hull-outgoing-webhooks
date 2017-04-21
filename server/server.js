@@ -28,7 +28,7 @@ module.exports = function Server(app) {
     });
   }, {
     groupTraits: true,
-    batchSize: 100,
+    batchSize: 100
   }));
 
   return app;
