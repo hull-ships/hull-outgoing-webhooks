@@ -1,9 +1,9 @@
-const assert = require("assert");
-
 import express from "express";
 import bodyParser from "body-parser";
 import ClientMock from "./client-mock";
 import WebHook from "../server/webhook";
+
+const assert = require("assert");
 
 const port = 8080;
 const app = express();
