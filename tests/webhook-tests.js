@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import ClientMock from "./client-mock";
-import WebHook from "../server/webhook";
+import Webhook from "../server/webhook";
 
 const assert = require("assert");
 
@@ -32,7 +32,7 @@ describe("Webhook", () => {
       payload: requestBody
     };
 
-    WebHook(webhookConfiguration);
+    Webhook(webhookConfiguration);
     setTimeout(() => {
       assert.equal(received, JSON.stringify(requestBody));
       done();
