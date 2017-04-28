@@ -20,7 +20,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   const { private_settings = {} } = ship;
   const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const hull = client;
-  hull.logger.info('notification.start', { userId: user.id });
+  hull.logger.debug('notification.start', { userId: user.id });
 
   if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
     hull.logger.error('notification.error', {
@@ -34,12 +34,18 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   if (!synchronized_segments.length) {
-    hull.logger.info('notification.skip', { message: 'No Segments configured. all Users will be skipped' });
+    hull.logger.info('outgoing.user.skip', _.merge(
+      _.pick(user, "id", "external_id", "email"),
+      { reason: 'No Segments configured. all Users will be skipped' }
+    ));
     return false;
   }
 
   if (!webhooks_events.length && !webhooks_segments.length && !webhooks_attributes.length) {
-    hull.logger.info('notification.skip', { message: 'No Events, Segments or Attributes configured. No Webhooks will be sent' });
+    hull.logger.info('outgoing.user.skip', _.merge(
+      _.pick(user, "id", "external_id", "email"),
+      { reason: 'No Events, Segments or Attributes configured. No Webhooks will be sent' }
+    ));
     return false;
   }
 
@@ -57,7 +63,10 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   if (!_.intersection(synchronized_segments, segmentIds).length) {
-    hull.logger.info('notification.skip', { message: "User doesn't match filtered segments" });
+    hull.logger.info('outgoing.user.skip', _.merge(
+      _.pick(user, "id", "external_id", "email"),
+      { reason: "User doesn't match filtered segments" }
+    ));
     return false;
   }
 
@@ -92,7 +101,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   if (matchedEvents.length) {
     _.map(matchedEvents, (event) => {
       metric.increment("ship.outgoing.events");
-      hull.logger.info('notification.send', loggingContext);
+      hull.logger.debug('notification.send', loggingContext);
       webhook({ hull, webhooks_urls, payload: { ...payload, event } });
     });
     return true;
@@ -102,11 +111,14 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   // Don't send again if already sent through events.
   if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length) {
     metric.increment("ship.outgoing.events");
-    hull.logger.info('notification.send', loggingContext);
+    hull.logger.debug('notification.send', loggingContext);
     webhook({ hull, webhooks_urls, payload });
     return true;
   }
 
-  hull.logger.info('notification.skip', { userId: user.id, message: "User didn't match any conditions" });
+  hull.logger.info('outgoing.user.skip', _.merge(
+    _.pick(user, "id", "external_id", "email"),
+    { reason: "User didn't match any conditions" }
+  ));
   return false;
 }
