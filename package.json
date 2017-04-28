@@ -68,7 +68,7 @@
     "dogapi": "^2.6.0",
     "ejs": "^2.5.5",
     "express": "^4.14.1",
-    "hull": "^0.11.0-beta.3",
+    "hull": "^0.11.0-beta.4",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",

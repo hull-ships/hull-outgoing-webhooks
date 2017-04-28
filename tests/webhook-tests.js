@@ -5,7 +5,7 @@ import Webhook from "../server/webhook";
 
 const assert = require("assert");
 
-const port = 8080;
+const port = 8070;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -27,7 +27,7 @@ describe("Webhook", () => {
       }
     };
     const webhookConfiguration = {
-      webhooks_urls: ["http://localhost:8080/notification"],
+      webhooks_urls: ["http://localhost:8070/notification"],
       hull: ClientMock(),
       payload: requestBody
     };
