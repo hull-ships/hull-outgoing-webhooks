@@ -52,6 +52,7 @@
     "eslint": "^3.14.1",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
+    "flow-bin": "^0.45.0",
     "updtr": "^0.2.3"
   },
   "dependencies": {

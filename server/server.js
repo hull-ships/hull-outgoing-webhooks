@@ -1,5 +1,4 @@
 /* @flow */
-import _ from "lodash";
 import express from "express";
 import { notifHandler, batchHandler } from "hull/lib/utils";
 
