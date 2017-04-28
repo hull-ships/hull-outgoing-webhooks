@@ -1,9 +1,11 @@
+/* @flow */
 import _ from "lodash";
+import express from "express";
 import { notifHandler, batchHandler } from "hull/lib/utils";
 
 import updateUser from "./update-user";
 
-module.exports = function Server(app) {
+module.exports = function Server(app: express) {
   app.use('/notify', notifHandler({
     userHandlerOptions: {
       groupTraits: true

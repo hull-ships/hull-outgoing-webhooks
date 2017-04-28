@@ -1,7 +1,8 @@
+/* @flow */
 import _ from 'lodash';
 import axios from 'axios';
 
-export default function webhook({ webhooks_urls, hull, payload = {} }) {
+export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
   return _.map(webhooks_urls, url => axios.post(url, payload)
     .then(
       ({ data, status, statusText }) => hull.logger.info('webhook.success', {

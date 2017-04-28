@@ -1,3 +1,4 @@
+/* @flow */
 import _ from 'lodash';
 import webhook from './webhook';
 
@@ -14,7 +15,7 @@ function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
   return _.filter(current, s => _.includes(filter, s.id));
 }
 
-export default function updateUser({ metric, ship, client, isBatch = false }, message = {}) {
+export default function updateUser({ metric, ship, client, isBatch = false }: any, message: any = {}) {
   const { user = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
   const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
