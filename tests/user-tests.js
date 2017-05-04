@@ -1,12 +1,15 @@
 /* global describe, it */
 import sinon from "sinon";
-import hullSpy from "./mocks/hull";
-import axios from "axios";
+// import axios from "axios";
 import moxios from "moxios";
 import { equal } from "assert";
-import updateUser from "../server/user-update";
+import { afterEach, beforeEach } from "mocha";
+import hullSpy from "./mocks/hull";
+import updateUser from "../server/update-user";
+
 
 const { events, segments, user, ship, changes } = require("./fixtures");
+
 const message = { changes, events, segments, user };
 
 function shipWithPrivateSettings(private_settings = {}, s = ship) {
@@ -43,18 +46,17 @@ function payload(p) {
 }
 
 
-describe('mocking axios requests', function () {
-  describe('across entire suite', function () {
-
-    beforeEach(function () {
+describe('mocking axios requests', () => {
+  describe('across entire suite', () => {
+    beforeEach(() => {
       // import and pass your custom axios instance to this method
-      moxios.install()
-    })
+      moxios.install();
+    });
 
-    afterEach(function () {
+    afterEach(() => {
       // import and pass your custom axios instance to this method
-      moxios.uninstall()
-    })
+      moxios.uninstall();
+    });
 
     it("Should not call traits if no changes", (done) => {
       const s = shipWithPrivateSettings({
@@ -67,25 +69,23 @@ describe('mocking axios requests', function () {
       sinon.assert.neverCalledWithMatch(spy, "traits");
       sinon.assert.neverCalledWithMatch(spy, "track");
 
-      moxios.wait(function () {
-          let request = moxios.requests.mostRecent()
-          request.respondWith({
-            status: 200,
-            response: [
-              { id: 1, firstName: 'Fred', lastName: 'Flintstone' },
-              { id: 2, firstName: 'Wilma', lastName: 'Flintstone' }
-            ]
-          }).then(function () {
-            let list = document.querySelector('.UserList__Data')
-            equal(list.rows.length, 2)
-            equal(list.rows[0].cells[0].innerHTML, 'Fred')
-            equal(list.rows[1].cells[0].innerHTML, 'Wilma')
-            done()
-          })
-        })
-      })
-
-
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: [
+            { id: 1, firstName: 'Fred', lastName: 'Flintstone' },
+            { id: 2, firstName: 'Wilma', lastName: 'Flintstone' }
+          ]
+        }).then(() => {
+          const list = document.querySelector('.UserList__Data');
+          equal(list.rows.length, 2);
+          equal(list.rows[0].cells[0].innerHTML, 'Fred');
+          equal(list.rows[1].cells[0].innerHTML, 'Wilma');
+          done();
+        });
+      });
     });
   });
 });
+// });

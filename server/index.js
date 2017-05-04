@@ -1,3 +1,4 @@
+/* @flow */
 import Hull from "hull";
 import express from "express";
 
@@ -7,6 +8,8 @@ import { name } from "../manifest.json";
 if (process.env.LOG_LEVEL) {
   Hull.logger.transports.console.level = process.env.LOG_LEVEL;
 }
+
+Hull.logger.transports.console.stringify = true;
 
 if (process.env.LOGSTASH_HOST && process.env.LOGSTASH_PORT) {
   const Logstash = require("winston-logstash").Logstash; // eslint-disable-line global-require
