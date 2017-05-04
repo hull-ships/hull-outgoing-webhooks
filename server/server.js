@@ -1,9 +1,10 @@
-import _ from "lodash";
+/* @flow */
+import express from "express";
 import { notifHandler, batchHandler } from "hull/lib/utils";
 
 import updateUser from "./update-user";
 
-module.exports = function Server(app) {
+module.exports = function Server(app: express) {
   app.use('/notify', notifHandler({
     userHandlerOptions: {
       groupTraits: true
@@ -15,20 +16,14 @@ module.exports = function Server(app) {
     }
   }));
 
-  app.use("/batch", batchHandler(({ metric, segments, client, ship }, users = []) => {
-    client.logger.debug("batch.process", { users: users.length });
-    const filtered = users.filter(u => client.filterUserSegments(u));
-    client.logger.debug("batch.process.filtered", { notifications: filtered.length });
-    filtered.map((user) => {
-      const message = {
-        user,
-        segments: user.segment_ids.map(id => _.find(segments, { id }))
-      };
+  app.use("/batch", batchHandler(({ metric, client, ship }, messages) => {
+    client.logger.debug("batch.process", { messages: messages.length });
+    messages.map((message) => {
       return updateUser({ metric, client, ship, isBatch: true }, message);
     });
   }, {
     groupTraits: true,
-    batchSize: 100,
+    batchSize: 100
   }));
 
   return app;
