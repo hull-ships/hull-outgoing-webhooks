@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+- update to hull-node@0.11.0
+- implement logging convention
+
 ## 0.2.1
 - update to hull-node@beta
 - add batch metrics

@@ -1,7 +1,7 @@
 {
   "name": "hull-webhooks",
   "description": "Send Hull user updates as webhooks",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/hull-ships/hull-webhooks",
   "license": "MIT",
   "main": "bin/start",
