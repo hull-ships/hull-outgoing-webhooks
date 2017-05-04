@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+- update to hull-node@beta
+- add batch metrics
+
 ## 0.2.0
 - BREAKING - chaning the name of segments filter (`segment_filter` -> `synchronized_segments`)
 - add prefixing selected attributes with `traits_` to enhance matching (sometimes the event comes with the prefix while the attribute key in settings it without it)

@@ -54,6 +54,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
 
   // Early return when sending batches. All users go through it. No changes, no events though...
   if (isBatch) {
+    metric.increment("ship.outgoing.events");
     webhook({
       hull,
       webhooks_urls,
