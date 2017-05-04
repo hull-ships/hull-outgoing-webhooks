@@ -36,7 +36,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   if (!synchronized_segments.length) {
     hull.logger.info('outgoing.user.skip', _.merge(
       _.pick(user, "id", "external_id", "email"),
-      { reason: 'No Segments configured. all Users will be skipped' }
+      { reason: 'No Segments configured. All Users will be skipped' }
     ));
     return false;
   }

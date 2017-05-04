@@ -6,7 +6,7 @@ export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
   return _.map(webhooks_urls, url => axios.post(url, payload)
     .then(
       ({ data, status, statusText }) => {
-        hull.logger.debug('outgoing.user.success', _.pick(payload.user, "id", "external_id", "email"));
+        hull.logger.info('outgoing.user.success', _.pick(payload.user, "id", "external_id", "email"));
         hull.logger.debug('webhook.success', {
           userId: payload.user.id,
           status,
