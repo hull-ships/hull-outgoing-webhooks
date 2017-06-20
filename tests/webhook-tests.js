@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import ClientMock from "./client-mock";
-import Webhook from "../server/webhook";
+import Webhook from "../server/lib/webhook";
 
 const assert = require("assert");
 

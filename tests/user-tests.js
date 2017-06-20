@@ -5,7 +5,7 @@ import moxios from "moxios";
 import { equal } from "assert";
 import { afterEach, beforeEach } from "mocha";
 import hullSpy from "./mocks/hull";
-import updateUser from "../server/update-user";
+import updateUser from "../server/lib/update-user";
 
 
 const { events, segments, user, ship, changes } = require("./fixtures");

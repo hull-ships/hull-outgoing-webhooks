@@ -2,9 +2,9 @@
 import express from "express";
 import { notifHandler, batchHandler } from "hull/lib/utils";
 
-import updateUser from "./update-user";
+import updateUser from "./lib/update-user";
 
-module.exports = function Server(app: express) {
+export default function server(app: express): express {
   app.use('/notify', notifHandler({
     userHandlerOptions: {
       groupTraits: true
@@ -27,4 +27,4 @@ module.exports = function Server(app: express) {
   }));
 
   return app;
-};
+}
