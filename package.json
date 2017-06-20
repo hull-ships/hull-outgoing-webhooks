@@ -1,7 +1,7 @@
 {
   "name": "hull-webhooks",
   "description": "Send Hull user updates as webhooks",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "homepage": "https://github.com/hull-ships/hull-webhooks",
   "license": "MIT",
   "main": "bin/start",
@@ -55,11 +55,11 @@
     "updtr": "^0.2.3"
   },
   "dependencies": {
-    "babel-preset-flow": "^6.23.0",
     "axios": "^0.15.3",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-preset-es2015": "^6.22.0",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.22.0",
     "babel-register": "^6.22.0",
     "body-parser": "^1.16.0",
@@ -69,7 +69,7 @@
     "dogapi": "^2.6.0",
     "ejs": "^2.5.5",
     "express": "^4.14.1",
-    "hull": "^0.11.0",
+    "hull": "^0.11.4",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",

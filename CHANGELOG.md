@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+- update to hull-node@0.11.4
+- move files to lib directory
+
 ## 0.2.2
 - update to hull-node@0.11.0
 - implement logging convention
