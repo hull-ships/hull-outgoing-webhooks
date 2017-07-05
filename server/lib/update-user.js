@@ -3,7 +3,7 @@ import _ from 'lodash';
 import webhook from './webhook';
 
 function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
-  const { segments = {} } = changes;
+  const {segments = {}} = changes;
   if (!_.size(segments)) return [];
   const current = segments[action] || [];
   if (!current.length) return [];
@@ -15,12 +15,12 @@ function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
   return _.filter(current, s => _.includes(filter, s.id));
 }
 
-export default function updateUser({ metric, ship, client, isBatch = false }: any, message: any = {}) {
-  const { user = {}, segments = [], changes = {}, events = [] } = message;
-  const { private_settings = {} } = ship;
-  const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
+export default function updateUser({metric, ship, client, isBatch = false}: any, message: any = {}) {
+  const {user = {}, segments = [], changes = {}, events = []} = message;
+  const {private_settings = {}} = ship;
+  const {webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = []} = private_settings;
   const hull = client;
-  hull.logger.debug('notification.start', { userId: user.id });
+  hull.logger.debug('notification.start', {userId: user.id});
 
   if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
     hull.logger.error('notification.error', {
@@ -34,18 +34,18 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   if (!synchronized_segments.length) {
-    hull.logger.info('outgoing.user.skip', _.merge(
-      _.pick(user, "id", "external_id", "email"),
-      { reason: 'No Segments configured. All Users will be skipped' }
-    ));
+    hull.logger.info('outgoing.user.skip', {
+      userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+      reason: "No Segments configured. All Users will be skipped"
+    });
     return false;
   }
 
   if (!webhooks_events.length && !webhooks_segments.length && !webhooks_attributes.length) {
-    hull.logger.info('outgoing.user.skip', _.merge(
-      _.pick(user, "id", "external_id", "email"),
-      { reason: 'No Events, Segments or Attributes configured. No Webhooks will be sent' }
-    ));
+    hull.logger.info('outgoing.user.skip', {
+      userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+      reason: "No Events, Segments or Attributes configured. No Webhooks will be sent"
+    });
     return false;
   }
 
@@ -58,16 +58,16 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
     webhook({
       hull,
       webhooks_urls,
-      payload: { user, segments }
+      payload: {user, segments}
     });
     return false;
   }
 
   if (!_.intersection(synchronized_segments, segmentIds).length) {
-    hull.logger.info('outgoing.user.skip', _.merge(
-      _.pick(user, "id", "external_id", "email"),
-      { reason: "User doesn't match filtered segments" }
-    ));
+    hull.logger.info('outgoing.user.skip', {
+      userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+      reason: "User doesn't match filtered segments"
+    });
     return false;
   }
 
@@ -103,7 +103,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
     _.map(matchedEvents, (event) => {
       metric.increment("ship.outgoing.events");
       hull.logger.debug('notification.send', loggingContext);
-      webhook({ hull, webhooks_urls, payload: { ...payload, event } });
+      webhook({hull, webhooks_urls, payload: {...payload, event}});
     });
     return true;
   }
@@ -113,13 +113,13 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length) {
     metric.increment("ship.outgoing.events");
     hull.logger.debug('notification.send', loggingContext);
-    webhook({ hull, webhooks_urls, payload });
+    webhook({hull, webhooks_urls, payload});
     return true;
   }
 
-  hull.logger.info('outgoing.user.skip', _.merge(
-    _.pick(user, "id", "external_id", "email"),
-    { reason: "User didn't match any conditions" }
-  ));
+  hull.logger.info('outgoing.user.skip', {
+    userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+    reason: "User didn't match any conditions"
+  });
   return false;
 }
