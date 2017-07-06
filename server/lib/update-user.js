@@ -21,6 +21,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const hull = client;
   hull.logger.debug('notification.start', { userId: user.id });
+  const asUser = hull.asUser({ email: user.email, id: user.id });
 
   if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
     hull.logger.error('notification.error', {
@@ -34,16 +35,14 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   if (!synchronized_segments.length) {
-    hull.logger.info('outgoing.user.skip', {
-      userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+    asUser.logger.info('outgoing.user.skip', {
       reason: "No Segments configured. All Users will be skipped"
     });
     return false;
   }
 
   if (!webhooks_events.length && !webhooks_segments.length && !webhooks_attributes.length) {
-    hull.logger.info('outgoing.user.skip', {
-      userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+    asUser.logger.info('outgoing.user.skip', {
       reason: "No Events, Segments or Attributes configured. No Webhooks will be sent"
     });
     return false;
@@ -64,8 +63,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   if (!_.intersection(synchronized_segments, segmentIds).length) {
-    hull.logger.info('outgoing.user.skip', {
-      userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+    asUser.logger.info('outgoing.user.skip', {
       reason: "User doesn't match filtered segments"
     });
     return false;
@@ -117,8 +115,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
     return true;
   }
 
-  hull.logger.info('outgoing.user.skip', {
-    userIdent: { email: user.email, external_id: user.external_id, hull_id: user.id },
+  asUser.logger.info('outgoing.user.skip', {
     reason: "User didn't match any conditions"
   });
   return false;
