@@ -21,7 +21,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const hull = client;
   hull.logger.debug('notification.start', { userId: user.id });
-  const asUser = hull.asUser(_.pick(user, [ "id", "email", "external_id" ]));
+  const asUser = hull.asUser(_.pick(user, ["id", "email", "external_id"]));
 
   if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
     hull.logger.error('notification.error', {
