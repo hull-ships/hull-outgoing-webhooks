@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch"],
   "picture": "picture.png",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private_settings":[
     {
       "name": "webhooks_urls",
