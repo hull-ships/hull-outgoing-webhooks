@@ -3,7 +3,7 @@ import _ from 'lodash';
 import axios from 'axios';
 
 export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
-  const asUser = hull.asUser(_.pick(payload.user, ["id", "email", "external_id"]))
+  const asUser = hull.asUser(_.pick(payload.user, ["id", "email", "external_id"]));
   return _.map(webhooks_urls, url => axios.post(url, payload)
     .then(
       ({ data, status, statusText }) => {

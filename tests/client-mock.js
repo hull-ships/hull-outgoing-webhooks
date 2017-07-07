@@ -7,6 +7,9 @@ module.exports = function getClientMock() {
       debug: (msg, data) => console.log(msg, data),
       log: (msg, data) => console.log(msg, data)
     },
+    asUser: function asUser() {
+      return this;
+    },
     get: () => {
       return Promise.resolve({});
     },
