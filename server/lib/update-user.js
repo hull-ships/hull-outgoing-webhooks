@@ -21,6 +21,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const hull = client;
   hull.logger.debug('notification.start', { userId: user.id });
+  const asUser = hull.asUser(_.pick(user, ["id", "email", "external_id"]));
 
   if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
     hull.logger.error('notification.error', {
@@ -34,18 +35,16 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   if (!synchronized_segments.length) {
-    hull.logger.info('outgoing.user.skip', _.merge(
-      _.pick(user, "id", "external_id", "email"),
-      { reason: 'No Segments configured. All Users will be skipped' }
-    ));
+    asUser.logger.info('outgoing.user.skip', {
+      reason: "No Segments configured. All Users will be skipped"
+    });
     return false;
   }
 
   if (!webhooks_events.length && !webhooks_segments.length && !webhooks_attributes.length) {
-    hull.logger.info('outgoing.user.skip', _.merge(
-      _.pick(user, "id", "external_id", "email"),
-      { reason: 'No Events, Segments or Attributes configured. No Webhooks will be sent' }
-    ));
+    asUser.logger.info('outgoing.user.skip', {
+      reason: "No Events, Segments or Attributes configured. No Webhooks will be sent"
+    });
     return false;
   }
 
@@ -64,10 +63,9 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   if (!_.intersection(synchronized_segments, segmentIds).length) {
-    hull.logger.info('outgoing.user.skip', _.merge(
-      _.pick(user, "id", "external_id", "email"),
-      { reason: "User doesn't match filtered segments" }
-    ));
+    asUser.logger.info('outgoing.user.skip', {
+      reason: "User doesn't match filtered segments"
+    });
     return false;
   }
 
@@ -117,9 +115,8 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
     return true;
   }
 
-  hull.logger.info('outgoing.user.skip', _.merge(
-    _.pick(user, "id", "external_id", "email"),
-    { reason: "User didn't match any conditions" }
-  ));
+  asUser.logger.info('outgoing.user.skip', {
+    reason: "User didn't match any conditions"
+  });
   return false;
 }

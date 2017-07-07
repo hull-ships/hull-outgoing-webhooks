@@ -3,10 +3,11 @@ import _ from 'lodash';
 import axios from 'axios';
 
 export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
+  const asUser = hull.asUser(_.pick(payload.user, ["id", "email", "external_id"]))
   return _.map(webhooks_urls, url => axios.post(url, payload)
     .then(
       ({ data, status, statusText }) => {
-        hull.logger.info('outgoing.user.success', _.pick(payload.user, "id", "external_id", "email"));
+        asUser.logger.info('outgoing.user.success');
         hull.logger.debug('webhook.success', {
           userId: payload.user.id,
           status,
@@ -27,10 +28,7 @@ export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
         // Something happened in setting up the request that triggered an Error
         hull.logger.debug('webhook.error', { message: msg });
       }
-      hull.logger.info('outgoing.user.error', _.merge(
-        _.pick(payload.user, "id", "external_id", "email"),
-        { errors }
-      ));
+      asUser.logger.error('outgoing.user.error', { errors });
     })
   );
 }

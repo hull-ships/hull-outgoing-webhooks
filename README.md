@@ -18,3 +18,9 @@ If you want your own instance: [![Deploy](https://www.herokucdn.com/deploy/butto
 npm install
 npm run start:dev
 ```
+
+### Logs :
+
+  Below list represents all specific logs for Webhooks Connector :
+  
+    * notification.error - logged when sending webhook operation returned some errors  
