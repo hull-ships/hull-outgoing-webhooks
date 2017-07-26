@@ -1,7 +1,7 @@
 /* @flow */
 import express from "express";
 import { smartNotifierHandler, FlowControl } from "hull/lib/utils";
-import Promide from "bluebird";
+import Promise from "bluebird";
 
 import updateUser from "./lib/update-user";
 
