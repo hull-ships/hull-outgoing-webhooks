@@ -16,8 +16,8 @@ export default function server(app: express): express {
           .then(() => {
             return new FlowControl({
               type: "next",
-              size: 10,
-              in: 1000
+              size: process.env.FLOW_CONTROL_SIZE || 10,
+              in: process.env.FLOW_CONTROL_SIZE || 1000
             });
           });
       }
