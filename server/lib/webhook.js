@@ -1,10 +1,12 @@
 /* @flow */
 import _ from 'lodash';
 import axios from 'axios';
+import Promise from "bluebird";
 
-export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
+
+export default function webhook({ smartNotifierResponse, webhooks_urls, hull, payload = {} }: any) {
   const asUser = hull.asUser(_.pick(payload.user, ["id", "email", "external_id"]));
-  return _.map(webhooks_urls, url => axios.post(url, payload)
+  return Promise.all(_.map(webhooks_urls, url => axios.post(url, payload)
     .then(
       ({ data, status, statusText }) => {
         asUser.logger.info('outgoing.user.success');
@@ -23,6 +25,11 @@ export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
         errors = "webhook failed";
 
         hull.logger.debug('webhook.error', { message: 'webhook failed', data, status });
+        smartNotifierResponse
+          .setFlowControl({
+            type: "retry",
+            in: 5000
+          });
       } else {
         errors = msg;
         // Something happened in setting up the request that triggered an Error
@@ -30,5 +37,5 @@ export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
       }
       asUser.logger.error('outgoing.user.error', { errors });
     })
-  );
+  ));
 }

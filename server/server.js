@@ -1,6 +1,6 @@
 /* @flow */
 import express from "express";
-import { smartNotifierHandler, FlowControl } from "hull/lib/utils";
+import { smartNotifierHandler } from "hull/lib/utils";
 import Promise from "bluebird";
 
 import updateUser from "./lib/update-user";
@@ -12,15 +12,14 @@ export default function server(app: express): express {
     },
     handlers: {
       "user:update": (ctx, messages) => {
-        return Promise.all(messages.map(m => updateUser(ctx, m)))
-          .then(() => {
-            ctx.smartNotifierResponse
-              .setFlowControl({
-                type: "next",
-                size: parseInt(process.env.FLOW_CONTROL_SIZE, 10) || 10,
-                in: parseInt(process.env.FLOW_CONTROL_IN, 10) || 1000
-              });
+        // default flow control
+        ctx.smartNotifierResponse
+          .setFlowControl({
+            type: "next",
+            size: parseInt(process.env.FLOW_CONTROL_SIZE, 10) || 10,
+            in: parseInt(process.env.FLOW_CONTROL_IN, 10) || 1000
           });
+        return Promise.all(messages.map(m => updateUser(ctx, m)));
       }
     }
   }));
