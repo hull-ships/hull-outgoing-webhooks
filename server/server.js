@@ -17,8 +17,8 @@ export default function server(app: express): express {
             ctx.smartNotifierResponse
               .setFlowControl({
                 type: "next",
-                size: process.env.FLOW_CONTROL_SIZE || 10,
-                in: process.env.FLOW_CONTROL_IN || 1000
+                size: parseInt(process.env.FLOW_CONTROL_SIZE, 10) || 10,
+                in: parseInt(process.env.FLOW_CONTROL_IN, 10) || 1000
               });
           });
       }
