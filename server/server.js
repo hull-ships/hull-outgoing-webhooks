@@ -14,11 +14,12 @@ export default function server(app: express): express {
       "user:update": (ctx, messages) => {
         return Promise.all(messages.map(m => updateUser(ctx, m)))
           .then(() => {
-            return new FlowControl({
-              type: "next",
-              size: process.env.FLOW_CONTROL_SIZE || 10,
-              in: process.env.FLOW_CONTROL_SIZE || 1000
-            });
+            ctx.smartNotifierResponse
+              .setFlowControl({
+                type: "next",
+                size: process.env.FLOW_CONTROL_SIZE || 10,
+                in: process.env.FLOW_CONTROL_SIZE || 1000
+              });
           });
       }
     }
