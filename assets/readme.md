@@ -17,6 +17,7 @@ It defines who will be sent. An empty list sends no one. To start, create a User
 
 The Second section defines additional conditions to send a user. User will be sent as soon as one of these conditions match.
 
+- On any update (if activated)
 - When entering and/or leaving a given segment
 - When a specific property changes
 - When A specific event is performed.
