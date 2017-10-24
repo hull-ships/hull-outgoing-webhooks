@@ -23,7 +23,6 @@
       "type": "array",
       "format": "segment"
     },
-
     {
       "name": "webhooks_header",
       "title": "Send conditions",
@@ -31,6 +30,14 @@
       "format": "title"
     },
 
+    {
+      "name": "webhooks_anytime",
+      "title": "Send anytime user is updated",
+      "default": [],
+      "type": "boolean",
+      "format": "checkbox",
+      "default": false
+    },
     {
       "name": "webhooks_segments",
       "title": "Send User when Segments changes",

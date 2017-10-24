@@ -18,13 +18,13 @@ function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
 export default function updateUser({ metric, ship, client, isBatch = false }: any, message: any = {}) {
   const { user = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
-  const { webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
+  const { webhooks_anytime, webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const hull = client;
-  hull.logger.debug('notification.start', { userId: user.id });
+  hull.logger.debug('outgoing.user.start', { userId: user.id });
   const asUser = hull.asUser(_.pick(user, ["id", "email", "external_id"]));
 
   if (!user || !user.id || !ship || !webhooks_urls.length || !synchronized_segments) {
-    hull.logger.error('notification.error', {
+    hull.logger.error('outgoing.user.error', {
       message: "Missing data",
       user: !!user,
       ship: !!ship,
@@ -108,7 +108,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
 
   // User
   // Don't send again if already sent through events.
-  if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length) {
+  if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length || webhooks_anytime) {
     metric.increment("ship.outgoing.events");
     hull.logger.debug('notification.send', loggingContext);
     webhook({ hull, webhooks_urls, payload });
