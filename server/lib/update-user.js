@@ -1,6 +1,5 @@
 /* @flow */
 import _ from 'lodash';
-import Promise from "bluebird";
 
 import webhook from './webhook';
 
@@ -17,7 +16,7 @@ function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
   return _.filter(current, s => _.includes(filter, s.id));
 }
 
-export default function updateUser({ smartNotifierResponse, metric, ship, client, isBatch = false }: any, message: any = {}) {
+export default function updateUser({ metric, ship, client, isBatch = false }: any, message: any = {}) {
   const { user = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
   const { webhooks_anytime, webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
@@ -56,11 +55,12 @@ export default function updateUser({ smartNotifierResponse, metric, ship, client
   // Early return when sending batches. All users go through it. No changes, no events though...
   if (isBatch) {
     metric.increment("ship.outgoing.events");
-    return webhook({
+    webhook({
       hull,
       webhooks_urls,
       payload: { user, segments }
     });
+    return false;
   }
 
   if (!_.intersection(synchronized_segments, segmentIds).length) {
@@ -99,11 +99,12 @@ export default function updateUser({ smartNotifierResponse, metric, ship, client
 
   // Event: Send once for each matching event.
   if (matchedEvents.length) {
-    return Promise.all(_.map(matchedEvents, (event) => {
+    _.map(matchedEvents, (event) => {
       metric.increment("ship.outgoing.events");
       hull.logger.debug('notification.send', loggingContext);
-      return webhook({ hull, webhooks_urls, payload: { ...payload, event } });
-    }));
+      webhook({ hull, webhooks_urls, payload: { ...payload, event } });
+    });
+    return true;
   }
 
   // User
@@ -111,7 +112,8 @@ export default function updateUser({ smartNotifierResponse, metric, ship, client
   if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length || webhooks_anytime) {
     metric.increment("ship.outgoing.events");
     hull.logger.debug('notification.send', loggingContext);
-    return webhook({ smartNotifierResponse, hull, webhooks_urls, payload });
+    webhook({ hull, webhooks_urls, payload });
+    return true;
   }
 
   asUser.logger.info('outgoing.user.skip', {
