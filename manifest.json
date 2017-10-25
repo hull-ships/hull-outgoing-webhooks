@@ -1,7 +1,7 @@
 {
   "name": "Webhooks",
   "description": "Send Hull Users updates as Webhooks",
-  "tags": ["outgoing", "oneColumn", "batch"],
+  "tags": ["outgoing", "oneColumn", "batch", "smart-notifier"],
   "picture": "picture.png",
   "version": "0.2.6",
   "private_settings":[
