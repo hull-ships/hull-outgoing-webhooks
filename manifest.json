@@ -33,7 +33,6 @@
     {
       "name": "webhooks_anytime",
       "title": "Send anytime user is updated",
-      "default": [],
       "type": "boolean",
       "format": "checkbox",
       "default": false
