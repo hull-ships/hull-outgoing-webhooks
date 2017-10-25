@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.7
+
+- revert smart-notifier support
+
 ## 0.2.6
 
 - add more details to error logs
