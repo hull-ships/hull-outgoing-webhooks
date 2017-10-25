@@ -17,18 +17,20 @@ export default function webhook({ webhooks_urls, hull, payload = {} }: any) {
       }
     )
     .catch(({ response, message: msg }) => {
-      let errors = "unknown";
+      const errorInfo = {
+        reason: "unknown"
+      };
       if (response) {
         const { data, status } = response;
-        errors = "webhook failed";
-
-        hull.logger.debug('webhook.error', { message: 'webhook failed', data, status });
+        errorInfo.reason = "Webhook failed";
+        _.set(errorInfo, "message", "See data for further details about the exact error.");
+        _.set(errorInfo, "data", data);
+        _.set(errorInfo, "status", status);
       } else {
-        errors = msg;
-        // Something happened in setting up the request that triggered an Error
-        hull.logger.debug('webhook.error', { message: msg });
+        _.set(errorInfo, "message", msg);
       }
-      asUser.logger.error('outgoing.user.error', { errors });
+      hull.logger.debug('webhook.error', errorInfo);
+      asUser.logger.error('outgoing.user.error', { error: errorInfo });
     })
   );
 }

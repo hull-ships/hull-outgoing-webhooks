@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch"],
   "picture": "picture.png",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private_settings":[
     {
       "name": "webhooks_urls",
@@ -33,7 +33,6 @@
     {
       "name": "webhooks_anytime",
       "title": "Send anytime user is updated",
-      "default": [],
       "type": "boolean",
       "format": "checkbox",
       "default": false

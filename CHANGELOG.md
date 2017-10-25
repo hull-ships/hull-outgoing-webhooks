@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6
+
+- add more details to error logs
+
 ## 0.2.5
 
 - enable to send all users
