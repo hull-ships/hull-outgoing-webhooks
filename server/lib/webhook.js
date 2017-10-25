@@ -19,23 +19,25 @@ export default function webhook({ smartNotifierResponse, webhooks_urls, hull, pa
       }
     )
     .catch(({ response, message: msg }) => {
-      let errors = "unknown";
+      const errorInfo = {
+        reason: "unknown"
+      };
       if (response) {
         const { data, status } = response;
-        errors = "webhook failed";
-
-        hull.logger.debug('webhook.error', { message: 'webhook failed', data, status });
+        errorInfo.reason = "Webhook failed";
+        _.set(errorInfo, "message", "See data for further details about the exact error.");
+        _.set(errorInfo, "data", data);
+        _.set(errorInfo, "status", status);
         smartNotifierResponse
           .setFlowControl({
             type: "retry",
             in: 5000
           });
       } else {
-        errors = msg;
-        // Something happened in setting up the request that triggered an Error
-        hull.logger.debug('webhook.error', { message: msg });
+        _.set(errorInfo, "message", msg);
       }
-      asUser.logger.error('outgoing.user.error', { errors });
+      hull.logger.debug('webhook.error', errorInfo);
+      asUser.logger.error('outgoing.user.error', { error: errorInfo });
     })
   ));
 }
