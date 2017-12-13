@@ -84,9 +84,13 @@
   "resources": [],
   "readme": "readme.md",
   "ui": false,
-  "subscriptions": [
+  "resources": [],
+  "subscriptions": [{ "url": "/smart-notifier" }],
+  "schedules": [
     {
-      "url": "/notify"
+      "url": "/status",
+      "type": "cron",
+      "value": "*/5 * * * *"
     }
   ]
 }

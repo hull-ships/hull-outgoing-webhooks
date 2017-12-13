@@ -1,29 +1,25 @@
-/* @flow */
 import express from "express";
-import { notifHandler, batchHandler } from "hull/lib/utils";
+import { errorHandler } from "hull-connector";
+import { batchHandler, statusHandler, notifyHandler } from "./handlers";
 
-import updateUser from "./lib/update-user";
+export default function Server(options = {}) {
+  const app = express();
+  const { Hull } = options;
 
-export default function server(app: express): express {
-  app.use('/notify', notifHandler({
-    userHandlerOptions: {
-      groupTraits: true
-    },
-    handlers: {
-      "user:update": (ctx, messages) => {
-        messages.map(m => updateUser(ctx, m));
-      }
-    }
-  }));
+  const connector = new Hull.Connector(options);
 
-  app.use("/batch", batchHandler(({ metric, client, ship }, messages) => {
-    client.logger.debug("batch.process", { messages: messages.length });
-    messages.map((message) => {
-      return updateUser({ metric, client, ship, isBatch: true }, message);
-    });
-  }, {
-    groupTraits: true,
-    batchSize: 100
-  }));
+  if (options.devMode) {
+    const { devMode } = require("hull-connector");
+    devMode(app, options);
+  }
+  connector.setupApp(app);
+
+  app.post("/smart-notifier", notifyHandler);
+  app.use("/batch", batchHandler);
+  app.all("/status", statusHandler);
+
+  // Error Handler
+  app.use(errorHandler);
+  connector.startApp(app);
   return app;
 }
