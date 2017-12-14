@@ -37,7 +37,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   }
 
   // pluck
-  const segmentIds = _.map(segments, 'id');
+  const segmentIds = _.map(segments, "id");
 
   // Early return when sending batches. All users go through it. No changes, no events though...
   if (isBatch) {
