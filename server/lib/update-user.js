@@ -4,7 +4,7 @@ import getSegmentChanges from "./get-segment-changes";
 import webhook from './webhook';
 
 export default function updateUser({ metric, ship, client, isBatch = false }: any, message: any = {}) {
-  const { user = {}, segments = [], changes = {}, events = [] } = message;
+  const { user = {}, account = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
   const { webhooks_anytime, webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const hull = client;
@@ -72,6 +72,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   // Payload
   const payload = {
     user,
+    account,
     segments,
     changes
   };

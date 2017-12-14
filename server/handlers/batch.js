@@ -1,8 +1,10 @@
-import { batchHandler } from "hull/lib/utils";
+/* @flow */
+
+import { batcherHandler } from "hull/lib/utils";
 import updateUser from "../lib/update-user";
 
-const batch = batchHandler(
-  ({ metric, client, ship }, messages) => {
+const batch = batcherHandler(
+  ({ metric, client, ship }: Object, messages: Array<Object> = []) => {
     client.logger.debug("outgoing.batch.process", {
       messages: messages.length
     });
