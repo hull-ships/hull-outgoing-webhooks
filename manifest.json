@@ -23,6 +23,16 @@
       "type": "array",
       "format": "segment"
     },
+
+    {
+      "name": "group_traits",
+      "title": "Group Traits",
+      "type": "boolean",
+      "format": "hidden",
+      "default": false
+    },
+
+
     {
       "name": "webhooks_header",
       "title": "Send conditions",
@@ -39,7 +49,7 @@
     },
     {
       "name": "webhooks_segments",
-      "title": "Send User when Segments changes",
+      "title": "Send User when entering and/or leaving segments",
       "type": "array",
       "format": "table",
       "default": [{ "segment": "", "channel": "" }],
@@ -74,7 +84,7 @@
     },
     {
       "name": "webhooks_events",
-      "title": "Send User when events performed",
+      "title": "Send User when events triggered",
       "default": [],
       "type": "array",
       "format": "event"

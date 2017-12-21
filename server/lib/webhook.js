@@ -28,11 +28,11 @@ export default function webhook({
         });
         return null;
       },
-      ({ response, message: msg }) => {
-        metric.increment("ship.service_api.call", 1);
+      ({ error, message: msg }) => {
+        metric.increment("ship.service_api.error", 1);
         const errorInfo = { reason: "unknown" };
-        if (response) {
-          const { data, status } = response;
+        if (error) {
+          const { data, status } = error;
           errorInfo.reason = "Webhook failed";
           _.set(
             errorInfo,
@@ -50,7 +50,7 @@ export default function webhook({
           payload,
           error: errorInfo
         });
-        throw new Error(errorInfo);
+        return Promise.resolve({ payload, error: errorInfo })
       }
     );
   });

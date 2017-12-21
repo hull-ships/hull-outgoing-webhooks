@@ -62,7 +62,8 @@ describe("Webhook should increment error counter in case of error", () => {
       account: { id: "account-1234" }
     };
     const finish = f => {
-      assert(increment.calledWith("ship.service_api.call", 1));
+      assert(increment.alwaysCalledWith("ship.service_api.call", 1));
+      assert(increment.calledTwice);
       ["notification", "notification2"]
       .map(e => assert.equal(res[e], JSON.stringify(payload)));
       done();

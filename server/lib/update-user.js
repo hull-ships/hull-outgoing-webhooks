@@ -16,6 +16,7 @@ export default function updateUser(
   } = message;
   const { private_settings = {} } = ship;
   const {
+    group_traits = false,
     webhooks_anytime,
     webhooks_urls = [],
     synchronized_segments = [],
@@ -114,8 +115,8 @@ export default function updateUser(
 
   // Payload
   const payload = {
-    user,
-    account,
+    user: group_traits ? client.utils.groupTraits(user) : user,
+    account: group_traits ? client.utils.groupTraits(account) : account,
     segments,
     changes
   };
