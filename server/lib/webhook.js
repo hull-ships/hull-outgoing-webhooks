@@ -44,7 +44,7 @@ export default function webhook({
         } else {
           _.set(errorInfo, "message", msg);
         }
-        hull.logger.debug("webhook.error", errorInfo);
+        hull.logger.debug("webhook.error", { payload, errorInfo });
         metric.increment("ship.service_api.errors", 1);
         asUser.logger.error("outgoing.user.error", {
           payload,
