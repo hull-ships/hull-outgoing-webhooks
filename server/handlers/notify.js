@@ -5,7 +5,7 @@ import updateUser from "../lib/update-user";
 const notify = smartNotifierHandler({
   handlers: {
     "user:update": (ctx, messages = []) => {
-      const { smartNotifierResponse, metric } = ctx;
+      const { smartNotifierResponse } = ctx;
       // Get 10 users every 100ms at most.
       smartNotifierResponse.setFlowControl({
         type: "next",

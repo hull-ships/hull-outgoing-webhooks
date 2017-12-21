@@ -1,3 +1,53 @@
 {
-  "extends" : ["./node_modules/hull-connector/config/.eslintrc"]
+  "parser": "babel-eslint",
+  "globals": {
+    "Hull": true
+  },
+  "settings": {
+    "ecmascript": 6,
+    "jsx": true,
+    "import/extensions": [".js", ".jsx"],
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  },
+  "extends": [
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "jest",
+    "flowtype-errors",
+    "flowtype",
+    "react"
+  ],
+  "env": {
+    "jest/globals": true,
+    "node": true,
+    "browser": true,
+    "commonjs": true,
+    "worker": true,
+    "mocha": true,
+    "mongo": true,
+    "es6": true
+  },
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "prefer-arrow-callback": [1],
+    "new-cap": [0],
+    "no-underscore-dangle": [0],
+    "arrow-body-style": [0],
+    "no-param-reassign": [0],
+    "no-console": [1],
+    "eqeqeq": [1],
+    "flowtype-errors/show-errors": [2],
+    "react/jsx-wrap-multilines": [0],
+    "react/no-deprecated": [2],
+    "react/jsx-uses-vars": [2],
+    "react/prefer-es6-class": [2],
+    "react/no-multi-comp": [2],
+    "react/no-find-dom-node": [2]
+  }
 }

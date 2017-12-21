@@ -1,28 +1,29 @@
-import Hull from 'hull';
-import server from './server';
-import pkg from '../package.json';
-import { dotEnv } from 'hull-connector';
+import Hull from "hull";
+import { dotEnv } from "hull-connector";
+import server from "./server";
+import pkg from "../package.json";
+
 dotEnv();
 
 const {
-  SECRET = '1234',
+  SECRET = "1234",
   NODE_ENV,
   OVERRIDE_FIREHOSE_URL,
   LOG_LEVEL,
-  PORT = 8082,
+  PORT = 8082
 } = process.env;
 
 const options = {
   hostSecret: SECRET,
-  devMode: NODE_ENV === 'development',
+  devMode: NODE_ENV === "development",
   port: PORT,
   ngrok: {
-    subdomain: pkg.name,
+    subdomain: pkg.name
   },
   Hull,
   clientConfig: {
-    firehoseUrl: OVERRIDE_FIREHOSE_URL,
-  },
+    firehoseUrl: OVERRIDE_FIREHOSE_URL
+  }
 };
 
 if (LOG_LEVEL) {
@@ -32,5 +33,5 @@ if (LOG_LEVEL) {
 Hull.logger.transports.console.json = true;
 Hull.logger.debug(`${pkg.name}.boot`);
 
-const app = server(options);
+server(options);
 Hull.logger.debug(`${pkg.name}.started`, { port: PORT });

@@ -9,7 +9,15 @@ const batch = batcherHandler(
       messages: messages.length
     });
     messages.map(m =>
-      updateUser({ metric, client, ship, isBatch: true }, m)
+      updateUser(
+        {
+          metric,
+          client,
+          ship,
+          isBatch: true
+        },
+        m
+      )
     );
   },
   {
