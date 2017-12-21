@@ -1,7 +1,7 @@
 {
   "name": "hull-webhooks",
-  "version": "1.0.0",
-  "description": "Synchronize Data with webhooks",
+  "version": "0.2.8",
+  "description": "Send data to webhooks",
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/hull-ships",
@@ -54,7 +54,7 @@
     "classnames": "^2.2.5",
     "css": "^2.2.1",
     "express": "^4.16.2",
-    "hull": "^0.13.0",
+    "hull": "^0.13.9",
     "hull-connector": "^1.0.36",
     "hull-connector-dev": "^1.0.36",
     "lodash": "^4.17.4",
