@@ -50,7 +50,7 @@ export default function webhook({
           payload,
           error: errorInfo
         });
-        return Promise.resolve({ payload, error: errorInfo })
+        return Promise.resolve({ payload, error: errorInfo });
       }
     );
   });
