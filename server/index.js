@@ -1,23 +1,36 @@
-/* @flow */
-import Hull from "hull";
-import express from "express";
+import Hull from 'hull';
+import server from './server';
+import pkg from '../package.json';
+import { dotEnv } from 'hull-connector';
+dotEnv();
 
-import server from "./server";
+const {
+  SECRET = '1234',
+  NODE_ENV,
+  OVERRIDE_FIREHOSE_URL,
+  LOG_LEVEL,
+  PORT = 8082,
+} = process.env;
 
-if (process.env.LOG_LEVEL) {
-  Hull.logger.transports.console.level = process.env.LOG_LEVEL;
+const options = {
+  hostSecret: SECRET,
+  devMode: NODE_ENV === 'development',
+  port: PORT,
+  ngrok: {
+    subdomain: pkg.name,
+  },
+  Hull,
+  clientConfig: {
+    firehoseUrl: OVERRIDE_FIREHOSE_URL,
+  },
+};
+
+if (LOG_LEVEL) {
+  Hull.logger.transports.console.level = LOG_LEVEL;
 }
 
-const connector = new Hull.Connector({
-  port: process.env.PORT || 8082,
-  hostSecret: process.env.SECRET || "1234",
-  clientConfig: {
-    firehoseUrl: process.env.OVERRIDE_FIREHOSE_URL
-  }
-});
-const app = express();
-connector.setupApp(app);
+Hull.logger.transports.console.json = true;
+Hull.logger.debug(`${pkg.name}.boot`);
 
-server(app);
-
-connector.startApp(app);
+const app = server(options);
+Hull.logger.debug(`${pkg.name}.started`, { port: PORT });

@@ -1,23 +1,10 @@
 /* @flow */
 import _ from 'lodash';
-
+import getSegmentChanges from "./get-segment-changes";
 import webhook from './webhook';
 
-function getSegmentChanges(webhooks_segments, changes = {}, action = 'left') {
-  const { segments = {} } = changes;
-  if (!_.size(segments)) return [];
-  const current = segments[action] || [];
-  if (!current.length) return [];
-
-  // Get list of segments we're validating against for a given changeset
-  const filter = _.map(_.filter(webhooks_segments, e => e[action]), 'segment');
-
-  // List of User segments matching entered or left
-  return _.filter(current, s => _.includes(filter, s.id));
-}
-
 export default function updateUser({ metric, ship, client, isBatch = false }: any, message: any = {}) {
-  const { user = {}, segments = [], changes = {}, events = [] } = message;
+  const { user = {}, account = {}, segments = [], changes = {}, events = [] } = message;
   const { private_settings = {} } = ship;
   const { webhooks_anytime, webhooks_urls = [], synchronized_segments = [], webhooks_events = [], webhooks_attributes = [], webhooks_segments = [] } = private_settings;
   const hull = client;
@@ -32,42 +19,42 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
       userId: (user && !!user.id),
       webhooks_urls: !!webhooks_urls
     });
-    return false;
+    return Promise.resolve();
   }
 
   if (!synchronized_segments.length) {
     asUser.logger.info('outgoing.user.skip', {
       reason: "No Segments configured. All Users will be skipped"
     });
-    return false;
+    return Promise.resolve();
   }
 
   if (!webhooks_events.length && !webhooks_segments.length && !webhooks_attributes.length) {
     asUser.logger.info('outgoing.user.skip', {
       reason: "No Events, Segments or Attributes configured. No Webhooks will be sent"
     });
-    return false;
+    return Promise.resolve();
   }
 
   // pluck
-  const segmentIds = _.map(segments, 'id');
+  const segmentIds = _.map(segments, "id");
 
   // Early return when sending batches. All users go through it. No changes, no events though...
   if (isBatch) {
     metric.increment("ship.outgoing.events");
-    webhook({
+    return webhook({
+      metric,
       hull,
       webhooks_urls,
       payload: { user, segments }
     });
-    return false;
   }
 
   if (!_.intersection(synchronized_segments, segmentIds).length) {
     asUser.logger.info('outgoing.user.skip', {
       reason: "User doesn't match filtered segments"
     });
-    return false;
+    return Promise.resolve();
   }
 
   const filteredSegments = _.intersection(synchronized_segments, segmentIds);
@@ -85,6 +72,7 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   // Payload
   const payload = {
     user,
+    account,
     segments,
     changes
   };
@@ -99,12 +87,11 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
 
   // Event: Send once for each matching event.
   if (matchedEvents.length) {
-    _.map(matchedEvents, (event) => {
+    return Promise.all(_.map(matchedEvents, (event) => {
       metric.increment("ship.outgoing.events");
       hull.logger.debug('notification.send', loggingContext);
-      webhook({ hull, webhooks_urls, payload: { ...payload, event } });
-    });
-    return true;
+      webhook({ metric, hull, webhooks_urls, payload: { ...payload, event } });
+    }));
   }
 
   // User
@@ -112,12 +99,11 @@ export default function updateUser({ metric, ship, client, isBatch = false }: an
   if (matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length || webhooks_anytime) {
     metric.increment("ship.outgoing.events");
     hull.logger.debug('notification.send', loggingContext);
-    webhook({ hull, webhooks_urls, payload });
-    return true;
+    return webhook({ metric, hull, webhooks_urls, payload });
   }
 
   asUser.logger.info('outgoing.user.skip', {
     reason: "User didn't match any conditions"
   });
-  return false;
+  return Promise.resolve();
 }

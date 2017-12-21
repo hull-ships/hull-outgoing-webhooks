@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.8
+
+- re-add smart-notifier
+- use hull-connector archetype
+- add status endpoint
+- refine logging
+
 ## 0.2.7
 
 - revert smart-notifier support
