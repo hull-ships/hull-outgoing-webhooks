@@ -4233,7 +4233,7 @@ hull-connector@^1.0.36:
     webpack "^3.10.0"
     webpack-alternate-require-loader "^0.0.3"
 
-hull@^0.13.10:
+hull@^0.13.9:
   version "0.13.9"
   resolved "https://registry.yarnpkg.com/hull/-/hull-0.13.9.tgz#0f3aec44ad2a5d424b58d9fd35617a70aa34b3e4"
   dependencies:
