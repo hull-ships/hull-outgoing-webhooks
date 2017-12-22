@@ -1,5 +1,5 @@
 {
-  "name": "hull-webhooks",
+  "name": "hull-outgoing-webhooks",
   "version": "0.2.8",
   "description": "Send data to webhooks",
   "main": "index.js",

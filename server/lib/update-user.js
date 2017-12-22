@@ -115,8 +115,8 @@ export default function updateUser(
 
   // Payload
   const payload = {
-    user: group_traits ? client.utils.groupTraits(user) : user,
-    account: group_traits ? client.utils.groupTraits(account) : account,
+    user: client.utils.groupTraits(user),
+    account: client.utils.groupTraits(account),
     segments,
     changes
   };

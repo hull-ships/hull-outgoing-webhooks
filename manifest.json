@@ -25,15 +25,6 @@
     },
 
     {
-      "name": "group_traits",
-      "title": "Group Traits",
-      "type": "boolean",
-      "format": "hidden",
-      "default": false
-    },
-
-
-    {
       "name": "webhooks_header",
       "title": "Send conditions",
       "type": "string",
