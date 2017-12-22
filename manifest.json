@@ -1,5 +1,5 @@
 {
-  "name": "Webhooks",
+  "name": "Outgoing Webhooks",
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch", "smart-notifier"],
   "picture": "picture.png",
