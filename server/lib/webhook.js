@@ -1,6 +1,7 @@
 /* @flow */
 import _ from "lodash";
 import request from "request-promise";
+import { version } from "../../package.json";
 
 export default function webhook({
   webhooks_urls,
@@ -8,18 +9,22 @@ export default function webhook({
   payload = {},
   metric
 }: any) {
-  const claims = _.pick(payload.user, ["id", "email", "external_id"]);
-  const asUser = hull.asUser(claims);
+  const asUser = hull.asUser(
+    _.pick(payload.user, ["id", "email", "external_id"])
+  );
   const promises = _.map(webhooks_urls, url => {
     return request({
       method: "POST",
+      headers: {
+        "User-Agent": `Hull Node Webhooks version: ${version}`
+      },
       uri: url,
       body: payload,
       json: true
     }).then(
       ({ data, status, statusText }) => {
         metric.increment("ship.service_api.call", 1);
-        asUser.logger.info("outgoing.user.success", { url, claims });
+        asUser.logger.info("outgoing.user.success", { url });
         hull.logger.debug("webhook.success", {
           userId: payload.user.id,
           status,
