@@ -4,6 +4,7 @@ import request from "request-promise";
 import { version } from "../../package.json";
 
 export default function webhook({
+  setFlowControl,
   webhooks_urls,
   hull,
   payload = {},
@@ -21,8 +22,8 @@ export default function webhook({
       uri: url,
       body: payload,
       json: true
-    }).then(
-      ({ data, status, statusText }) => {
+    })
+      .then(({ data, status, statusText }) => {
         metric.increment("ship.service_api.call", 1);
         asUser.logger.info("outgoing.user.success", { url });
         hull.logger.debug("webhook.success", {
@@ -32,32 +33,30 @@ export default function webhook({
           data
         });
         return null;
-      },
-      ({ error, message: msg }) => {
+      })
+      .catch(({ statusCode: status, error, response }) => {
         metric.increment("ship.service_api.error", 1);
-        const errorInfo = { reason: "unknown" };
-        if (error) {
-          const { data, status } = error;
-          errorInfo.reason = "Webhook failed";
-          _.set(
-            errorInfo,
-            "message",
-            "See data for further details about the exact error."
-          );
-          _.set(errorInfo, "data", data);
-          _.set(errorInfo, "status", status);
-        } else {
-          _.set(errorInfo, "message", msg);
+        const errorInfo = {
+          reason: "Webhook Failed",
+          status,
+          error,
+          message: "See data for further details about the exact error."
+        };
+
+        if (status === 429 || status >= 500) {
+          setFlowControl({
+            type: "retry",
+            in: (response.headers["Retry-After"] || 120) * 1000
+          });
         }
-        hull.logger.debug("webhook.error", { payload, errorInfo });
+
+        const res = {
+          payload, error: errorInfo
+        }
         metric.increment("ship.service_api.errors", 1);
-        asUser.logger.error("outgoing.user.error", {
-          payload,
-          error: errorInfo
-        });
-        return Promise.resolve({ payload, error: errorInfo });
-      }
-    );
+        asUser.logger.error("outgoing.user.error", res);
+        return Promise.resolve(res);
+      });
   });
   return Promise.all(promises);
 }
