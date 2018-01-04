@@ -19,17 +19,15 @@ export default function webhook({
       headers: {
         "User-Agent": `Hull Node Webhooks version: ${version}`
       },
+      json: true,
       uri: url,
-      body: payload,
-      json: true
+      body: payload
     })
-      .then(({ data, status, statusText }) => {
+      .then(data => {
         metric.increment("ship.service_api.call", 1);
         asUser.logger.info("outgoing.user.success", { url });
         hull.logger.debug("webhook.success", {
           userId: payload.user.id,
-          status,
-          statusText,
           data
         });
         return null;
@@ -51,8 +49,9 @@ export default function webhook({
         }
 
         const res = {
-          payload, error: errorInfo
-        }
+          payload,
+          error: errorInfo
+        };
         metric.increment("ship.service_api.errors", 1);
         asUser.logger.error("outgoing.user.error", res);
         return Promise.resolve(res);
