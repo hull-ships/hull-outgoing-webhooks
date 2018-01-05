@@ -25,9 +25,8 @@ export default function updateUser(
     webhooks_attributes = [],
     webhooks_segments = []
   } = private_settings;
-  const hull = client;
-  hull.logger.debug("outgoing.user.start", { userId: user.id });
   const asUser = hull.asUser(_.pick(user, ["id", "email", "external_id"]));
+  asUser.logger.info("outgoing.user.start");
 
   if (
     !user ||
@@ -36,8 +35,9 @@ export default function updateUser(
     !webhooks_urls.length ||
     !synchronized_segments
   ) {
+    hull.logger.debug("outgoing.user.error", user);
     hull.logger.error("outgoing.user.error", {
-      message: "Missing data",
+      message: "Missing setting",
       user: !!user,
       ship: !!ship,
       userId: user && !!user.id,
