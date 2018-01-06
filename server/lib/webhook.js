@@ -4,7 +4,7 @@ import request from "request-promise";
 import { version } from "../../package.json";
 
 export default function webhook({
-  setFlowControl,
+  smartNotifierResponse,
   webhooks_urls,
   hull,
   payload = {},
@@ -42,10 +42,13 @@ export default function webhook({
         };
 
         if (status === 429 || status >= 500) {
-          setFlowControl({
-            type: "retry",
-            in: (response.headers["Retry-After"] || 120) * 1000
-          });
+          // smartNotifierResponse could be nil if we are consuming a Batch.
+          if (smartNotifierResponse && smartNotifierResponse.setFlowControl) {
+            smartNotifierResponse.setFlowControl({
+              type: "retry",
+              in: (response.headers["Retry-After"] || 120) * 1000
+            });
+          }
         }
 
         const res = {
