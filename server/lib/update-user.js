@@ -4,7 +4,7 @@ import getSegmentChanges from "./get-segment-changes";
 import webhook from "./webhook";
 
 export default function updateUser(
-  { smartNotifierResponse, metric, ship, client, isBatch = false }: any,
+  { smartNotifierResponse, metric, ship, client: hull, isBatch = false }: any,
   message: any = {}
 ): Promise<any> {
   const {
@@ -117,8 +117,8 @@ export default function updateUser(
 
   // Payload
   const payload = {
-    user: client.utils.groupTraits(user),
-    account: client.utils.groupTraits(account),
+    user: hull.utils.groupTraits(user),
+    account: hull.utils.groupTraits(account),
     segments,
     changes
   };
@@ -159,7 +159,7 @@ export default function updateUser(
     metric.increment("ship.outgoing.events");
     hull.logger.debug("notification.send", loggingContext);
     return webhook({
-      setFlowControl
+      setFlowControl,
       metric,
       hull,
       webhooks_urls,
