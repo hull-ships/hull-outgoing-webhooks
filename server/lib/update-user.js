@@ -34,12 +34,12 @@ export default function updateUser(
     !webhooks_urls.length ||
     !synchronized_segments
   ) {
-    hull.logger.debug("outgoing.user.error", user);
+    hull.logger.debug("outgoing.user.error", message);
     hull.logger.error("outgoing.user.error", {
       message: "Missing setting",
       user: !!user,
       ship: !!ship,
-      userId: user && !!user.id,
+      userId: user && user.id,
       webhooks_urls: !!webhooks_urls
     });
     return Promise.resolve();
