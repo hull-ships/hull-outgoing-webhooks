@@ -16,8 +16,9 @@
     "url": "https://github.com/hull-ships"
   },
   "engines": {
-    "node": "8.x",
-    "npm": "3.x"
+    "node": "8.10.x",
+    "npm": "5.6.x",
+    "yarn": "1.5.x"
   },
   "lint-staged": {
     "*.{js,jsx,css,scss,json}": [
@@ -47,10 +48,8 @@
     "test": "builder run npm:test"
   },
   "dependencies": {
-    "axios": "^0.17.1",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
-    "bottleneck": "^2.2.2",
     "builder": "^3.2.3",
     "classnames": "^2.2.5",
     "css": "^2.2.1",
