@@ -15,11 +15,17 @@ const notify = smartNotifierHandler({
         size: 10,
         in: 100
       });
-      return Promise.map(messages, (message) => {
-        return updateUser(ctx, message);
-      }, { concurrency });
+      return Promise.map(
+        messages,
+        message => {
+          return updateUser(ctx, message);
+        },
+        {
+          concurrency
+        }
+      );
     }
   }
 });
 
-export default notify;
+module.exports = notify;

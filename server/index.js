@@ -1,7 +1,7 @@
-import Hull from "hull";
-import { dotEnv } from "hull-connector";
-import server from "./server";
-import pkg from "../package.json";
+const Hull = require("hull");
+const { dotEnv } = require("hull-connector");
+const server = require("./server");
+const pkg = require("../package.json");
 
 dotEnv();
 

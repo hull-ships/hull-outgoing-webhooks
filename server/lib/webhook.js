@@ -1,9 +1,9 @@
 /* @flow */
-import _ from "lodash";
-import request from "request-promise";
-import { version } from "../../package.json";
+const _ = require("lodash");
+const request = require("request-promise");
+const { version } = require("../../package.json");
 
-export default function webhook({
+function webhook({
   smartNotifierResponse,
   webhooks_urls,
   hull,
@@ -62,3 +62,5 @@ export default function webhook({
   });
   return Promise.all(promises);
 }
+
+module.exports = webhook;

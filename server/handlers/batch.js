@@ -1,7 +1,9 @@
 /* @flow */
+const Promise = require("bluebird");
+const _ = require("lodash");
 
-import { notifHandler } from "hull/lib/utils";
-import updateUser from "../lib/update-user";
+const { notifHandler } = require("hull/lib/utils");
+const updateUser = require("../lib/update-user");
 
 const batch = notifHandler({
   userHandlerOptions: {
@@ -13,12 +15,21 @@ const batch = notifHandler({
       { metric, client, ship }: Object,
       messages: Array<Object> = []
     ) => {
+      const concurrency = _.get(ship, "private_settings.concurrency", 10);
       client.logger.debug("outgoing.batch.process", {
         messages: messages.length
       });
-      messages.map(m => updateUser({ metric, client, ship, isBatch: true }, m));
+      return Promise.map(
+        messages,
+        (message: Object) => {
+          return updateUser({ metric, client, ship, isBatch: true }, message);
+        },
+        {
+          concurrency
+        }
+      );
     }
   }
 });
 
-export default batch;
+module.exports = batch;

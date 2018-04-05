@@ -1,9 +1,10 @@
 /* @flow */
-import _ from "lodash";
-import getSegmentChanges from "./get-segment-changes";
-import webhook from "./webhook";
+const _ = require("lodash");
 
-export default function updateUser(
+const getSegmentChanges = require("./get-segment-changes");
+const webhook = require("./webhook");
+
+function updateUser(
   { smartNotifierResponse, metric, ship, client: hull, isBatch = false }: any,
   message: any = {}
 ): Promise<any> {
@@ -171,3 +172,5 @@ export default function updateUser(
   });
   return Promise.resolve();
 }
+
+module.exports = updateUser;
