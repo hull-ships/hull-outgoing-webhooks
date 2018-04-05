@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.9
+- add concurrency support
+
 ## 0.2.8
 
 - re-add smart-notifier
