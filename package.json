@@ -54,7 +54,7 @@
     "classnames": "^2.2.5",
     "css": "^2.2.1",
     "express": "^4.16.2",
-    "hull": "^0.13.9",
+    "hull": "0.13.11",
     "hull-connector": "^1.0.36",
     "hull-connector-dev": "^1.0.36",
     "lodash": "^4.17.5",

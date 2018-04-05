@@ -1,5 +1,4 @@
 const express = require("express");
-const { errorHandler } = require("hull-connector");
 const { batchHandler, statusHandler, notifyHandler } = require("./handlers");
 
 function server(options = {}) {
@@ -18,8 +17,6 @@ function server(options = {}) {
   app.use("/batch", batchHandler);
   app.all("/status", statusHandler);
 
-  // Error Handler
-  app.use(errorHandler);
   connector.startApp(app);
   return app;
 }
