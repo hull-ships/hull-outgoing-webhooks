@@ -1,6 +1,12 @@
 /* @flow */
 const _ = require("lodash");
-const request = require("request-promise");
+const superagent = require("superagent");
+const {
+  superagentUrlTemplatePlugin,
+  superagentInstrumentationPlugin,
+  superagentErrorPlugin
+} = require("hull/lib/utils");
+
 const { version } = require("../../package.json");
 
 function webhook({
@@ -14,26 +20,25 @@ function webhook({
     _.pick(payload.user, ["id", "email", "external_id"])
   );
   const promises = _.map(webhooks_urls, url => {
-    return request({
-      method: "POST",
-      headers: {
-        "User-Agent": `Hull Node Webhooks version: ${version}`
-      },
-      json: true,
-      uri: url,
-      body: payload
-    })
-      .then(data => {
-        metric.increment("ship.service_api.call", 1);
+    return superagent
+      .post(url)
+      .use(superagentErrorPlugin({ timeout: 5000 }))
+      .use(
+        superagentInstrumentationPlugin({
+          logger: hull.logger,
+          metric
+        })
+      )
+      .send(payload)
+      .then(response => {
         asUser.logger.info("outgoing.user.success", { url });
-        hull.logger.debug("webhook.success", {
-          userId: payload.user.id,
-          data
+        asUser.logger.debug("webhook.success", {
+          payload: payload,
+          response: response.body
         });
         return null;
       })
       .catch(({ statusCode: status, error, response }) => {
-        metric.increment("ship.service_api.error", 1);
         const errorInfo = {
           reason: "Webhook Failed",
           status,

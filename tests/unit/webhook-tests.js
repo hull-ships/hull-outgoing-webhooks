@@ -32,7 +32,8 @@ describe("Webhook should increment error counter in case of error", () => {
   const { app, res } = createServer(endpoints);
   it("should increment errors if an error occured", done => {
     const increment = sinon.spy();
-    const metric = { increment };
+    const value = sinon.spy();
+    const metric = { increment, value };
     const payload = {
       user: { id: "user-1234" },
       account: { id: "account-1234" }
@@ -57,7 +58,8 @@ describe("Webhook should increment error counter in case of error", () => {
 
   it("should send notification", done => {
     const increment = sinon.spy();
-    const metric = { increment };
+    const value = sinon.spy();
+    const metric = { increment, value };
     const payload = {
       user: { id: "user-1234" },
       account: { id: "account-1234" }

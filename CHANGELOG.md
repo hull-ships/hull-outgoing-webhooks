@@ -4,6 +4,7 @@
 - add concurrency support
 - upgrade hull-node
 - cleanup babeljs and flow configuration, rewrite import/export syntax
+- replace request with superagent
 
 ## 0.2.8
 
