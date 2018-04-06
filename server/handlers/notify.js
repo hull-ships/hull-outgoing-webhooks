@@ -8,7 +8,10 @@ const notify = smartNotifierHandler({
   handlers: {
     "user:update": (ctx, messages = []) => {
       const { smartNotifierResponse } = ctx;
-      const concurrency = parseInt(_.get(ctx, "ship.private_settings.concurrency", 10), 10);
+      const concurrency = parseInt(
+        _.get(ctx, "ship.private_settings.concurrency", 10),
+        10
+      );
       if (_.isNaN(concurrency)) {
         concurrency = 10;
       }
