@@ -22,7 +22,7 @@ function webhook({
   const promises = _.map(webhooks_urls, url => {
     return superagent
       .post(url)
-      .use(superagentErrorPlugin({ timeout: 5000 }))
+      .use(superagentErrorPlugin({ timeout: 20000 }))
       .use(
         superagentInstrumentationPlugin({
           logger: hull.logger,
