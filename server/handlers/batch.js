@@ -15,7 +15,10 @@ const batch = notifHandler({
       { metric, client, ship }: Object,
       messages: Array<Object> = []
     ) => {
-      const concurrency = parseInt(_.get(ship, "private_settings.concurrency", 10), 10);
+      let concurrency = parseInt(_.get(ship, "private_settings.concurrency", 10), 10);
+      if (_.isNaN(concurrency)) {
+        concurrency = 10;
+      }
       client.logger.debug("outgoing.batch.process", {
         messages: messages.length
       });

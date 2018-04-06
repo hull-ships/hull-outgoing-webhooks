@@ -9,6 +9,9 @@ const notify = smartNotifierHandler({
     "user:update": (ctx, messages = []) => {
       const { smartNotifierResponse } = ctx;
       const concurrency = parseInt(_.get(ctx, "ship.private_settings.concurrency", 10), 10);
+      if (_.isNaN(concurrency)) {
+        concurrency = 10;
+      }
       // Get 10 users every 100ms at most.
       smartNotifierResponse.setFlowControl({
         type: "next",
