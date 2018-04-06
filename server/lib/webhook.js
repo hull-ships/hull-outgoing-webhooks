@@ -56,12 +56,10 @@ function webhook({
             });
           }
         }
-
         const res = {
           payload,
           error: errorInfo
         };
-        metric.increment("ship.service_api.errors", 1);
         asUser.logger.error("outgoing.user.error", res);
         return Promise.resolve(res);
       });
