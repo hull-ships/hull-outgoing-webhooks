@@ -44,7 +44,7 @@ function webhook({
           reason: "Webhook Failed",
           status: error.status,
           error: error.message,
-          message: "See data for further details about the exact error."
+          message: "See error param for further details about the exact error."
         };
 
         if (error.status === 429 || error.status >= 500) {
