@@ -2,6 +2,8 @@
 
 ## 0.2.9
 - add concurrency support
+- upgrade hull-node
+- cleanup babeljs and flow configuration, rewrite import/export syntax
 
 ## 0.2.8
 
