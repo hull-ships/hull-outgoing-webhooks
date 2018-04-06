@@ -29,6 +29,7 @@ function webhook({
           metric
         })
       )
+      .ok(res => res.status === 200)
       .send(payload)
       .then(response => {
         asUser.logger.info("outgoing.user.success", { url });
@@ -38,20 +39,20 @@ function webhook({
         });
         return null;
       })
-      .catch(({ statusCode: status, error, response }) => {
+      .catch(error => {
         const errorInfo = {
           reason: "Webhook Failed",
-          status,
-          error,
+          status: error.status,
+          error: error.message,
           message: "See data for further details about the exact error."
         };
 
-        if (status === 429 || status >= 500) {
+        if (error.status === 429 || error.status >= 500) {
           // smartNotifierResponse could be nil if we are consuming a Batch.
           if (smartNotifierResponse && smartNotifierResponse.setFlowControl) {
             smartNotifierResponse.setFlowControl({
               type: "retry",
-              in: (response.headers["Retry-After"] || 120) * 1000
+              in: (error.response.headers["Retry-After"] || 120) * 1000
             });
           }
         }
