@@ -1,23 +1,10 @@
-const express = require("express");
 const { batchHandler, statusHandler, notifyHandler } = require("./handlers");
 
 function server(options = {}) {
-  const app = express();
-  const { Hull } = options;
-
-  const connector = new Hull.Connector(options);
-
-  if (options.devMode) {
-    const { devMode } = require("hull-connector");
-    devMode(app, options);
-  }
-  connector.setupApp(app);
-
   app.post("/smart-notifier", notifyHandler);
   app.use("/batch", batchHandler);
   app.all("/status", statusHandler);
 
-  connector.startApp(app);
   return app;
 }
 

@@ -1,9 +1,10 @@
-import express from "express";
-import sinon from "sinon";
-import assert from "assert";
-import bodyParser from "body-parser";
-import ClientMock from "../client-mock";
-import webhook from "../../server/lib/webhook";
+const express = require("express");
+const sinon = require("sinon");
+const assert = require("assert");
+const bodyParser = require("body-parser");
+
+const ClientMock = require("../client-mock");
+const webhook = require("../../server/lib/webhook");
 
 const port = 8070;
 

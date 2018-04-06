@@ -48,6 +48,8 @@
     "test": "builder run npm:test"
   },
   "dependencies": {
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "builder": "^3.2.3",
@@ -70,6 +72,8 @@
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
+    "flow-bin": "^0.69.0",
+    "flow-typed": "^2.4.0",
     "moxios": "^0.4.0",
     "react-hot-loader": "^3.1.1",
     "reactotron-react-js": "^1.12.2",
