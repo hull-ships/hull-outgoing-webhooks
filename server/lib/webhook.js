@@ -19,6 +19,7 @@ function webhook({
   const asUser = hull.asUser(
     _.pick(payload.user, ["id", "email", "external_id"])
   );
+  const start = process.hrtime();
   const promises = _.map(webhooks_urls, url => {
     return superagent
       .post(url)
@@ -32,7 +33,9 @@ function webhook({
       .ok(res => res.status === 200)
       .send(payload)
       .then(response => {
-        asUser.logger.info("outgoing.user.success", { url });
+        const hrTime = process.hrtime(start);
+        const elapsed = hrTime[0] * 1000 + hrTime[1] / 1000000;
+        asUser.logger.info("outgoing.user.success", { url, elapsed });
         asUser.logger.debug("webhook.success", {
           payload: payload,
           response: response.body
