@@ -30,7 +30,7 @@ function webhook({
           metric
         })
       )
-      .ok(res => res.status === 200)
+      .ok(res => res.status >= 200 && res.status <= 204)
       .send(payload)
       .then(response => {
         const hrTime = process.hrtime(start);

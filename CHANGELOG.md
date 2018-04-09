@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.10
+- treat 200-204 status codes as success
+
 ## 0.2.9
 - add concurrency support
 - upgrade hull-node
