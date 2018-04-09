@@ -1,6 +1,6 @@
 {
   "name": "hull-outgoing-webhooks",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Send data to webhooks",
   "main": "index.js",
   "license": "MIT",
@@ -16,8 +16,9 @@
     "url": "https://github.com/hull-ships"
   },
   "engines": {
-    "node": "8.x",
-    "npm": "3.x"
+    "node": "8.10.x",
+    "npm": "5.6.x",
+    "yarn": "1.5.x"
   },
   "lint-staged": {
     "*.{js,jsx,css,scss,json}": [
@@ -47,17 +48,18 @@
     "test": "builder run npm:test"
   },
   "dependencies": {
-    "axios": "^0.17.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "builder": "^3.2.3",
     "classnames": "^2.2.5",
     "css": "^2.2.1",
     "express": "^4.16.2",
-    "hull": "^0.13.9",
+    "hull": "0.13.11",
     "hull-connector": "^1.0.36",
     "hull-connector-dev": "^1.0.36",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
@@ -66,10 +68,11 @@
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",
-    "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "superagent": "^3.8.2"
   },
   "devDependencies": {
+    "flow-bin": "^0.69.0",
+    "flow-typed": "^2.4.0",
     "moxios": "^0.4.0",
     "react-hot-loader": "^3.1.1",
     "reactotron-react-js": "^1.12.2",

@@ -1,10 +1,6 @@
-import _ from "lodash";
+const _ = require("lodash");
 
-export default function getSegmentChanges(
-  webhooks_segments,
-  changes = {},
-  action = "left"
-) {
+function getSegmentChanges(webhooks_segments, changes = {}, action = "left") {
   const { segments = {} } = changes;
   if (!_.size(segments)) return [];
   const current = segments[action] || [];
@@ -16,3 +12,5 @@ export default function getSegmentChanges(
   // List of User segments matching entered or left
   return _.filter(current, s => _.includes(filter, s.id));
 }
+
+module.exports = getSegmentChanges;

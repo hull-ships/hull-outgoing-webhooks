@@ -1,9 +1,8 @@
-import Hull from "hull";
-import { dotEnv } from "hull-connector";
-import server from "./server";
-import pkg from "../package.json";
+const Hull = require("hull");
+const express = require("express");
 
-dotEnv();
+const server = require("./server");
+const pkg = require("../package.json");
 
 const {
   SECRET = "1234",
@@ -20,7 +19,6 @@ const options = {
   ngrok: {
     subdomain: pkg.name
   },
-  Hull,
   clientConfig: {
     firehoseUrl: OVERRIDE_FIREHOSE_URL
   }
@@ -31,7 +29,15 @@ if (LOG_LEVEL) {
 }
 
 Hull.logger.transports.console.json = true;
-Hull.logger.debug(`${pkg.name}.boot`);
 
-server(options);
-Hull.logger.debug(`${pkg.name}.started`, { port: PORT });
+const connector = new Hull.Connector(options);
+const app = express();
+
+if (options.devMode) {
+  const { devMode } = require("hull-connector");
+  devMode(app, options);
+}
+
+connector.setupApp(app);
+server(app, options);
+connector.startApp(app);

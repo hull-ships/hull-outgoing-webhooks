@@ -1,5 +1,5 @@
 /* global describe, it */
-import sinon from "sinon";
+// import sinon from "sinon";
 // import axios from "axios";
 // import moxios from "moxios";
 // import { equal } from "assert";

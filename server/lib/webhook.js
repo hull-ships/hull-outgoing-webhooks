@@ -1,9 +1,15 @@
 /* @flow */
-import _ from "lodash";
-import request from "request-promise";
-import { version } from "../../package.json";
+const _ = require("lodash");
+const superagent = require("superagent");
+const {
+  superagentUrlTemplatePlugin,
+  superagentInstrumentationPlugin,
+  superagentErrorPlugin
+} = require("hull/lib/utils");
 
-export default function webhook({
+const { version } = require("../../package.json");
+
+function webhook({
   smartNotifierResponse,
   webhooks_urls,
   hull,
@@ -13,52 +19,55 @@ export default function webhook({
   const asUser = hull.asUser(
     _.pick(payload.user, ["id", "email", "external_id"])
   );
+  const start = process.hrtime();
   const promises = _.map(webhooks_urls, url => {
-    return request({
-      method: "POST",
-      headers: {
-        "User-Agent": `Hull Node Webhooks version: ${version}`
-      },
-      json: true,
-      uri: url,
-      body: payload
-    })
-      .then(data => {
-        metric.increment("ship.service_api.call", 1);
-        asUser.logger.info("outgoing.user.success", { url });
-        hull.logger.debug("webhook.success", {
-          userId: payload.user.id,
-          data
+    return superagent
+      .post(url)
+      .use(superagentErrorPlugin({ timeout: 20000 }))
+      .use(
+        superagentInstrumentationPlugin({
+          logger: hull.logger,
+          metric
+        })
+      )
+      .ok(res => res.status === 200)
+      .send(payload)
+      .then(response => {
+        const hrTime = process.hrtime(start);
+        const elapsed = hrTime[0] * 1000 + hrTime[1] / 1000000;
+        asUser.logger.info("outgoing.user.success", { url, elapsed });
+        asUser.logger.debug("webhook.success", {
+          payload: payload,
+          response: response.body
         });
         return null;
       })
-      .catch(({ statusCode: status, error, response }) => {
-        metric.increment("ship.service_api.error", 1);
+      .catch(error => {
         const errorInfo = {
           reason: "Webhook Failed",
-          status,
-          error,
-          message: "See data for further details about the exact error."
+          status: error.status,
+          error: error.message,
+          message: "See error param for further details about the exact error."
         };
 
-        if (status === 429 || status >= 500) {
+        if (error.status === 429 || error.status >= 500) {
           // smartNotifierResponse could be nil if we are consuming a Batch.
           if (smartNotifierResponse && smartNotifierResponse.setFlowControl) {
             smartNotifierResponse.setFlowControl({
               type: "retry",
-              in: (response.headers["Retry-After"] || 120) * 1000
+              in: (error.response.headers["Retry-After"] || 120) * 1000
             });
           }
         }
-
         const res = {
           payload,
           error: errorInfo
         };
-        metric.increment("ship.service_api.errors", 1);
         asUser.logger.error("outgoing.user.error", res);
         return Promise.resolve(res);
       });
   });
   return Promise.all(promises);
 }
+
+module.exports = webhook;

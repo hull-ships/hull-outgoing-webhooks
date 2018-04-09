@@ -1,9 +1,10 @@
-import express from "express";
-import sinon from "sinon";
-import assert from "assert";
-import bodyParser from "body-parser";
-import ClientMock from "../client-mock";
-import webhook from "../../server/lib/webhook";
+const express = require("express");
+const sinon = require("sinon");
+const assert = require("assert");
+const bodyParser = require("body-parser");
+
+const ClientMock = require("../client-mock");
+const webhook = require("../../server/lib/webhook");
 
 const port = 8070;
 
@@ -31,13 +32,14 @@ describe("Webhook should increment error counter in case of error", () => {
   const { app, res } = createServer(endpoints);
   it("should increment errors if an error occured", done => {
     const increment = sinon.spy();
-    const metric = { increment };
+    const value = sinon.spy();
+    const metric = { increment, value };
     const payload = {
       user: { id: "user-1234" },
       account: { id: "account-1234" }
     };
     const finish = f => {
-      assert(increment.calledWith("ship.service_api.errors", 1));
+      assert(increment.calledWith("connector.service_api.error", 1));
       assert(increment.calledWith("ship.service_api.call", 1));
       ["notification"]
       .map(e => assert.equal(res[e], JSON.stringify(payload)));
@@ -56,7 +58,8 @@ describe("Webhook should increment error counter in case of error", () => {
 
   it("should send notification", done => {
     const increment = sinon.spy();
-    const metric = { increment };
+    const value = sinon.spy();
+    const metric = { increment, value };
     const payload = {
       user: { id: "user-1234" },
       account: { id: "account-1234" }

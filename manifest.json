@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch", "smart-notifier"],
   "picture": "picture.png",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "private_settings":[
     {
       "name": "webhooks_urls",
@@ -16,6 +16,13 @@
       }
     },
     {
+      "name": "concurrency",
+      "title": "Requests concurrency",
+      "description": "Number of average concurrent, in-flight requests done by connector",
+      "default": 10,
+      "type": "number"
+    },
+    {
       "name": "synchronized_segments",
       "title": "Filtered Segments",
       "description": "Global filter. Only send if user matches one of these segments",
@@ -23,14 +30,12 @@
       "type": "array",
       "format": "segment"
     },
-
     {
       "name": "webhooks_header",
       "title": "Send conditions",
       "type": "string",
       "format": "title"
     },
-
     {
       "name": "webhooks_anytime",
       "title": "Send anytime user is updated",
