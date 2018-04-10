@@ -168,7 +168,7 @@ Example Payload:
 
 ### Concurrency
 
-Outgoing Webhooks Connector allows to limit the concurrency at which each webhook endpoint will be called.
+Outgoing Webhooks Connector allows to limit the concurrency at which each webhook endpoint will be called. The default value of the setting is 10.
 
 > E.g. if you define concurrency of 2, first two requests will be fired immediately and the 3rd one will be only run after completion of any of first two.
 
