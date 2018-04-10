@@ -1,6 +1,6 @@
 # Hull Webhooks
 
-This Ship sends user updates and events as Webhooks
+This Connector sends user updates and events as Webhooks
 
 ##  Installing
 
@@ -32,7 +32,7 @@ When one or more of these conditions are fullfilled, a complete payload comprise
   "account": "The Entire Account associated with the user with all it's attributes",
   "segments": "Every segment the User belongs to, as objects containing unique Segment IDs",
   "changes": "Every change that caused this user to be recomputed",
-  "events": "The events that triggered the send, if any" //optional
+  "events": "The events that triggered the send, if any" // optional
 }
 ```
 
@@ -168,9 +168,9 @@ Example Payload:
 
 ### Concurrency
 
-Connector allows to limit the concurrency at which each webhook endpoint will be called.
+Outgoing Webhooks Connector allows to limit the concurrency at which each webhook endpoint will be called.
 
-> E.g. if you define concurrency of 2, first two requests will be fired immediately and the 3rd one will be only run after completion of any of two first.
+> E.g. if you define concurrency of 2, first two requests will be fired immediately and the 3rd one will be only run after completion of any of first two.
 
 If your endpoint is rate limited - that means the limit is expressed in a number of requests per time unit (for example 10 requests per second), you can use concurrency to make sure Outgoing Webhooks connector will respect this rate limit. To do so you need to know the average response time of the request. To get the information you can go to Connctor logs and search for `outgoing.user.success` - the response time is shown there as a `elapsed` property (in milliseconds).
 
@@ -197,4 +197,4 @@ Our connector expect the webhook endpoint to respond with 200-204 status codes t
 
 ### 10 requests needs to fit in 25 seconds time window
 
-Due to our internal batching and timeouts levels we need to make sure that the connector can process 10 users in time below ~20 seconds. E.g. if the connector is with concurrency of 1, the slowest webhook endpoint needs to respond in less than ~2 seconds to be able to finish all 10 users before our timeout will interrupt the data flow.
+Due to our internal batching and timeouts levels we need to make sure that the connector can process 10 users in time below ~20 seconds. E.g. if the connector is set with concurrency of 1, the slowest webhook endpoint needs to respond in less than ~2 seconds to be able to finish all 10 users before our timeout will interrupt the data flow.
