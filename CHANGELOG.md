@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.11
+- update documentation for concurrency
+
 ## 0.2.10
 - treat 200-204 status codes as success
 

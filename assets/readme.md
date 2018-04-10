@@ -1,6 +1,6 @@
 # Hull Webhooks
 
-This Ship sends user updates and events as Webhooks
+This Connector sends user updates and events as Webhooks
 
 ##  Installing
 
@@ -11,11 +11,11 @@ This Ship sends user updates and events as Webhooks
 
 There are two sections in Hull's Settings tab to help you define which users will be sent as POST webhooks.
 
-#### The first section is a global filter for which users will be allowed to be sent.
+### The first section is a global filter for which users will be allowed to be sent.
 
 It defines who will be sent. An empty list sends no one. To start, create a User segment defining who should be sent. This is a global filter, the conditions below will only be checked only if the User matches this filter.
 
-#### The Second section defines additional conditions to send a user.
+### The Second section defines additional conditions to send a user.
 
 Users will be sent as soon as one of these conditions match.
 
@@ -32,7 +32,7 @@ When one or more of these conditions are fullfilled, a complete payload comprise
   "account": "The Entire Account associated with the user with all it's attributes",
   "segments": "Every segment the User belongs to, as objects containing unique Segment IDs",
   "changes": "Every change that caused this user to be recomputed",
-  "events": "The events that triggered the send, if any" //optional
+  "events": "The events that triggered the send, if any" // optional
 }
 ```
 
@@ -164,3 +164,37 @@ Example Payload:
   }
 }
 ```
+
+
+### Concurrency
+
+Outgoing Webhooks Connector allows to limit the concurrency at which each webhook endpoint will be called. The default value of the setting is 10.
+
+> E.g. if you define concurrency of 2, first two requests will be fired immediately and the 3rd one will be only run after completion of any of first two.
+
+If your endpoint is rate limited - that means the limit is expressed in a number of requests per time unit (for example 10 requests per second), you can use concurrency to make sure Outgoing Webhooks connector will respect this rate limit. To do so you need to know the average response time of the request. To get the information you can go to Connctor logs and search for `outgoing.user.success` - the response time is shown there as a `elapsed` property (in milliseconds).
+
+If you have the reponse time then you can calculate the desired concurrency using following equation:
+
+`(average number of concurrent request) = (throughput per time unit) * (average response time)`
+
+**Example:**
+
+Let say we have an endpoint which can handle 10 requests per second and the average response time is 500 milliseconds:
+
+`concurrency = 10 * 0.5 (seconds)`
+
+`concurrency = 5`
+
+As a result we need to set concurrency setting to 5 in connectors settings.
+
+
+## Limitations
+
+### Webhook receiver endpoint must respond with 2xx status code
+
+Our connector expect the webhook endpoint to respond with 200-204 status codes to treat it as a successfull request. Otherwise it will mark the user event as `outgoing.user.error`
+
+### 10 requests needs to fit in 25 seconds time window
+
+Due to our internal batching and timeouts levels we need to make sure that the connector can process 10 users in time below ~20 seconds. E.g. if the connector is set with concurrency of 1, the slowest webhook endpoint needs to respond in less than ~2 seconds to be able to finish all 10 users before our timeout will interrupt the data flow.
