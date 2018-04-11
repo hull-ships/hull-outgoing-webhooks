@@ -9,13 +9,10 @@ const {
 
 const { version } = require("../../package.json");
 
-function webhook({
-  smartNotifierResponse,
-  webhooks_urls,
-  hull,
-  payload = {},
-  metric
-}: any) {
+function webhook(
+  { smartNotifierResponse, webhooks_urls, hull, payload = {}, metric }: Object,
+  throttle: Object
+) {
   const asUser = hull.asUser(
     _.pick(payload.user, ["id", "email", "external_id"])
   );
@@ -23,6 +20,7 @@ function webhook({
   const promises = _.map(webhooks_urls, url => {
     return superagent
       .post(url)
+      .use(throttle.plugin(url))
       .use(superagentErrorPlugin({ timeout: 20000 }))
       .use(
         superagentInstrumentationPlugin({

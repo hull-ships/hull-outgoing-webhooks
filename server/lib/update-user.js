@@ -1,13 +1,22 @@
 /* @flow */
+import type { THullUserUpdateMessage, THullConnector } from "hull";
+
 const _ = require("lodash");
 
 const getSegmentChanges = require("./get-segment-changes");
 const webhook = require("./webhook");
 
 function updateUser(
-  { smartNotifierResponse, metric, ship, client: hull, isBatch = false }: any,
-  message: any = {}
-): Promise<any> {
+  {
+    smartNotifierResponse,
+    metric,
+    ship,
+    client: hull,
+    isBatch = false,
+    throttle
+  }: Object,
+  message: THullUserUpdateMessage
+): Promise<*> {
   const {
     user = {},
     account = {},
@@ -25,7 +34,8 @@ function updateUser(
     webhooks_attributes = [],
     webhooks_segments = []
   } = private_settings;
-  const asUser = hull.asUser(_.pick(user, ["id", "email", "external_id"]));
+
+  const asUser = hull.asUser(user);
   asUser.logger.info("outgoing.user.start");
 
   if (
@@ -71,13 +81,16 @@ function updateUser(
   // Early return when sending batches. All users go through it. No changes, no events though...
   if (isBatch) {
     metric.increment("ship.outgoing.events");
-    return webhook({
-      smartNotifierResponse,
-      metric,
-      hull,
-      webhooks_urls,
-      payload: { user, segments }
-    });
+    return webhook(
+      {
+        smartNotifierResponse,
+        metric,
+        hull,
+        webhooks_urls,
+        payload: { user, segments }
+      },
+      throttle
+    );
   }
 
   if (!_.intersection(synchronized_segments, segmentIds).length) {
@@ -137,13 +150,16 @@ function updateUser(
       _.map(matchedEvents, event => {
         metric.increment("ship.outgoing.events");
         hull.logger.debug("notification.send", loggingContext);
-        webhook({
-          smartNotifierResponse,
-          metric,
-          hull,
-          webhooks_urls,
-          payload: { ...payload, event }
-        });
+        webhook(
+          {
+            smartNotifierResponse,
+            metric,
+            hull,
+            webhooks_urls,
+            payload: { ...payload, event }
+          },
+          throttle
+        );
       })
     );
   }
@@ -158,13 +174,16 @@ function updateUser(
   ) {
     metric.increment("ship.outgoing.events");
     hull.logger.debug("notification.send", loggingContext);
-    return webhook({
-      smartNotifierResponse,
-      metric,
-      hull,
-      webhooks_urls,
-      payload
-    });
+    return webhook(
+      {
+        smartNotifierResponse,
+        metric,
+        hull,
+        webhooks_urls,
+        payload
+      },
+      throttle
+    );
   }
 
   asUser.logger.info("outgoing.user.skip", {

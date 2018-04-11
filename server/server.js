@@ -1,4 +1,4 @@
-const { batchHandler, statusHandler, notifyHandler } = require("./handlers");
+const { batchHandler, statusHandler, notifyHandler } = require("./actions");
 
 function server(app, options = {}) {
   app.post("/smart-notifier", notifyHandler);

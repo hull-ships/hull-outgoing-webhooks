@@ -8,6 +8,10 @@ const webhook = require("../../server/lib/webhook");
 
 const port = 8070;
 
+const mockThrottle = {
+  plugin: () => { return () => {} }
+};
+
 const listenTo = (app, endpoint, responses) => {
   app.post(`/${endpoint}`, (req, res) => {
     req.on("data", data => {
@@ -53,7 +57,7 @@ describe("Webhook should increment error counter in case of error", () => {
       ],
       hull: ClientMock(),
       payload
-    }).then(finish, finish);
+    }, mockThrottle).then(finish, finish);
   });
 
   it("should send notification", done => {
@@ -79,6 +83,6 @@ describe("Webhook should increment error counter in case of error", () => {
       ],
       hull: ClientMock(),
       payload
-    }).then(finish, finish);
+    }, mockThrottle).then(finish, finish);
   });
 });
