@@ -16,10 +16,13 @@ function webhook(
   const asUser = hull.asUser(
     _.pick(payload.user, ["id", "email", "external_id"])
   );
-  const start = process.hrtime();
+  let start;
   const promises = _.map(webhooks_urls, url => {
     return superagent
       .post(url)
+      .on("request", () => {
+        start = process.hrtime();
+      })
       .use(throttle.plugin(url))
       .use(superagentErrorPlugin({ timeout: 20000 }))
       .use(
