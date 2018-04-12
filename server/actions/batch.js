@@ -1,10 +1,9 @@
 /* @flow */
 const Promise = require("bluebird");
 const _ = require("lodash");
-const Throttle = require("superagent-throttle");
 
 const { notifHandler } = require("hull/lib/utils");
-const updateUser = require("../lib/update-user");
+const SyncAgent = require("../lib/sync-agent");
 
 const batch = notifHandler({
   userHandlerOptions: {
@@ -12,25 +11,14 @@ const batch = notifHandler({
     batchSize: 100
   },
   handlers: {
-    "user:update": (
-      { metric, client, ship }: Object,
-      messages: Array<Object> = []
-    ) => {
-      const { private_settings } = ship;
-      const throttle = new Throttle({
-        rate: private_settings.throttle_rate || 5,
-        ratePer: private_settings.throttle_per_rate || 10000,
-        concurrent: private_settings.throttle_concurrency || 2
-      });
+    "user:update": (ctx: Object, messages: Array<Object> = []) => {
+      const syncAgent = new SyncAgent(ctx, { isBatch: true });
 
-      client.logger.debug("outgoing.batch.process", {
+      ctx.client.logger.debug("outgoing.batch.process", {
         messages: messages.length
       });
       return Promise.map(messages, (message: Object) => {
-        return updateUser(
-          { metric, client, ship, isBatch: true, throttle },
-          message
-        );
+        return syncAgent.updateUser(message);
       });
     }
   }

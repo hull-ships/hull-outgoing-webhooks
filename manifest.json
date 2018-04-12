@@ -16,9 +16,24 @@
       }
     },
     {
+      "name": "throttle_rate",
+      "title": "Requests rate limit",
+      "description": "Number of rquests done every 1 second",
+      "default": 10,
+      "type": "number"
+    },
+    {
+      "name": "throttle_per_rate",
+      "title": "Time window for request throughput",
+      "description": "Set the number of milliseconds to define time unit where above rate limit will be applied",
+      "default": 1000,
+      "type": "number",
+      "format" : "hidden"
+    },
+    {
       "name": "concurrency",
       "title": "Requests concurrency",
-      "description": "Number of average concurrent, in-flight requests done by connector",
+      "description": "Number of maximum concurrent, in-flight requests done by connector",
       "default": 10,
       "type": "number"
     },
