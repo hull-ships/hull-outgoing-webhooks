@@ -5,6 +5,7 @@ import type {
   THullReqContext
 } from "hull";
 
+const Promise = require("bluebird");
 const _ = require("lodash");
 const Throttle = require("superagent-throttle");
 
@@ -31,7 +32,8 @@ class SyncAgent {
     this.smartNotifierResponse = ctx.smartNotifierResponse;
     this.hullClient = ctx.client;
     this.connector = ctx.ship;
-    this.throttle = this.initThrottle(this.connector);
+    const throttleSettings = this.getThrottleSettings(this.connector);
+    this.throttle = new Throttle(throttleSettings);
     this.isBatch = isBatch;
   }
 
@@ -43,7 +45,7 @@ class SyncAgent {
    * @param  {THullConnector} connector
    * @return {Throttle}
    */
-  initThrottle(connector: THullConnector) {
+  getThrottleSettings(connector: THullConnector): Object {
     const { private_settings } = connector;
     const parsedRate = parseInt(private_settings.throttle_rate, 10);
     const rate = _.isInteger(parsedRate) && parsedRate >= 1 ? parsedRate : 10;
@@ -54,7 +56,14 @@ class SyncAgent {
     const parsedConcurrency = parseInt(private_settings.concurrency, 10);
     const concurrent = _.isInteger(parsedConcurrency) ? parsedConcurrency : 10;
 
-    return new Throttle({ rate, ratePer, concurrent });
+    return { rate, ratePer, concurrent };
+  }
+
+  sendUserUpdateMessages(messages: Array<THullUserUpdateMessage>): Promise {
+    this.hullClient.logger.debug("outgoing.job.start", { throttling: this.getThrottleSettings(this.connector) });
+    return Promise.map(messages, message => {
+      return this.updateUser(message);
+    });
   }
 
   updateUser(message: THullUserUpdateMessage): Promise<*> {

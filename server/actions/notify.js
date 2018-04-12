@@ -16,9 +16,7 @@ const notify = smartNotifierHandler({
         size: 10,
         in: 100
       });
-      return Promise.map(messages, message => {
-        return syncAgent.updateUser(message);
-      });
+      return syncAgent.sendUserUpdateMessages(messages);
     }
   }
 });

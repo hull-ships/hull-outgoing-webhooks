@@ -17,9 +17,7 @@ const batch = notifHandler({
       ctx.client.logger.debug("outgoing.batch.process", {
         messages: messages.length
       });
-      return Promise.map(messages, (message: Object) => {
-        return syncAgent.updateUser(message);
-      });
+      return syncAgent.sendUserUpdateMessages(messages);
     }
   }
 });
