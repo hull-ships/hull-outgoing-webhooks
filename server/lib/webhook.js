@@ -1,6 +1,7 @@
 /* @flow */
 const _ = require("lodash");
 const superagent = require("superagent");
+const Promise = require("bluebird");
 const {
   superagentUrlTemplatePlugin,
   superagentInstrumentationPlugin,

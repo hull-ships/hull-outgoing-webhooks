@@ -59,8 +59,10 @@ class SyncAgent {
     return { rate, ratePer, concurrent };
   }
 
-  sendUserUpdateMessages(messages: Array<THullUserUpdateMessage>): Promise {
-    this.hullClient.logger.debug("outgoing.job.start", { throttling: this.getThrottleSettings(this.connector) });
+  sendUserUpdateMessages(messages: Array<THullUserUpdateMessage>): Promise<*> {
+    this.hullClient.logger.debug("outgoing.job.start", {
+      throttling: this.getThrottleSettings(this.connector)
+    });
     return Promise.map(messages, message => {
       return this.updateUser(message);
     });
