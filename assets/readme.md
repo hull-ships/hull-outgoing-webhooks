@@ -166,27 +166,14 @@ Example Payload:
 ```
 
 
-### Concurrency
+### Rate limiting
 
-Outgoing Webhooks Connector allows to limit the concurrency at which each webhook endpoint will be called. The default value of the setting is 10.
+Outgoing Webhooks Connector allows to adjust rate limit at which each webhook endpoint will be called. To make that possible we expose two settings: `Requests rate limit` and `Requests concurrency`:
+
+- `Requests rate limit` is an integer which means the maximum number of requests done every 1 second.
+- `Requests concurrency` is an integer which additionaly can limit the number of maximum concurrent requests our connector will open
 
 > E.g. if you define concurrency of 2, first two requests will be fired immediately and the 3rd one will be only run after completion of any of first two.
-
-If your endpoint is rate limited - that means the limit is expressed in a number of requests per time unit (for example 10 requests per second), you can use concurrency to make sure Outgoing Webhooks connector will respect this rate limit. To do so you need to know the average response time of the request. To get the information you can go to Connctor logs and search for `outgoing.user.success` - the response time is shown there as a `elapsed` property (in milliseconds).
-
-If you have the reponse time then you can calculate the desired concurrency using following equation:
-
-`(average number of concurrent request) = (throughput per time unit) * (average response time)`
-
-**Example:**
-
-Let say we have an endpoint which can handle 10 requests per second and the average response time is 500 milliseconds:
-
-`concurrency = 10 * 0.5 (seconds)`
-
-`concurrency = 5`
-
-As a result we need to set concurrency setting to 5 in connectors settings.
 
 
 ## Limitations
