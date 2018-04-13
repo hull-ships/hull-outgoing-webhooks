@@ -21,7 +21,10 @@ class SyncAgent {
   smartNotifierResponse: ?Object;
   hullClient: Object;
   connector: THullConnector;
-  throttle: Throttle;
+  throttlePool: {
+    [string]: Throttle
+  };
+  webhookUrls: Array<string>;
   isBatch: boolean;
 
   constructor(
@@ -32,8 +35,16 @@ class SyncAgent {
     this.smartNotifierResponse = ctx.smartNotifierResponse;
     this.hullClient = ctx.client;
     this.connector = ctx.ship;
+    this.webhookUrls = this.connector.private_settings.webhooks_urls || [];
+
     const throttleSettings = this.getThrottleSettings(this.connector);
-    this.throttle = new Throttle(throttleSettings);
+    this.throttlePool = this.webhookUrls.reduce(
+      (acc: Object, value: string) => {
+        acc[value] = new Throttle(throttleSettings);
+        return acc;
+      },
+      {}
+    );
     this.isBatch = isBatch;
   }
 
@@ -133,16 +144,7 @@ class SyncAgent {
     // Early return when sending batches. All users go through it. No changes, no events though...
     if (this.isBatch) {
       this.metric.increment("ship.outgoing.events");
-      return webhook(
-        {
-          smartNotifierResponse: this.smartNotifierResponse,
-          metric: this.metric,
-          hull: this.hullClient,
-          webhooks_urls,
-          payload: { user, segments }
-        },
-        this.throttle
-      );
+      return this.callWebhookUrls({ user, segments });
     }
 
     if (!_.intersection(synchronized_segments, segmentIds).length) {
@@ -198,22 +200,11 @@ class SyncAgent {
 
     // Event: Send once for each matching event.
     if (matchedEvents.length) {
-      return Promise.all(
-        _.map(matchedEvents, event => {
-          this.metric.increment("ship.outgoing.events");
-          this.hullClient.logger.debug("notification.send", loggingContext);
-          webhook(
-            {
-              smartNotifierResponse: this.smartNotifierResponse,
-              metric: this.metric,
-              hull: this.hullClient,
-              webhooks_urls,
-              payload: { ...payload, event }
-            },
-            this.throttle
-          );
-        })
-      );
+      return Promise.map(matchedEvents, event => {
+        this.metric.increment("ship.outgoing.events");
+        this.hullClient.logger.debug("notification.send", loggingContext);
+        return this.callWebhookUrls({ ...payload, event });
+      });
     }
 
     // User
@@ -226,22 +217,29 @@ class SyncAgent {
     ) {
       this.metric.increment("ship.outgoing.events");
       this.hullClient.logger.debug("notification.send", loggingContext);
-      return webhook(
-        {
-          smartNotifierResponse: this.smartNotifierResponse,
-          metric: this.metric,
-          hull: this.hullClient,
-          webhooks_urls,
-          payload
-        },
-        this.throttle
-      );
+      return this.callWebhookUrls(payload);
     }
 
     asUser.logger.info("outgoing.user.skip", {
       reason: "User didn't match any conditions"
     });
     return Promise.resolve();
+  }
+
+  callWebhookUrls(payload: Object): Promise<*> {
+    return Promise.map(this.webhookUrls, url => {
+      const throttle = this.throttlePool[url];
+      return webhook(
+        {
+          smartNotifierResponse: this.smartNotifierResponse,
+          metric: this.metric,
+          hull: this.hullClient,
+          url,
+          payload
+        },
+        throttle
+      );
+    });
   }
 
   getSegmentChanges(

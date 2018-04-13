@@ -18,7 +18,7 @@
     {
       "name": "throttle_rate",
       "title": "Requests rate limit",
-      "description": "Number of rquests done every 1 second",
+      "description": "Number of requests done every 1 second, the same rate limit will be applied separately to each webhook url above",
       "default": 10,
       "type": "number"
     },
