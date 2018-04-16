@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch", "smart-notifier"],
   "picture": "picture.png",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "private_settings":[
     {
       "name": "webhooks_urls",
@@ -16,9 +16,24 @@
       }
     },
     {
+      "name": "throttle_rate",
+      "title": "Requests rate limit",
+      "description": "Number of requests done every 1 second, the same rate limit will be applied separately to each webhook url above",
+      "default": 10,
+      "type": "number"
+    },
+    {
+      "name": "throttle_per_rate",
+      "title": "Time window for request throughput",
+      "description": "Set the number of milliseconds to define time unit where above rate limit will be applied",
+      "default": 1000,
+      "type": "number",
+      "format" : "hidden"
+    },
+    {
       "name": "concurrency",
       "title": "Requests concurrency",
-      "description": "Number of average concurrent, in-flight requests done by connector",
+      "description": "Number of maximum concurrent, in-flight requests done by connector",
       "default": 10,
       "type": "number"
     },

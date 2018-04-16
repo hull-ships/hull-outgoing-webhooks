@@ -8,6 +8,10 @@ const webhook = require("../../server/lib/webhook");
 
 const port = 8070;
 
+const mockThrottle = {
+  plugin: () => { return () => {} }
+};
+
 const listenTo = (app, endpoint, responses) => {
   app.post(`/${endpoint}`, (req, res) => {
     req.on("data", data => {
@@ -39,7 +43,6 @@ describe("Webhook should increment error counter in case of error", () => {
       account: { id: "account-1234" }
     };
     const finish = f => {
-      assert(increment.calledWith("connector.service_api.error", 1));
       assert(increment.calledWith("ship.service_api.call", 1));
       ["notification"]
       .map(e => assert.equal(res[e], JSON.stringify(payload)));
@@ -47,13 +50,10 @@ describe("Webhook should increment error counter in case of error", () => {
     }
     webhook({
       metric,
-      webhooks_urls: [
-        `http://localhost:${port}/notification`,
-        `http://localhost:${port}/notification3`
-      ],
+      url: `http://localhost:${port}/notification`,
       hull: ClientMock(),
       payload
-    }).then(finish, finish);
+    }, mockThrottle).then(finish, finish);
   });
 
   it("should send notification", done => {
@@ -66,19 +66,16 @@ describe("Webhook should increment error counter in case of error", () => {
     };
     const finish = f => {
       assert(increment.alwaysCalledWith("ship.service_api.call", 1));
-      assert(increment.calledTwice);
-      ["notification", "notification2"]
+      assert(increment.calledOnce);
+      ["notification"]
       .map(e => assert.equal(res[e], JSON.stringify(payload)));
       done();
     }
     webhook({
       metric,
-      webhooks_urls: [
-        `http://localhost:${port}/notification`,
-        `http://localhost:${port}/notification2`
-      ],
+      url: `http://localhost:${port}/notification`,
       hull: ClientMock(),
       payload
-    }).then(finish, finish);
+    }, mockThrottle).then(finish, finish);
   });
 });
