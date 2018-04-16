@@ -1,0 +1,795 @@
+{
+    "configuration": {
+        "id": "5ac74fe8745cc3e861000004",
+        "organization": "224bbaa3.hullbeta.io",
+        "secret": "d894cf870a91eb15080856df5da8004c"
+    },
+    "channel": "user:update",
+    "messages": [
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdpTm11JW8FG3R0ZHJqUxoHA0BRdnf_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:20Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again1@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1c6fbb5ac0840000ab",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdqTm11JW8FG3R0ZHJqUxoHA0BRd3f_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:21Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again2@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1d6fbb5ac0840000ad",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdrTm11JW8FG3R0ZHJqUxoHA0BQfnf_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:21Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again3@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1d6fbb5ac0840000af",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdsTm11JW8FG3R0ZHJqUxoHA0BQf3f_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:21Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again4@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1d6fbb5ac0840000b1",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdtTm11JW8FG3R0ZHJqUxoHA0BQfHf_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:21Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again5@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1d6fbb5ac0840000b3",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAduTm11JW8FG3R0ZHJqUxoHA0BQfXf_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:22Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again6@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1d6fbb5ac0840000b5",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdvTm11JW8FG3R0ZHJqUxoHA0BQenf_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:22Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again7@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1e6fbb5ac0840000b7",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdgTm11JW8FG3R0ZHJqUxoHA0BQe3f_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:22Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again8@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1e6fbb5ac0840000b9",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVdGAdhTm11JW8FG3R0ZHJqUxoHA0BQeHf_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "anonymous_ids": [],
+                "created_at": "2018-04-13T13:18:22Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again9@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1e6fbb5ac0840000bb",
+                "is_approved": false,
+                "last_known_ip": "216.239.34.21",
+                "last_seen_at": "2018-04-13T13:21:10Z",
+                "segment_ids": [
+                    "5ab11517c7f25dfe3b000015"
+                ],
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:26:29+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "segment_ids[0]": [
+                        "5ad0af9c7d0bbd60da000003",
+                        null
+                    ]
+                },
+                "segments": {},
+                "account": {},
+                "account_segments": {},
+                "is_new": false
+            }
+        },
+        {
+            "message_id": "QBJMOAFESVMrQwsqWBFOBCEhPjA-RVNEUAYWLF1GSFE3GQhoUQ5PXiM_NSAoRRAJCBQFfH1wXVF1XlwaB1ENGXJ8Z3c7CxEHUEUBKlVeGgdoTm11JW8FG3R0ZHZiWBUGBkNRenf_nsHeh-1VZiU9XxJLLD5-MzRFQV4",
+            "user": {
+                "accepts_marketing": false,
+                "created_at": "2018-04-13T13:18:20Z",
+                "domain": "hull.io",
+                "email": "testing-facebook-again0@hull.io",
+                "has_password": false,
+                "id": "5ad0ae1c6fbb5ac0840000a9",
+                "is_approved": false,
+                "traits_calculated_score": 110,
+                "indexed_at": "2018-04-13T13:18:42+00:00"
+            },
+            "segments": [
+                {
+                    "id": "5ab11517c7f25dfe3b000015",
+                    "name": "Calculated Score",
+                    "type": "users_segment",
+                    "created_at": "2018-03-20T14:05:11Z",
+                    "updated_at": "2018-03-20T14:05:11Z"
+                }
+            ],
+            "account": {},
+            "account_segments": [],
+            "events": [],
+            "changes": {
+                "user": {
+                    "accepts_marketing": [
+                        null,
+                        false
+                    ],
+                    "created_at": [
+                        null,
+                        "2018-04-13T13:18:20Z"
+                    ],
+                    "domain": [
+                        null,
+                        "hull.io"
+                    ],
+                    "email": [
+                        null,
+                        "testing-facebook-again0@hull.io"
+                    ],
+                    "has_password": [
+                        null,
+                        false
+                    ],
+                    "id": [
+                        null,
+                        "5ad0ae1c6fbb5ac0840000a9"
+                    ],
+                    "is_approved": [
+                        null,
+                        false
+                    ],
+                    "traits_calculated_score": [
+                        null,
+                        110
+                    ]
+                },
+                "segments": {
+                    "entered": [
+                        {
+                            "id": "5ab11517c7f25dfe3b000015",
+                            "name": "Calculated Score",
+                            "type": "users_segment",
+                            "created_at": "2018-03-20T14:05:11Z",
+                            "updated_at": "2018-03-20T14:05:11Z"
+                        }
+                    ]
+                },
+                "account": {},
+                "account_segments": {},
+                "is_new": true
+            }
+        }
+    ],
+    "segments": [
+        {
+            "id": "5ab11517c7f25dfe3b000015",
+            "name": "Calculated Score",
+            "query": {
+                "constant_score": {
+                    "query": {
+                        "match_all": {}
+                    },
+                    "filter": {
+                        "and": {
+                            "filters": [
+                                {
+                                    "exists": {
+                                        "field": "traits_calculated_score"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "type": "users_segment",
+            "predicate": {
+                "id": "f2fd577d-f026-41c3-98cb-968f0c7849d9",
+                "isEditable": true,
+                "type": "all",
+                "predicates": [
+                    {
+                        "id": "ebafff93-ab57-426b-a0aa-abeb3d874e14",
+                        "isEditable": true,
+                        "property": {
+                            "id": "traits_calculated_score",
+                            "text": "Calculated score",
+                            "type": "number",
+                            "id_path": [
+                                "traits"
+                            ],
+                            "name": "calculated_score",
+                            "path": [
+                                "traits"
+                            ],
+                            "key": "traits_calculated_score",
+                            "sortKey": "traits_calculated_score",
+                            "entity": "user"
+                        },
+                        "operator": "is_set",
+                        "options": {}
+                    }
+                ]
+            },
+            "stats": {
+                "users": 44
+            },
+            "created_at": "2018-03-20T14:05:11Z",
+            "updated_at": "2018-03-20T14:05:11Z",
+            "fields_list": [
+                "name",
+                "email",
+                "created_at",
+                "last_seen_at",
+                "traits_calculated_score"
+            ]
+        },
+        {
+            "id": "5ab380d5dea024d282000037",
+            "name": "intercom test",
+            "query": {
+                "constant_score": {
+                    "query": {
+                        "match_all": {}
+                    },
+                    "filter": {
+                        "and": {
+                            "filters": [
+                                {
+                                    "term": {
+                                        "traits_foo.raw": "intercom_test"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "type": "users_segment",
+            "predicate": {
+                "id": "47672dc4-ed59-424f-9e3a-b955ba7b72fd",
+                "isEditable": true,
+                "type": "all",
+                "predicates": [
+                    {
+                        "id": "1011fdd0-83e2-427e-b1d3-cafd4570383a",
+                        "isEditable": true,
+                        "property": {},
+                        "options": {}
+                    },
+                    {
+                        "id": "b1f92ee9-70ea-41c8-852d-6411bcdef45c",
+                        "isEditable": true,
+                        "property": {
+                            "id": "traits_foo",
+                            "text": "Foo",
+                            "type": "string",
+                            "id_path": [
+                                "Traits"
+                            ],
+                            "path": [
+                                "Traits"
+                            ],
+                            "name": "Foo",
+                            "color": "#a61401",
+                            "key": "traits_foo",
+                            "sortKey": "traits_foo.exact",
+                            "flatPath": "traits-foo"
+                        },
+                        "operator": "equals",
+                        "options": {
+                            "value": [
+                                "intercom_test"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "stats": {
+                "users": 1
+            },
+            "created_at": "2018-03-22T10:09:25Z",
+            "updated_at": "2018-03-22T10:09:25Z",
+            "fields_list": [
+                "name",
+                "email",
+                "created_at",
+                "last_seen_at",
+                "traits_foo"
+            ]
+        },
+        {
+            "id": "5aba0629ff1a11beaa000016",
+            "name": "Intercom leads",
+            "query": {
+                "constant_score": {
+                    "query": {
+                        "match_all": {}
+                    },
+                    "filter": {
+                        "and": {
+                            "filters": [
+                                {
+                                    "term": {
+                                        "traits_intercom/is_lead": true
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "type": "users_segment",
+            "predicate": {
+                "id": "7b5c92ed-26e6-4d17-821f-d97fe1a18fdf",
+                "isEditable": true,
+                "type": "all",
+                "predicates": [
+                    {
+                        "id": "340a1bcc-2b25-4a20-b6bf-c4ae97438770",
+                        "isEditable": true,
+                        "property": {
+                            "id": "traits_intercom/is_lead",
+                            "text": "Is lead",
+                            "type": "boolean",
+                            "id_path": [
+                                "intercom"
+                            ],
+                            "name": "is_lead",
+                            "path": [
+                                "intercom"
+                            ],
+                            "key": "traits_intercom/is_lead",
+                            "sortKey": "traits_intercom/is_lead",
+                            "entity": "user"
+                        },
+                        "operator": "is_true",
+                        "options": {}
+                    }
+                ]
+            },
+            "stats": {
+                "users": 6
+            },
+            "created_at": "2018-03-27T08:51:53Z",
+            "updated_at": "2018-03-27T08:51:53Z",
+            "fields_list": [
+                "name",
+                "email",
+                "created_at",
+                "last_seen_at",
+                "traits_intercom/is_lead"
+            ]
+        },
+        {
+            "id": "5ad0af9c7d0bbd60da000003",
+            "name": "1.0.1 Testing (segment) with characters - so",
+            "query": {
+                "constant_score": {
+                    "query": {
+                        "match_all": {}
+                    },
+                    "filter": {
+                        "and": {
+                            "filters": [
+                                {
+                                    "exists": {
+                                        "field": "traits_name_with_dots"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "type": "users_segment",
+            "predicate": {
+                "id": "7f54afbe-c228-46b8-af7f-3da6d816094f",
+                "isEditable": true,
+                "type": "all",
+                "predicates": [
+                    {
+                        "id": "7ea7ec9d-377a-4406-b7ad-5ad055636116",
+                        "isEditable": true,
+                        "property": {
+                            "id": "traits_name_with_dots",
+                            "text": "Name with dots",
+                            "type": "number",
+                            "id_path": [
+                                "traits"
+                            ],
+                            "name": "name_with_dots",
+                            "path": [
+                                "traits"
+                            ],
+                            "key": "traits_name_with_dots",
+                            "sortKey": "traits_name_with_dots",
+                            "entity": "user"
+                        },
+                        "operator": "is_set",
+                        "options": {}
+                    }
+                ]
+            },
+            "stats": {
+                "users": 10
+            },
+            "created_at": "2018-04-13T13:24:44Z",
+            "updated_at": "2018-04-13T13:24:44Z",
+            "fields_list": [
+                "name",
+                "email",
+                "created_at",
+                "last_seen_at",
+                "traits_name_with_dots"
+            ]
+        }
+    ],
+    "notification_id": "26c4c5ab-37ee-482b-a0de-2e28e2f8672b",
+    "connector": {
+        "id": "5ac74fe8745cc3e861000004",
+        "settings": {},
+        "manifest": {
+            "name": "Outgoing Webhooks",
+            "version": "0.2.11",
+            "subscriptions": [
+                {
+                    "url": "/smart-notifier"
+                }
+            ],
+            "tags": [
+                "outgoing",
+                "oneColumn",
+                "batch",
+                "smart-notifier"
+            ]
+        },
+        "type": "ship",
+        "name": "https://michaloo-outgoing-webhooks.eu.ngrok.io",
+        "private_settings": {
+            "webhooks_urls": [
+                "http://localhost:8002/endpoint_redirect?a=1",
+                "http://localhost:8002/endpoint_redirect?a=2",
+                "http://localhost:8002/endpoint_redirect?a=3",
+                "http://localhost:8002/endpoint_redirect?a=4",
+                "http://localhost:8002/endpoint_redirect?a=5"
+            ],
+            "concurrency": 10,
+            "synchronized_segments": [
+                "5ab11517c7f25dfe3b000015"
+            ],
+            "webhooks_anytime": true,
+            "webhooks_segments": [
+                {
+                    "segment": "",
+                    "channel": ""
+                }
+            ],
+            "webhooks_attributes": [],
+            "webhooks_events": [],
+            "throttle_rate": 10,
+            "throttle_per_rate": 5000
+        },
+        "source_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/",
+        "manifest_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/manifest.json"
+    }
+}

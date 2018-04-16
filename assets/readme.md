@@ -182,6 +182,12 @@ Outgoing Webhooks Connector allows to adjust rate limit at which each webhook en
 
 Our connector expect the webhook endpoint to respond with 200-204 status codes to treat it as a successfull request. Otherwise it will mark the user event as `outgoing.user.error`
 
+### Connector doesn't support redirects
+
+Connector does not follow redirect responses such us 301, 302 etc. Those redirects are treated as errors. To make sure that the connector works smoothly ensure that all of the urls provided in the settings are the final, resolved url addresses.
+
+> E.g. if your final url is `https://www.webhook-url.com/endpoint/` do not use `http://webhook-url.com/endpoint` - watch out for missing `https`, `www` and trailing slash. If any of those parts are missing it may lead to redirect and cause connector to error out
+
 ### 10 requests needs to fit in 25 seconds time window
 
 Due to our internal batching and timeouts levels we need to make sure that the connector can process 10 users in time below ~20 seconds. E.g. if the connector is set with concurrency of 1, the slowest webhook endpoint needs to respond in less than ~2 seconds to be able to finish all 10 users before our timeout will interrupt the data flow.
