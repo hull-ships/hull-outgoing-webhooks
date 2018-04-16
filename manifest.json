@@ -8,7 +8,7 @@
     {
       "name": "webhooks_urls",
       "title": "Webhooks URLs",
-      "default": ["https://example.com.com/webhooks/"],
+      "default": [],
       "type": "array",
       "format": "table",
       "items": {

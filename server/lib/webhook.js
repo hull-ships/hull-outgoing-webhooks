@@ -31,12 +31,14 @@ function webhook(
         metric
       })
     )
+    .redirects(0)
     .ok(res => res.status >= 200 && res.status <= 204)
     .send(payload)
     .then(response => {
+      const status = response.status;
       const hrTime = process.hrtime(start);
       const elapsed = hrTime[0] * 1000 + hrTime[1] / 1000000;
-      asUser.logger.info("outgoing.user.success", { url, elapsed });
+      asUser.logger.info("outgoing.user.success", { status, url, elapsed });
       asUser.logger.debug("webhook.success", {
         payload: payload,
         response: response.body
@@ -62,8 +64,14 @@ function webhook(
       }
       const res = {
         payload,
-        error: errorInfo
+        hull_summary: "",
+        error: errorInfo,
+        status: error.status
       };
+      if (error.status >= 300 && error.status <= 308) {
+        res.hull_summary =
+          "Server returned a redirect code - see `Connector doesn't support redirects` in documentation";
+      }
       asUser.logger.error("outgoing.user.error", res);
       return Promise.resolve(res);
     });

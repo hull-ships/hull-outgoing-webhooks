@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.13
+- upgrade hull-node to 0.13.14
+- changed http client to not follow redirects and treat them as errors
+
 ## v0.2.12
 - adds `throttle_rate` and `throttle_per_rate` settings to control throughput
 - refactor code into SyncAgent
