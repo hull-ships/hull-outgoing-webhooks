@@ -184,9 +184,9 @@ Our connector expect the webhook endpoint to respond with 200-204 status codes t
 
 ### Connector doesn't support redirects
 
-Connector does not follow redirect responses such us 301, 302 etc. Those redirects are treated as errors. To make sure that the connector works smoothly ensure that all of the utls provided in the settings are the final resolved url addresses.
+Connector does not follow redirect responses such us 301, 302 etc. Those redirects are treated as errors. To make sure that the connector works smoothly ensure that all of the urls provided in the settings are the final, resolved url addresses.
 
-For example if your endpoint enforce `https://` as a protocol do not put `http://` since it may cause the redirect and as a result connector error.
+> E.g. if your final url is `https://www.webhook-url.com/endpoint/` do not use `http://webhook-url.com/endpoint` - watch out for missing `https`, `www` and trailing slash. If any of those parts are missing it may lead to redirect and cause connector to error out
 
 ### 10 requests needs to fit in 25 seconds time window
 
