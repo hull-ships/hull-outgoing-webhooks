@@ -27,11 +27,6 @@ describe("request feature allowing to call external API", () => {
       }, 100);
     });
 
-    // externalApi.stubApp("/endpoint_success_return_email").respond((req, res) => {
-    //   setTimeout(() =>{
-    //     res.json({ returned_email: req.query.email });
-    //   }, 20);
-    // });
     return Promise.all([
       minihull.listen(8001),
       externalApi.listen(8002)
