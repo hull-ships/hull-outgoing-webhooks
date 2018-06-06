@@ -89,7 +89,6 @@ class SyncAgent {
     } = message;
     const { private_settings = {} } = this.connector;
     const {
-      group_traits = false,
       webhooks_anytime,
       webhooks_urls = [],
       synchronized_segments = [],

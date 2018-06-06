@@ -43,7 +43,6 @@ describe("request feature allowing to call external API", () => {
   });
 
   it.only("should return http 503 - gateway timeout in case of 3rd part API timeout", function() {
-    this.timeout(10000);
     return minihull.smartNotifyConnector(
       examplePayload.connector,
       "http://localhost:8000/smart-notifier",
@@ -55,6 +54,6 @@ describe("request feature allowing to call external API", () => {
     }, (e) => {
       expect(false).to.be.true;
     });
-  });
+  }, 10000);
 
 });

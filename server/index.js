@@ -34,8 +34,8 @@ const connector = new Hull.Connector(options);
 const app = express();
 
 if (options.devMode) {
-  const { devMode } = require("hull-connector");
-  devMode(app, options);
+  // const { devMode } = require("hull-connector");
+  // devMode(app, options);
 }
 
 connector.setupApp(app);

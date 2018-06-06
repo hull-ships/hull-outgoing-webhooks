@@ -1,7 +1,4 @@
 /* @flow */
-const Promise = require("bluebird");
-const _ = require("lodash");
-
 const { notifHandler } = require("hull/lib/utils");
 const SyncAgent = require("../lib/sync-agent");
 

@@ -1,6 +1,6 @@
 const { batchHandler, statusHandler, notifyHandler } = require("./actions");
 
-function server(app, options = {}) {
+function server(app) {
   app.post("/smart-notifier", notifyHandler);
   app.use("/batch", batchHandler);
   app.all("/status", statusHandler);

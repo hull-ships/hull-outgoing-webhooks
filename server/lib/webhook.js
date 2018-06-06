@@ -3,7 +3,6 @@ const _ = require("lodash");
 const superagent = require("superagent");
 const Promise = require("bluebird");
 const {
-  superagentUrlTemplatePlugin,
   superagentInstrumentationPlugin,
   superagentErrorPlugin
 } = require("hull/lib/utils");
@@ -20,6 +19,7 @@ function webhook(
   let start;
   return superagent
     .post(url)
+    .set("X-Hull-Outgoing-Webhooks", `v${version}`)
     .on("request", () => {
       start = process.hrtime();
     })
@@ -40,7 +40,7 @@ function webhook(
       const elapsed = hrTime[0] * 1000 + hrTime[1] / 1000000;
       asUser.logger.info("outgoing.user.success", { status, url, elapsed });
       asUser.logger.debug("webhook.success", {
-        payload: payload,
+        payload,
         response: response.body
       });
       return null;

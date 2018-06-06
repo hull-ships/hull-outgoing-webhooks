@@ -1,6 +1,3 @@
-const _ = require("lodash");
-const Promise = require("bluebird");
-
 const { smartNotifierHandler } = require("hull/lib/utils");
 
 const SyncAgent = require("../lib/sync-agent");
