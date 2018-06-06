@@ -11,10 +11,6 @@ const Throttle = require("superagent-throttle");
 
 const webhook = require("./webhook");
 
-type TSyncAgentOptions = {
-  isBatch: boolean
-};
-
 class SyncAgent {
   // TODO: replace all of those generic types with new coming from hull libraries
   metric: Object;
@@ -27,10 +23,7 @@ class SyncAgent {
   webhookUrls: Array<string>;
   isBatch: boolean;
 
-  constructor(
-    ctx: THullReqContext,
-    { isBatch = false }: TSyncAgentOptions = {}
-  ) {
+  constructor(ctx: THullReqContext) {
     this.metric = ctx.metric;
     this.smartNotifierResponse = ctx.smartNotifierResponse;
     this.hullClient = ctx.client;
@@ -45,7 +38,11 @@ class SyncAgent {
       },
       {}
     );
-    this.isBatch = isBatch;
+    this.isBatch = this.checkIsBatch(ctx);
+  }
+
+  checkIsBatch(ctx: THullReqContext): boolean {
+    return ctx.options.url && ctx.options.format && ctx.options.object_type;
   }
 
   /**
