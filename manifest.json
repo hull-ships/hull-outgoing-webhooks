@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch", "smart-notifier"],
   "picture": "picture.png",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "private_settings":[
     {
       "name": "webhooks_urls",
@@ -106,7 +106,22 @@
   "readme": "readme.md",
   "ui": false,
   "resources": [],
-  "subscriptions": [{ "url": "/smart-notifier" }],
+  "subscriptions": [
+    {
+      "url": "/smart-notifier",
+      "conditions": {
+        "channels": {
+          "only": [
+            "user:update",
+            "ship:update",
+            "users_segment:update",
+            "accounts_segment:update",
+            "segment:update"
+          ]
+        }
+      }
+    }
+  ],
   "schedules": [
     {
       "url": "/status",

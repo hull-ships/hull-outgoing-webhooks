@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.16
+- specify subscription conditions
+
 ## v0.2.15
 - upgrade hull-node to 0.13.15
 
