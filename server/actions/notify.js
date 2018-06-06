@@ -13,8 +13,8 @@ const notify = smartNotifierHandler({
       // Get 10 users every 100ms at most.
       smartNotifierResponse.setFlowControl({
         type: "next",
-        size: 10,
-        in: 100
+        size: parseInt(process.env.USER_UPDATE_FLOW_CONTROL_SIZE, 10) || 10,
+        in: parseInt(process.env.USER_UPDATE_FLOW_CONTROL_IN, 10) || 100
       });
       return syncAgent.sendUserUpdateMessages(messages);
     }
