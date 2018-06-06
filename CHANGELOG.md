@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.14
+- add flow control env vars
+
 ## v0.2.13
 - upgrade hull-node to 0.13.14
 - changed http client to not follow redirects and treat them as errors

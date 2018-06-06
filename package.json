@@ -1,6 +1,6 @@
 {
   "name": "hull-outgoing-webhooks",
-  "version": "0.2.12",
+  "version": "0.2.14",
   "description": "Send data to webhooks",
   "main": "index.js",
   "license": "MIT",
@@ -16,9 +16,9 @@
     "url": "https://github.com/hull-ships"
   },
   "engines": {
-    "node": "8.10.x",
+    "node": "8.11.x",
     "npm": "5.6.x",
-    "yarn": "1.5.x"
+    "yarn": "1.6.x"
   },
   "lint-staged": {
     "*.{js,jsx,css,scss,json}": [
