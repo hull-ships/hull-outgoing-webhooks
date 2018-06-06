@@ -2,8 +2,7 @@ module.exports = {
   "collectCoverage": true,
   "collectCoverageFrom": [
     "src/**/*.{js,jsx}",
-    "!src/dll.js",
-    "!src/vendors.js"
+    "server/**/*.{js,jsx}"
   ],
   "coveragePathIgnorePatterns": [
     "/node_modules/",
@@ -11,10 +10,10 @@ module.exports = {
   ],
   "coverageThreshold": {
     "global": {
-      "branches": 80,
-      "functions": 80,
-      "lines": 90,
-      "statements": 90
+      "branches": 40,
+      "functions": 70,
+      "lines": 60,
+      "statements": 60
     }
   },
   "transform": {
