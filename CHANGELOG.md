@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.15
+- upgrade hull-node to 0.13.15
+
 ## v0.2.14
 - add flow control env vars
 
