@@ -211,10 +211,6 @@ agent-base@^4.1.0:
   dependencies:
     es6-promisify "^5.0.0"
 
-agent-base@~1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-1.0.2.tgz#6890d3fb217004b62b70f8928e0fae5f8952a706"
-
 ajv-keywords@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-2.1.1.tgz#617997fc5f60576894c435f940d819e135b80762"
@@ -3082,10 +3078,6 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     assign-symbols "^1.0.0"
     is-extendable "^1.0.1"
 
-extend@3, extend@^3.0.0, extend@~3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
-
 extend@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.0.tgz#5a474353b9f3353ddd8176dfd37b91c83a46f1d4"
@@ -3093,6 +3085,10 @@ extend@3.0.0:
 extend@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/extend/-/extend-1.3.0.tgz#d1516fb0ff5624d2ebf9123ea1dac5a1994004f8"
+
+extend@^3.0.0, extend@~3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
 
 extendible@0.1.x:
   version "0.1.1"
@@ -3805,14 +3801,6 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
-https-proxy-agent@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-0.3.6.tgz#713fa38e5d353f50eb14a342febe29033ed1619b"
-  dependencies:
-    agent-base "~1.0.1"
-    debug "2"
-    extend "3"
-
 https-proxy-agent@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-2.2.1.tgz#51552970fa04d723e04c56d04178c3f92592bbc0"
@@ -3831,12 +3819,13 @@ hull-client@^1.2.2:
     uuid "^3.0.1"
     winston "^2.2.0"
 
-hull@0.13.15:
-  version "0.13.15"
-  resolved "https://registry.yarnpkg.com/hull/-/hull-0.13.15.tgz#af54af848690d3821f928fe2290c60c4fefd5589"
+hull@0.13.16:
+  version "0.13.16"
+  resolved "https://registry.yarnpkg.com/hull/-/hull-0.13.16.tgz#5760f0de3477e5050e296913501a46ee90519a50"
   dependencies:
     JSONStream "^1.1.2"
     aws-sdk "^2.81.0"
+    babel-polyfill "^6.26.0"
     basic-auth "^1.1.0"
     batch-stream "^0.1.3"
     bluebird "^3.4.7"
@@ -3856,16 +3845,21 @@ hull@0.13.15:
     kue "^0.11.5"
     kue-ui "^0.1.0"
     lodash "^4.17.5"
-    newrelic "^2.4.1"
+    newrelic "^4.1.4"
     passport "^0.3.2"
+    progress-bar-webpack-plugin "^1.11.0"
     promise-streams "^1.0.1"
     raven "^2.4.2"
     raw-body "^2.1.7"
+    react-hot-loader "^4.2.0"
     request "^2.72.0"
     sns-validator "^0.3.0"
     sqs-consumer "^3.6.1"
     supply "0.0.4"
     urijs "^1.18.7"
+    webpack "^3.12.0"
+    webpack-dev-middleware "^2.0.6"
+    webpack-hot-middleware "^2.22.2"
 
 iconv-lite@0.2.11:
   version "0.2.11"
@@ -5581,20 +5575,7 @@ neo-async@^2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.1.tgz#acb909e327b1e87ec9ef15f41b8a269512ad41ee"
 
-newrelic@^2.4.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-2.9.1.tgz#dcd65dff7735eb0869202ac03b8611c6efd3d11d"
-  dependencies:
-    async "^2.1.4"
-    concat-stream "^1.5.0"
-    https-proxy-agent "^0.3.6"
-    json-stringify-safe "^5.0.0"
-    readable-stream "^2.1.4"
-    semver "^5.3.0"
-  optionalDependencies:
-    "@newrelic/native-metrics" "^2.1.0"
-
-newrelic@^4.1.3:
+newrelic@^4.1.3, newrelic@^4.1.4:
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/newrelic/-/newrelic-4.1.4.tgz#102fa74dce38b03f917d671368a58555fba1efb0"
   dependencies:
@@ -8565,7 +8546,7 @@ webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-dev-middleware@2.x.x:
+webpack-dev-middleware@2.x.x, webpack-dev-middleware@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-2.0.6.tgz#a51692801e8310844ef3e3790e1eacfe52326fd4"
   dependencies:
@@ -8602,7 +8583,7 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@3.x.x:
+webpack@3.x.x, webpack@^3.12.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.12.0.tgz#3f9e34360370602fcf639e97939db486f4ec0d74"
   dependencies:

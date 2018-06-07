@@ -2,6 +2,9 @@
 
 ## v0.3.0
 - remove archetype builder
+- upgrade dependencies, inlcuding hull-node@0.13.16
+- test are run by jest now
+- new standard file `notifications-configuration.js` introduced
 
 ## v0.2.16
 - specify subscription conditions
