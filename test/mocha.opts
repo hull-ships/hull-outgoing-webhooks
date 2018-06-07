@@ -1,4 +1,0 @@
---compilers js:babel-core/register
---exit
---require babel-register
--R spec

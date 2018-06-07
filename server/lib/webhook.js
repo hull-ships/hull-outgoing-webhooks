@@ -43,7 +43,7 @@ function webhook(
         payload,
         response: response.body
       });
-      return null;
+      return elapsed;
     })
     .catch(error => {
       const errorInfo = {
