@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.0
+- remove archetype builder
+
 ## v0.2.16
 - specify subscription conditions
 
