@@ -12,14 +12,8 @@ describe("request feature allowing to call external API", () => {
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8000, timeout: 25000 });
+    server = bootstrap({ port: 8003, timeout: 25000 });
     externalApi = new MiniApplication();
-
-    externalApi.stubApp("/endpoint_redirect").respond((req, res) => {
-      setTimeout(() => {
-        res.redirect("/endpoint_ok");
-      }, 200);
-    });
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {
       setTimeout(() => {
@@ -28,8 +22,8 @@ describe("request feature allowing to call external API", () => {
     });
 
     return Promise.all([
-      minihull.listen(8001),
-      externalApi.listen(8002)
+      minihull.listen(8004),
+      externalApi.listen(8005)
     ]);
   });
 
@@ -42,14 +36,19 @@ describe("request feature allowing to call external API", () => {
     });
   });
 
-  it("should return next flow type in case of 3rd part API redirect", function() {
+  it("should return next", function() {
+    examplePayload.connector.private_settings.webhooks_urls = [
+      "http://localhost:8005/endpoint_ok"
+    ];
     return minihull.smartNotifyConnector(
       examplePayload.connector,
-      "http://localhost:8000/smart-notifier",
+      "http://localhost:8003/smart-notifier",
       "user:update",
       examplePayload.messages
     ).then((res) => {
-      expect(res.body.flow_control.type).to.equal("next")
+      const firstSentPayload = externalApi.requests.get("incoming.0").value();
+      console.log(firstSentPayload.body.user.traits);
+      expect(res.body.flow_control.type).to.equal("next");
       expect(res.statusCode).to.equal(200);
       expect(true).to.be.true;
     }, (e) => {
