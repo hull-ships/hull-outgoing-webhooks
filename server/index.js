@@ -1,6 +1,8 @@
 const Hull = require("hull");
+const { devMode } = require("hull/lib/utils");
 const express = require("express");
 
+const webpackConfig = require("../webpack.config");
 const server = require("./server");
 const pkg = require("../package.json");
 
@@ -34,8 +36,7 @@ const connector = new Hull.Connector(options);
 const app = express();
 
 if (options.devMode) {
-  const { devMode } = require("hull-connector");
-  devMode(app, options);
+  devMode(app, webpackConfig);
 }
 
 connector.setupApp(app);

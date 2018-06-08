@@ -12,24 +12,18 @@ describe("request feature allowing to call external API", () => {
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap(25000);
+    server = bootstrap({ port: 8006, timeout: 25000 });
     externalApi = new MiniApplication();
 
-    externalApi.stubApp("/endpoint_redirect").respond((req, res) => {
+    externalApi.stubApp("/endpoint_err").respond((req, res) => {
       setTimeout(() => {
-        res.redirect("/endpoint_ok");
-      }, 200);
-    });
-
-    externalApi.stubApp("/endpoint_ok").respond((req, res) => {
-      setTimeout(() => {
-        res.end("ok");
+        req.destroy();
       }, 100);
     });
 
     return Promise.all([
-      minihull.listen(8001),
-      externalApi.listen(8002)
+      minihull.listen(8007),
+      externalApi.listen(8008)
     ]);
   });
 
@@ -42,19 +36,23 @@ describe("request feature allowing to call external API", () => {
     });
   });
 
-  it.only("should return http 503 - gateway timeout in case of 3rd part API timeout", function() {
-    this.timeout(10000);
+  it("should return next", function() {
+    examplePayload.connector.private_settings.webhooks_urls = [
+      "http://localhost:8008/endpoint_error"
+    ];
     return minihull.smartNotifyConnector(
       examplePayload.connector,
-      "http://localhost:8000/smart-notifier",
+      "http://localhost:8006/smart-notifier",
       "user:update",
       examplePayload.messages
     ).then((res) => {
-      console.log("RESOLVED!!!!!");
+      const firstSentPayload = externalApi.requests.get("incoming.0").value();
+      expect(res.body.flow_control.type).to.equal("next");
+      expect(res.statusCode).to.equal(200);
       expect(true).to.be.true;
     }, (e) => {
       expect(false).to.be.true;
     });
-  });
+  }, 10000);
 
 });
