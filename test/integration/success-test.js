@@ -55,25 +55,4 @@ describe("request feature allowing to call external API", () => {
       expect(false).to.be.true;
     });
   }, 10000);
-
-
-  it("should not send duplicates for both event and segment change", () => {
-    examplePayload.connector.private_settings.webhooks_urls = [
-      "http://localhost:8005/endpoint_ok"
-    ];
-    return minihull.smartNotifyConnector(
-      examplePayload.connector,
-      "http://localhost:8003/smart-notifier",
-      "user:update",
-      examplePayload.messages
-    ).then((res) => {
-      const firstSentPayload = externalApi.requests.get("incoming.0").value();
-      console.log(firstSentPayload.body.user.traits);
-      expect(res.body.flow_control.type).to.equal("next");
-      expect(res.statusCode).to.equal(200);
-      expect(true).to.be.true;
-    }, (e) => {
-      expect(false).to.be.true;
-    });
-  });
 });
