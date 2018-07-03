@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.1
+- add `message_id` param to `outgoing.user.start` log line
+
 ## v0.3.0
 - remove archetype builder
 - upgrade dependencies, inlcuding hull-node@0.13.16

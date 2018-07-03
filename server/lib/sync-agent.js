@@ -95,7 +95,10 @@ class SyncAgent {
     } = private_settings;
 
     const asUser = this.hullClient.asUser(user);
-    asUser.logger.info("outgoing.user.start");
+    asUser.logger.info("outgoing.user.start", {
+      // $FlowFixMe
+      message_id: message.message_id
+    });
 
     if (
       !user ||
@@ -191,7 +194,8 @@ class SyncAgent {
       matchedAttributes,
       filteredSegments,
       matchedEnteredSegments,
-      matchedLeftSegments
+      matchedLeftSegments,
+      webhooksAnytime: webhooks_anytime
     };
 
     // Event: Send once for each matching event.
