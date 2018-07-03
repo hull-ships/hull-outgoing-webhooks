@@ -55,5 +55,4 @@ describe("request feature allowing to call external API", () => {
       expect(false).to.be.true;
     });
   }, 10000);
-
 });
