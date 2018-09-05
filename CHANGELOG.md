@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.2
+- improve documentation
+- add `account` when processing batch extracts
+
 ## v0.3.1
 - add `message_id` param to `outgoing.user.start` log line
 

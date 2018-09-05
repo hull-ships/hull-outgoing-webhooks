@@ -143,7 +143,7 @@ class SyncAgent {
     // Early return when sending batches. All users go through it. No changes, no events though...
     if (this.isBatch) {
       this.metric.increment("ship.outgoing.events");
-      return this.callWebhookUrls({ user, segments });
+      return this.callWebhookUrls({ user, segments, account });
     }
 
     if (!_.intersection(synchronized_segments, segmentIds).length) {
