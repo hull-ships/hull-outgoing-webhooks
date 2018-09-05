@@ -167,16 +167,13 @@ Example Payload:
 
 ### Events handling
 
-This connector always send one webhook call per event. If there were many events triggered on user profile there will be many webhook calls performed.
+This connector always sends one webhook call per event. If there were many events triggered on the user profile there will be many webhook calls performed.
 This way events behaves slightly different to traits or segments changes which are grouped together as shown in examples above.
 
 ### Manual extract
 
-As soon as the Outgoing Webhooks Connector is configured it will start to process any changes happening within Hull database.
-But as an addition a force push can be triggered using "Send to" button on Hull dashboard.
-It will send selected users to the connector and depending on the configuration to selected webhook endpoints.
+As an addition to ongoing updates, a manual push to the connector can be triggered using "Send to" button on Hull dashboard. It will send selected users to the connector. In this case there are no changes or events on user profile and only global segment filter will be applied to decide which users are send out.
 
-In this case there are not changes or events on user profile and this is why only global segment filter will be applied to decide which users are send out.
 Payload of those calls will only include `user`, `account` and `segments` properties.
 
 ### Rate limiting
