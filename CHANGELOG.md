@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.3
+- upgrade hull-node to overcame batch endpoint failure
+
 ## v0.3.2
 - improve documentation
 - add `account` when processing batch extracts
