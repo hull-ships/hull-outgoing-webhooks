@@ -1,6 +1,6 @@
 {
   "name": "hull-outgoing-webhooks",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Send data to webhooks",
   "homepage": "https://github.com/hull-ships/hull-outgoing-webhooks",
   "repository": {
@@ -70,7 +70,7 @@
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
     "happypack": "^5.0.0",
-    "hull": "0.13.16",
+    "hull": "0.13.17",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "newrelic": "^4.1.3",
