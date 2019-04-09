@@ -6,16 +6,6 @@
   "version": "0.3.3",
   "private_settings":[
     {
-      "name": "webhooks_urls",
-      "title": "Webhooks URLs",
-      "default": [],
-      "type": "array",
-      "format": "table",
-      "items": {
-        "type": "string"
-      }
-    },
-    {
       "name": "throttle_rate",
       "title": "Requests rate limit",
       "description": "Number of requests done every 1 second, the same rate limit will be applied separately to each webhook url above",
@@ -38,18 +28,28 @@
       "type": "number"
     },
     {
+      "name": "webhooks_header",
+      "title": "Send User",
+      "type": "string",
+      "format": "title"
+    },
+    {
+      "name": "webhooks_urls",
+      "title": "User Webhooks URLs",
+      "default": [],
+      "type": "array",
+      "format": "table",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
       "name": "synchronized_segments",
-      "title": "Filtered Segments",
+      "title": "User Filtered Segments",
       "description": "Global filter. Only send if user matches one of these segments",
       "default": [],
       "type": "array",
       "format": "segment"
-    },
-    {
-      "name": "webhooks_header",
-      "title": "Send conditions",
-      "type": "string",
-      "format": "title"
     },
     {
       "name": "webhooks_anytime",
@@ -99,6 +99,79 @@
       "default": [],
       "type": "array",
       "format": "event"
+    },
+    {
+      "name": "webhooks_account_header",
+      "title": "Send Account",
+      "type": "string",
+      "format": "title"
+    },
+    {
+      "name": "webhooks_account_urls",
+      "title": "Account Webhooks URLs",
+      "default": [],
+      "type": "array",
+      "format": "table",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "synchronized_account_segments",
+      "title": "Account Filtered Segments",
+      "description": "Global filter. Only send if account matches one of these segments",
+      "default": [],
+      "type": "array",
+      "format": "account_segment"
+    },
+    {
+      "name": "webhooks_account_anytime",
+      "title": "Send anytime account is updated",
+      "type": "boolean",
+      "format": "checkbox",
+      "default": false
+    },
+    {
+      "name": "webhooks_account_segments",
+      "title": "Send account when entering and/or leaving segments",
+      "type": "array",
+      "format": "table",
+      "default": [{ "segment": "", "channel": "" }],
+      "items": {
+        "type": "object",
+        "required": [ "channel", "segment"],
+        "properties": {
+          "segment": {
+            "title": "Segment Name",
+            "type": "string",
+            "format": "segment"
+          },
+          "entered": {
+            "title": "Send on enter",
+            "type": "boolean",
+            "format": "checkbox"
+          },
+          "left": {
+            "title": "Send on leave",
+            "type": "boolean",
+            "format": "checkbox"
+          }
+        }
+      }
+    },
+    {
+      "name": "webhooks_account_attributes",
+      "title": "Send account when attributes change",
+      "default": [],
+      "type": "array",
+      "format": "trait"
+    },
+    {
+      "name": "webhooks_account_events",
+      "title": "Send account when events triggered",
+      "default": [],
+      "type": "array",
+      "format": "event"
     }
   ],
   "deployment_settings": [],
@@ -116,6 +189,7 @@
             "ship:update",
             "users_segment:update",
             "accounts_segment:update",
+            "account:update",
             "segment:update"
           ]
         }
