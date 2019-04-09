@@ -11,11 +11,17 @@ const { version } = require("../../package.json");
 
 function webhook(
   { smartNotifierResponse, url, hull, payload = {}, metric }: Object,
-  throttle: Object
+  throttle: Object,
+  targetEntity: "user" | "account"
 ) {
-  const asUser = hull.asUser(
-    _.pick(payload.user, ["id", "email", "external_id"])
-  );
+  let asTargetEntity;
+  if (targetEntity === "user") {
+    asTargetEntity = hull.asUser(
+      _.pick(payload.user, ["id", "email", "external_id"])
+    );
+  } else if (targetEntity === "account") {
+    asTargetEntity = hull.asAccount(_.pick(payload.account, ["id", "domain"]));
+  }
   let start;
   return superagent
     .post(url)
@@ -38,8 +44,12 @@ function webhook(
       const status = response.status;
       const hrTime = process.hrtime(start);
       const elapsed = hrTime[0] * 1000 + hrTime[1] / 1000000;
-      asUser.logger.info("outgoing.user.success", { status, url, elapsed });
-      asUser.logger.debug("webhook.success", {
+      asTargetEntity.logger.info(`outgoing.${targetEntity}.success`, {
+        status,
+        url,
+        elapsed
+      });
+      asTargetEntity.logger.debug("webhook.success", {
         payload,
         response: response.body
       });
@@ -72,7 +82,7 @@ function webhook(
         res.hull_summary =
           "Server returned a redirect code - see `Connector doesn't support redirects` in documentation";
       }
-      asUser.logger.error("outgoing.user.error", res);
+      asTargetEntity.logger.error(`outgoing.${targetEntity}.error`, res);
       return Promise.resolve(res);
     });
 }
