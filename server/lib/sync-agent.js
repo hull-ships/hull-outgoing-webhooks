@@ -30,11 +30,6 @@ class SyncAgent {
     this.connector = ctx.ship;
     this.webhookUrls = this.connector.private_settings.webhooks_urls || [];
 
-    let i;
-    for (i = 0; i < this.webhookUrls.length; i += 1) {
-      this.webhookUrls[i] = this.webhookUrls[i].trim();
-    }
-
     const throttleSettings = this.getThrottleSettings(this.connector);
     this.throttlePool = this.webhookUrls.reduce(
       (acc: Object, value: string) => {
