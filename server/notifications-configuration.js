@@ -22,6 +22,11 @@ module.exports = {
         in: parseInt(process.env.ACCOUNT_UPDATE_FLOW_CONTROL_IN, 10) || 100
       });
     }
+
+    console.log("-------context-------");
+
+    console.log("-------messages-------");
+
     return syncAgent.sendUpdateMessages(ctx, "account", messages);
   }
 };
