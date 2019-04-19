@@ -144,7 +144,7 @@
           "segment": {
             "title": "Segment Name",
             "type": "string",
-            "format": "segment"
+            "format": "accountSegment"
           },
           "entered": {
             "title": "Send on enter",

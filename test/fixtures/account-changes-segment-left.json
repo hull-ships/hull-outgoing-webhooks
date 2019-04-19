@@ -21,7 +21,26 @@
             "it is a hull company"
           ]
         },
-        "account_segments": {}
+        "account_segments": {
+          "entered": [
+            {
+              "created_at": "2019-04-08T20:41:54Z",
+              "id": "5cabb21273eb3f17f60001c2",
+              "name": "SomeHullCompanySegment",
+              "type": "accounts_segment",
+              "updated_at": "2019-04-08T20:41:54Z"
+            }
+          ],
+          "left": [
+            {
+              "created_at": "2019-04-08T20:41:54Z",
+              "id": "5cabb21273eb3f17f60001c2",
+              "name": "SomeHullCompanySegment",
+              "type": "accounts_segment",
+              "updated_at": "2019-04-08T20:41:54Z"
+            }
+          ]
+        }
       },
       "account": {
         "0": "Hello",
@@ -96,7 +115,7 @@
       "webhooks_account_anytime": true,
       "webhooks_account_segments": [
         {
-          "segment": "",
+          "segment": "5cabb21273eb3f17f60001c2",
           "channel": ""
         }
       ],

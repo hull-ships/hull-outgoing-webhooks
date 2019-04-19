@@ -3,9 +3,9 @@ const Minihull = require("minihull");
 const MiniApplication = require("mini-application");
 
 const bootstrap = require("./support/bootstrap");
-const examplePayload = require("../fixtures/account-changes.json");
+const examplePayload = require("../fixtures/account-changes-segment-left.json");
 
-describe("account test - attribute change", () => {
+describe("account test - segment left", () => {
   let minihull;
   let server;
   let externalApi;
