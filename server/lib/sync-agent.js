@@ -167,10 +167,16 @@ class SyncAgent {
     }
 
     let asTargetEntity;
+    let segmentScope;
+    let changesScope;
     if (targetEntity === "user") {
       asTargetEntity = this.hullClient.asUser(user);
+      segmentScope = "segments";
+      changesScope = "user.";
     } else if (targetEntity === "account") {
       asTargetEntity = this.hullClient.asAccount(account);
+      segmentScope = "account_segments";
+      changesScope = ""; // account changes by default are account.${attribute}
     }
 
     if (!synchronized_segments.length) {
@@ -191,9 +197,6 @@ class SyncAgent {
       });
       return Promise.resolve();
     }
-
-    const segmentScope =
-      targetEntity === "user" ? "segments" : "account_segments";
 
     const entityInSegments = _.map(_.get(message, segmentScope, []), "id");
 
@@ -247,14 +250,10 @@ class SyncAgent {
       entityInSegments
     );
 
-    const changesScope = targetEntity === "user" ? "user." : "";
     const matchedAttributes = _.filter(
       webhooks_attributes,
       webhook_attribute => {
-        const traitsPrefix = `traits_${webhook_attribute.replace(
-          "account.",
-          ""
-        )}`;
+        const traitsPrefix = `traits_${webhook_attribute}`;
 
         const attribute = _.get(
           changes,
