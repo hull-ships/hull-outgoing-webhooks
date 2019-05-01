@@ -1,18 +1,18 @@
 const { expect } = require("chai");
 const Minihull = require("minihull");
 const MiniApplication = require("mini-application");
-
+const _ = require("lodash");
 const bootstrap = require("./support/bootstrap");
-const examplePayload = require("../fixtures/account-changes-segment-left.json");
+const examplePayload = require("../fixtures/user-change-attribute");
 
-describe("account test - segment left", () => {
+describe("user test - attribute change", () => {
   let minihull;
   let server;
   let externalApi;
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8003, timeout: 250000 });
+    server = bootstrap({ port: 8018, timeout: 250000 });
     externalApi = new MiniApplication();
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {
@@ -21,7 +21,7 @@ describe("account test - segment left", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8004), externalApi.listen(8005)]);
+    return Promise.all([minihull.listen(8019), externalApi.listen(8020)]);
   });
 
   afterEach(done => {
@@ -33,14 +33,14 @@ describe("account test - segment left", () => {
   it(
     "should return next",
     function() {
-      examplePayload.connector.private_settings.webhooks_account_urls = [
-        "http://localhost:8005/endpoint_ok"
+      examplePayload.connector.private_settings.webhooks_urls = [
+        "http://localhost:8020/endpoint_ok"
       ];
       return minihull
         .smartNotifyConnector(
           examplePayload.connector,
-          "http://localhost:8003/smart-notifier",
-          "account:update",
+          "http://localhost:8018/smart-notifier",
+          "user:update",
           examplePayload.messages
         )
         .then(
@@ -48,10 +48,13 @@ describe("account test - segment left", () => {
             const firstSentPayload = externalApi.requests
               .get("incoming.0")
               .value();
+            console.log(JSON.stringify(firstSentPayload));
+            expect(_.get(firstSentPayload, "body.changes.user.traits_outreach/custom1")[0]).to.equal("c1-v");
+            expect(_.get(firstSentPayload, "body.changes.user.traits_outreach/custom1")[1]).to.equal("c1-value");
+            expect(_.get(firstSentPayload, "body.changes.user.username")[0]).to.equal(null);
+            expect(_.get(firstSentPayload, "body.changes.user.username")[1]).to.equal("andyhull565");
 
-            expect(
-              firstSentPayload.body.changes.account_segments.left[0].id
-            ).to.equal("segment-left-id");
+
             expect(res.body.flow_control.type).to.equal("next");
             expect(res.statusCode).to.equal(200);
             expect(true).to.be.true;

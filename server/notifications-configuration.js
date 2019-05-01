@@ -2,7 +2,8 @@ const SyncAgent = require("./lib/sync-agent");
 
 module.exports = {
   "user:update": (ctx, messages = []) => {
-    const syncAgent = new SyncAgent(ctx);
+    const scope = "user";
+    const syncAgent = new SyncAgent(ctx, scope);
     if (ctx.smartNotifierResponse) {
       // Get 10 users every 100ms at most.
       ctx.smartNotifierResponse.setFlowControl({
@@ -14,7 +15,8 @@ module.exports = {
     return syncAgent.sendUpdateMessages(ctx, "user", messages);
   },
   "account:update": (ctx, messages = []) => {
-    const syncAgent = new SyncAgent(ctx);
+    const scope = "account";
+    const syncAgent = new SyncAgent(ctx, scope);
     if (ctx.smartNotifierResponse) {
       ctx.smartNotifierResponse.setFlowControl({
         type: "next",
@@ -22,11 +24,6 @@ module.exports = {
         in: parseInt(process.env.ACCOUNT_UPDATE_FLOW_CONTROL_IN, 10) || 100
       });
     }
-
-    console.log("-------context-------");
-
-    console.log("-------messages-------");
-
     return syncAgent.sendUpdateMessages(ctx, "account", messages);
   }
 };

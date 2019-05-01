@@ -1,18 +1,19 @@
 const { expect } = require("chai");
 const Minihull = require("minihull");
 const MiniApplication = require("mini-application");
+const _ = require("lodash");
 
 const bootstrap = require("./support/bootstrap");
-const examplePayload = require("../fixtures/account-changes-segment-left.json");
+const examplePayload = require("../fixtures/account-change-name.json");
 
-describe("account test - segment left", () => {
+describe("account test - attribute attribute change", () => {
   let minihull;
   let server;
   let externalApi;
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8003, timeout: 250000 });
+    server = bootstrap({ port: 8015, timeout: 2500000 });
     externalApi = new MiniApplication();
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {
@@ -21,7 +22,7 @@ describe("account test - segment left", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8004), externalApi.listen(8005)]);
+    return Promise.all([minihull.listen(8016), externalApi.listen(8017)]);
   });
 
   afterEach(done => {
@@ -34,12 +35,12 @@ describe("account test - segment left", () => {
     "should return next",
     function() {
       examplePayload.connector.private_settings.webhooks_account_urls = [
-        "http://localhost:8005/endpoint_ok"
+        "http://localhost:8017/endpoint_ok"
       ];
       return minihull
         .smartNotifyConnector(
           examplePayload.connector,
-          "http://localhost:8003/smart-notifier",
+          "http://localhost:8015/smart-notifier",
           "account:update",
           examplePayload.messages
         )
@@ -48,10 +49,18 @@ describe("account test - segment left", () => {
             const firstSentPayload = externalApi.requests
               .get("incoming.0")
               .value();
+            console.log(JSON.stringify(firstSentPayload));
 
             expect(
-              firstSentPayload.body.changes.account_segments.left[0].id
-            ).to.equal("segment-left-id");
+              _.get(firstSentPayload, "body.changes.account.name")[0]
+            ).to.equal("TMP-1");
+            expect(
+              _.get(firstSentPayload, "body.changes.account.name")[1]
+            ).to.equal("TMP Account Name");
+            expect(_.get(firstSentPayload, "body.account.name")).to.equal(
+              "SomeHullCompany"
+            );
+
             expect(res.body.flow_control.type).to.equal("next");
             expect(res.statusCode).to.equal(200);
             expect(true).to.be.true;

@@ -24,12 +24,15 @@ class SyncAgent {
   webhookUrls: Array<string>;
   isBatch: boolean;
 
-  constructor(ctx: THullReqContext) {
+  constructor(ctx: THullReqContext, scope: "account" | "user") {
     this.metric = ctx.metric;
     this.smartNotifierResponse = ctx.smartNotifierResponse;
     this.hullClient = ctx.client;
     this.connector = ctx.ship;
-    this.webhookUrls = this.connector.private_settings.webhooks_urls || [];
+    this.webhookUrls =
+      scope === "user"
+        ? this.connector.private_settings.webhooks_urls || []
+        : this.connector.private_settings.webhooks_account_urls || [];
 
     const throttleSettings = this.getThrottleSettings(this.connector);
     this.throttlePool = this.webhookUrls.reduce(
@@ -70,14 +73,14 @@ class SyncAgent {
 
   sendUpdateMessages(
     context: THullReqContext,
-    dataType: "account" | "user",
+    scope: "account" | "user",
     messages: Array<THullUserUpdateMessage> | Array<THullAccountUpdateMessage>
   ) {
     this.hullClient.logger.debug("outgoing.job.start", {
       throttling: this.getThrottleSettings(this.connector)
     });
     return Promise.map(messages, message => {
-      return this.sendMessage(context, dataType, message);
+      return this.sendMessage(context, scope, message);
     });
   }
 
@@ -132,6 +135,7 @@ class SyncAgent {
       private_settings,
       webhooks_attributes_path
     );
+
     const webhooks_anytime = _.get(private_settings, webhooks_anytime_path);
 
     if (
@@ -188,65 +192,96 @@ class SyncAgent {
       return Promise.resolve();
     }
 
-    let entitySegments;
-    if (targetEntity === "user") {
-      entitySegments = segments;
-    } else if (targetEntity === "account") {
-      entitySegments = account_segments;
-    }
+    const segmentScope =
+      targetEntity === "user" ? "segments" : "account_segments";
+
+    const entityInSegments = _.map(_.get(message, segmentScope, []), "id");
 
     if (isBatch) {
       this.metric.increment("ship.outgoing.events");
       return this.callWebhookUrls(targetEntity, {
         user,
-        entitySegments,
+        entityInSegments,
         account
       });
     }
 
-    const segmentIds = _.map(entitySegments, "id");
+    const matchedEnteredSegments = _.map(
+      this.getSegmentChanges(
+        webhooks_segments,
+        changes,
+        "entered",
+        targetEntity
+      ),
+      "id"
+    );
 
-    if (!_.intersection(synchronized_segments, segmentIds).length) {
+    const matchedLeftSegments = _.map(
+      this.getSegmentChanges(webhooks_segments, changes, "left", targetEntity),
+      "id"
+    );
+
+    const global_synchronized_segments = _.compact(
+      _.concat(
+        synchronized_segments,
+        matchedEnteredSegments,
+        matchedLeftSegments
+      )
+    );
+
+    const globalEntitySegments = _.compact(
+      _.concat(entityInSegments, matchedEnteredSegments, matchedLeftSegments)
+    );
+
+    if (
+      !_.intersection(global_synchronized_segments, globalEntitySegments).length
+    ) {
       asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
         reason: `${targetEntity} does not match filtered segments`
       });
       return Promise.resolve();
     }
 
-    const changesKey = targetEntity === "user" ? changes.user : changes.account;
-    const filteredSegments = _.intersection(synchronized_segments, segmentIds);
-    let matchedAttributes = _.intersection(
+    const filteredSegments = _.intersection(
+      synchronized_segments,
+      entityInSegments
+    );
+
+    const changesScope = targetEntity === "user" ? "user." : "";
+    const matchedAttributes = _.filter(
       webhooks_attributes,
-      _.keys(changesKey || {})
+      webhook_attribute => {
+        const traitsPrefix = `traits_${webhook_attribute.replace(
+          "account.",
+          ""
+        )}`;
+
+        const attribute = _.get(
+          changes,
+          `${changesScope}${webhook_attribute}`,
+          null
+        );
+
+        const traitsPrefixAttribute = _.get(
+          changes,
+          `${changesScope}${traitsPrefix}`,
+          null
+        );
+
+        return attribute !== null || traitsPrefixAttribute !== null;
+      }
     );
-    const matchedEnteredSegments = this.getSegmentChanges(
-      webhooks_segments,
-      changes,
-      "entered"
-    );
-    const matchedLeftSegments = this.getSegmentChanges(
-      webhooks_segments,
-      changes,
-      "left"
-    );
+
     const matchedEvents = _.filter(events, event =>
       _.includes(webhooks_events, event.event)
     );
-
-    // some traits have "traits_" prefix in event payload but not in the settings select field.
-    // we give them another try matching prefixed version
-    if (_.isEmpty(matchedAttributes)) {
-      matchedAttributes = _.intersection(
-        _.map(webhooks_attributes, a => `traits_${a}`),
-        _.keys(changesKey || {})
-      );
-    }
 
     // Payload
     const payload = {
       user: this.hullClient.utils.groupTraits(user),
       account: this.hullClient.utils.groupTraits(account),
       segments,
+      account_segments,
       changes
     };
 
@@ -308,11 +343,15 @@ class SyncAgent {
   getSegmentChanges(
     webhooks_segments: Array<Object>,
     changes: Object = {},
-    action: string = "left"
+    action: string = "left",
+    targetEntity: string = "user"
   ): Array<Object> {
-    const { segments = {} } = changes;
-    if (!_.size(segments)) return [];
-    const current = segments[action] || [];
+    const { segments = {}, account_segments = {} } = changes;
+    const entitySegments =
+      targetEntity === "user" ? segments : account_segments;
+
+    if (!_.size(entitySegments)) return [];
+    const current = entitySegments[action] || [];
     if (!current.length) return [];
 
     // Get list of segments we're validating against for a given changeset

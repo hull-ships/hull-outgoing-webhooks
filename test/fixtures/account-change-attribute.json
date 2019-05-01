@@ -12,26 +12,20 @@
       "changes": {
         "is_new": false,
         "account": {
+          "name": [
+            "TMP-1",
+            "TMP Account Name"
+          ],
           "updated_at": [
-            "2019-04-09T18:55:09Z",
-            "2019-04-09T19:37:42Z"
+            "2019-04-30T17:48:43Z",
+            "2019-04-30T19:42:16Z"
           ],
           "outreach/custom1": [
-            "custom1 value - hull company",
-            "it is a hull company"
+            "oldValue",
+            "newValue"
           ]
         },
-        "account_segments": {
-          "left": [
-            {
-              "id": "segment-left-id",
-              "name": "Bad guys",
-              "updated_at": "2019-04-23T18:07:13Z",
-              "type": "accounts_segment",
-              "created_at": "2018-10-29T14:58:34Z"
-            }
-          ]
-        }
+        "account_segments": {}
       },
       "account": {
         "0": "Hello",
@@ -61,8 +55,15 @@
       },
       "account_segments": [
         {
-          "id": "segment-currently-in-id",
+          "id": "segment-id-1",
           "name": "SomeHullCompanySegment",
+          "updated_at": "2019-04-08T20:41:54Z",
+          "type": "accounts_segment",
+          "created_at": "2019-04-08T20:41:54Z"
+        },
+        {
+          "id": "some-other-segment-id",
+          "name": "SomeOtherSegment",
           "updated_at": "2019-04-08T20:41:54Z",
           "type": "accounts_segment",
           "created_at": "2019-04-08T20:41:54Z"
@@ -93,26 +94,20 @@
     "name": "https://michaloo-outgoing-webhooks.eu.ngrok.io",
     "private_settings": {
       "webhooks_account_urls": [
-        "http://localhost:8002/endpoint_redirect?a=1",
-        "http://localhost:8002/endpoint_redirect?a=2",
-        "http://localhost:8002/endpoint_redirect?a=3",
-        "http://localhost:8002/endpoint_redirect?a=4",
-        "http://localhost:8002/endpoint_redirect?a=5"
+        "http://localhost:8015/endpoint_ok"
       ],
       "concurrency": 10,
       "synchronized_account_segments": [
+        "segment-id-1",
         "global-synchronized-segment-id-1"
       ],
       "webhooks_account_anytime": false,
-      "webhooks_account_segments": [
-        {
-          "segment": "segment-left-id",
-          "channel": "",
-          "entered": false,
-          "left": true
-        }
+      "webhooks_account_segments": [],
+      "webhooks_account_attributes": [
+        "account.domain",
+        "account.name",
+        "account.outreach/custom1"
       ],
-      "webhooks_account_attributes": [],
       "webhooks_account_events": [],
       "throttle_rate": 10,
       "throttle_per_rate": 5000

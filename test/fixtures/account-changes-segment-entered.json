@@ -1,11 +1,11 @@
 {
   "configuration": {
-    "id": "5ac74fe8745cc3e861000004",
+  "id": "5ac74fe8745cc3e861000004",
     "organization": "224bbaa3.hullbeta.io",
     "secret": "d894cf870a91eb15080856df5da8004c"
   },
-  "channel": "user:update",
-  "messages": [
+    "channel": "user:update",
+    "messages": [
     {
       "message_id": "97b6d06a4ae33b5d270720b6f6e149f48ab6f16e",
       "matchesFilter": true,
@@ -22,10 +22,10 @@
           ]
         },
         "account_segments": {
-          "left": [
+          "entered": [
             {
-              "id": "segment-left-id",
-              "name": "Bad guys",
+              "id": "segment-entered-id",
+              "name": "SomeHullCompanySegment",
               "updated_at": "2019-04-23T18:07:13Z",
               "type": "accounts_segment",
               "created_at": "2018-10-29T14:58:34Z"
@@ -61,8 +61,15 @@
       },
       "account_segments": [
         {
-          "id": "segment-currently-in-id",
+          "id": "segment-entered-id",
           "name": "SomeHullCompanySegment",
+          "updated_at": "2019-04-08T20:41:54Z",
+          "type": "accounts_segment",
+          "created_at": "2019-04-08T20:41:54Z"
+        },
+        {
+          "id": "some-other-egment-id",
+          "name": "SomeOtherSegment",
           "updated_at": "2019-04-08T20:41:54Z",
           "type": "accounts_segment",
           "created_at": "2019-04-08T20:41:54Z"
@@ -70,19 +77,19 @@
       ]
     }
   ],
-  "notification_id": "26c4c5ab-37ee-482b-a0de-2e28e2f8672b",
-  "connector": {
+    "notification_id": "26c4c5ab-37ee-482b-a0de-2e28e2f8672b",
+    "connector": {
     "id": "5ac74fe8745cc3e861000004",
-    "settings": {},
+      "settings": {},
     "manifest": {
       "name": "Outgoing Webhooks",
-      "version": "0.2.11",
-      "subscriptions": [
+        "version": "0.2.11",
+        "subscriptions": [
         {
           "url": "/smart-notifier"
         }
       ],
-      "tags": [
+        "tags": [
         "outgoing",
         "oneColumn",
         "batch",
@@ -90,35 +97,32 @@
       ]
     },
     "type": "ship",
-    "name": "https://michaloo-outgoing-webhooks.eu.ngrok.io",
-    "private_settings": {
+      "name": "https://michaloo-outgoing-webhooks.eu.ngrok.io",
+      "private_settings": {
       "webhooks_account_urls": [
-        "http://localhost:8002/endpoint_redirect?a=1",
-        "http://localhost:8002/endpoint_redirect?a=2",
-        "http://localhost:8002/endpoint_redirect?a=3",
-        "http://localhost:8002/endpoint_redirect?a=4",
-        "http://localhost:8002/endpoint_redirect?a=5"
+        "http://localhost:8005/endpoint_ok"
       ],
-      "concurrency": 10,
-      "synchronized_account_segments": [
+        "concurrency": 10,
+        "synchronized_account_segments": [
+        "segment-entered-id",
         "global-synchronized-segment-id-1"
       ],
-      "webhooks_account_anytime": false,
-      "webhooks_account_segments": [
+        "webhooks_account_anytime": false,
+        "webhooks_account_segments": [
         {
-          "segment": "segment-left-id",
+          "segment": "segment-entered-id",
           "channel": "",
-          "entered": false,
-          "left": true
+          "entered": true,
+          "left": false
         }
       ],
-      "webhooks_account_attributes": [],
-      "webhooks_account_events": [],
-      "throttle_rate": 10,
-      "throttle_per_rate": 5000
+        "webhooks_account_attributes": [],
+        "webhooks_account_events": [],
+        "throttle_rate": 10,
+        "throttle_per_rate": 5000
     },
     "source_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/",
-    "manifest_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/manifest.json"
+      "manifest_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/manifest.json"
   }
 }
 
