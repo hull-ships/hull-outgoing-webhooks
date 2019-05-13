@@ -12,7 +12,7 @@ describe("account test - segment left", () => {
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8003, timeout: 250000 });
+    server = bootstrap({ port: 8003, timeout: 25000 });
     externalApi = new MiniApplication();
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {

@@ -21,7 +21,7 @@ describe("account test - webhooks account send anytime", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8004), externalApi.listen(8005)]);
+    return Promise.all([minihull.listen(8060), externalApi.listen(8056)]);
   });
 
   afterEach(done => {
@@ -34,7 +34,7 @@ describe("account test - webhooks account send anytime", () => {
     "should return next",
     function() {
       examplePayload.connector.private_settings.webhooks_urls = [
-        "http://localhost:8005/endpoint_ok"
+        "http://localhost:8056/endpoint_ok"
       ];
       return minihull
         .smartNotifyConnector(
