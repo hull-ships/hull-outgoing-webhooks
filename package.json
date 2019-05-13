@@ -42,7 +42,7 @@
     "build:server": "babel server -d build",
     "build:client": "NODE_ENV=production webpack --config ./webpack.config.js",
     "start": "node -r newrelic build",
-    "start:dev": "nodemon $NODE_DEBUG_OPTION --inspect --exec babel-node server",
+    "start:dev": "NODE_ENV=development LOG_LEVEL=debug babel-watch -L server",
     "dev": "yarn start:dev",
     "test": "yarn run test:lint && yarn run test:combined",
     "test:lint": "eslint server src",
@@ -54,8 +54,6 @@
   },
   "dependencies": {
     "autoprefixer": "^8.6.0",
-    "nodemon": "^1.18.7",
-    "@babel/node": "^7.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
