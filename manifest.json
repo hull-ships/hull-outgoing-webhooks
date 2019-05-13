@@ -160,6 +160,13 @@
       }
     },
     {
+      "name": "webhooks_account_events",
+      "title": "Send account when events triggered",
+      "default": [],
+      "type": "array",
+      "format": "hidden"
+    },
+    {
       "name": "webhooks_account_attributes",
       "title": "Send account when attributes change",
       "default": [],
