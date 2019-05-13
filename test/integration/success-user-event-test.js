@@ -21,7 +21,7 @@ describe("user test - attribute change", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8019), externalApi.listen(8041)]);
+    return Promise.all([minihull.listen(8061), externalApi.listen(8041)]);
   });
 
   afterEach(done => {
