@@ -25,6 +25,15 @@
         }
       },
       "account": {},
+      "segments": [
+        {
+          "id": "synchronize-segment-id",
+          "name": "SynchronizedSegment",
+          "updated_at": "2019-05-01T11:58:56Z",
+          "type": "users_segment",
+          "created_at": "2019-05-01T11:58:56Z"
+        }
+      ],
       "user": {
         "traits_outreach/id": 184823,
         "id": "5cc8c32f03f8929f9e000725",

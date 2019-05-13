@@ -24,6 +24,15 @@
           ]
         }
       },
+      "segments": [
+        {
+          "id": "global-synchronized-segment-id-1",
+          "name": "SynchronizedSegment",
+          "updated_at": "2019-05-01T11:58:56Z",
+          "type": "users_segment",
+          "created_at": "2019-05-01T11:58:56Z"
+        }
+      ],
       "account": {},
       "user": {
         "traits_outreach/id": 184823,
