@@ -1,5 +1,10 @@
 // @flow
-import type { THullAccountUpdateMessage, THullConnector, THullReqContext, THullUserUpdateMessage } from "hull";
+import type {
+  THullAccountUpdateMessage,
+  THullConnector,
+  THullReqContext,
+  THullUserUpdateMessage
+} from "hull";
 
 const getEntityMatchedSegmentChanges = require("../util/get-entity-matched-segment-changes");
 const getEntityMatchedAttributeChanges = require("../util/get-entity-matched-attribute-changes");
@@ -118,24 +123,36 @@ class SyncAgent {
       segmentScope = "account_segments";
     }
 
-    const synchronized_segments = _.get(private_settings, synchronized_segments_path);
-    const webhook_settings = this.getWebhookSettings(private_settings, targetEntity);
+    const synchronized_segments = _.get(
+      private_settings,
+      synchronized_segments_path
+    );
+    const webhook_settings = this.getWebhookSettings(
+      private_settings,
+      targetEntity
+    );
 
-    if (!this.isConfigured(webhook_settings, synchronized_segments, entity, targetEntity)) {
+    if (
+      !this.isConfigured(
+        webhook_settings,
+        synchronized_segments,
+        entity,
+        targetEntity
+      )
+    ) {
       return Promise.resolve();
     }
 
     const entityInSegments = _.map(_.get(message, segmentScope, []), "id");
 
     if (isBatch) {
-
       const payload = {
         user,
         entityInSegments,
         account
       };
 
-      return this.sendPayload(payload, targetEntity);
+      return this.sendPayload(payload, targetEntity, null, []);
     }
 
     if (!_.intersection(synchronized_segments, entityInSegments).length) {
@@ -145,8 +162,18 @@ class SyncAgent {
       return Promise.resolve();
     }
 
-    const entityMatches = this.getEntityMatches(webhook_settings, entityInSegments, synchronized_segments, events, changes, targetEntity);
-    const shouldSendMessage = this.shouldSendMessage(webhook_settings, entityMatches);
+    const entityMatches = this.getEntityMatches(
+      webhook_settings,
+      entityInSegments,
+      synchronized_segments,
+      events,
+      changes,
+      targetEntity
+    );
+    const shouldSendMessage = this.shouldSendMessage(
+      webhook_settings,
+      entityMatches
+    );
 
     if (shouldSendMessage) {
       const payload = {
@@ -157,8 +184,16 @@ class SyncAgent {
         changes
       };
 
-      const loggingContext = this.getLoggingContext(webhook_settings, entityMatches);
-      return this.sendPayload(payload, targetEntity, loggingContext, entityMatches);
+      const loggingContext = this.getLoggingContext(
+        webhook_settings,
+        entityMatches
+      );
+      return this.sendPayload(
+        payload,
+        targetEntity,
+        loggingContext,
+        entityMatches
+      );
     }
 
     asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
@@ -170,65 +205,81 @@ class SyncAgent {
 
   getEntityMatches(
     webhook_settings: Object,
-    entityInSegments: Array,
-    synchronizedSegments: Array,
-    events: Object,
+    entityInSegments: Array<string>,
+    synchronizedSegments: Array<string>,
+    events: Array<Object>,
     changes: Object,
     targetEntity: "user" | "account"
-  ): boolean {
+  ) {
+    const webhook_segments = webhook_settings.webhook_segments;
+    const webhook_attributes = webhook_settings.webhook_attributes;
+    const webhook_events = webhook_settings.webhook_events;
 
-    let webhook_segments = webhook_settings["webhook_segments"];
-    let webhook_attributes = webhook_settings["webhook_attributes"];
-    let webhook_events = webhook_settings["webhook_events"];
-
-    const matchedEvents = getEntityMatchedEvents(events, webhook_events, entityInSegments);
+    const matchedEvents = getEntityMatchedEvents(events, webhook_events);
 
     const matchedEnteredSegments = getEntityMatchedSegmentChanges(
-      webhook_segments, changes, "entered", targetEntity
+      webhook_segments,
+      changes,
+      "entered",
+      targetEntity
     );
 
     const matchedLeftSegments = getEntityMatchedSegmentChanges(
-      webhook_segments, changes, "left", targetEntity
+      webhook_segments,
+      changes,
+      "left",
+      targetEntity
     );
 
     const matchedAttributes = getEntityMatchedAttributeChanges(
-      webhook_attributes, changes, targetEntity
+      webhook_attributes,
+      changes,
+      targetEntity
     );
 
-    let entityMatches = {};
-    entityMatches["entityMatchedEvents"] = matchedEvents;
-    entityMatches["entityMatchedAttributes"] = matchedAttributes;
-    entityMatches["entityMatchedEnteredSegments"] = matchedEnteredSegments;
-    entityMatches["entityMatchedLeftSegments"] = matchedLeftSegments;
-    entityMatches["entityFilteredSegments"] = _.intersection(synchronizedSegments, entityInSegments);
+    const entityMatches = {};
+    entityMatches.entityMatchedEvents = matchedEvents;
+    entityMatches.entityMatchedAttributes = matchedAttributes;
+    entityMatches.entityMatchedEnteredSegments = matchedEnteredSegments;
+    entityMatches.entityMatchedLeftSegments = matchedLeftSegments;
+    entityMatches.entityFilteredSegments = _.intersection(
+      synchronizedSegments,
+      entityInSegments
+    );
 
     return entityMatches;
   }
 
-  shouldSendMessage(
-    webhook_settings: Object,
-    entityMatches: Object
-  ): boolean {
-
-    let webhook_anytime = webhook_settings["webhook_anytime"];
+  shouldSendMessage(webhook_settings: Object, entityMatches: Object): boolean {
+    const webhook_anytime = webhook_settings.webhook_anytime;
 
     if (webhook_anytime) {
       return true;
     }
 
-    const matchedAttributes = entityMatches["entityMatchedAttributes"];
-    const matchedEnteredSegments = entityMatches["entityMatchedEnteredSegments"];
-    const matchedLeftSegments = entityMatches["entityMatchedLeftSegments"];
+    const matchedEvents = entityMatches.entityMatchedEvents;
+    const matchedAttributes = entityMatches.entityMatchedAttributes;
+    const matchedEnteredSegments = entityMatches.entityMatchedEnteredSegments;
+    const matchedLeftSegments = entityMatches.entityMatchedLeftSegments;
 
-    return matchedAttributes.length || matchedEnteredSegments.length || matchedLeftSegments.length;
+    return (
+      matchedEvents.length ||
+      matchedAttributes.length ||
+      matchedEnteredSegments.length ||
+      matchedLeftSegments.length
+    );
   }
 
-  isConfigured(webhook_settings: Object, synchronized_segments: Array, entity: Object, targetEntity: "user" | "account"): boolean {
-
-    let webhook_events = webhook_settings["webhook_events"];
-    let webhook_segments = webhook_settings["webhook_segments"];
-    let webhook_attributes = webhook_settings["webhook_attributes"];
-    let webhook_urls = webhook_settings["webhook_urls"];
+  isConfigured(
+    webhook_settings: Object,
+    synchronized_segments: Array<string>,
+    entity: Object,
+    targetEntity: "user" | "account"
+  ): boolean {
+    const webhook_events = webhook_settings.webhook_events;
+    const webhook_segments = webhook_settings.webhook_segments;
+    const webhook_attributes = webhook_settings.webhook_attributes;
+    const webhook_urls = webhook_settings.webhook_urls;
 
     if (
       !this.connector ||
@@ -257,20 +308,26 @@ class SyncAgent {
       return false;
     }
 
-    let asTargetEntity = targetEntity === "user" ? this.hullClient.asUser(entity) : this.hullClient.asAccount(entity);
+    const asTargetEntity =
+      targetEntity === "user"
+        ? this.hullClient.asUser(entity)
+        : this.hullClient.asAccount(entity);
 
     if (!synchronized_segments.length) {
-
       asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
         reason: "No Segments configured. All Users will be skipped"
       });
-      return false
+      return false;
     }
 
-    if (!webhook_events.length && !webhook_segments.length && !webhook_attributes.length) {
-
+    if (
+      !webhook_events.length &&
+      !webhook_segments.length &&
+      !webhook_attributes.length
+    ) {
       asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
-        reason: "No Events, Segments or Attributes configured. No Webhooks will be sent"
+        reason:
+          "No Events, Segments or Attributes configured. No Webhooks will be sent"
       });
       return false;
     }
@@ -298,8 +355,10 @@ class SyncAgent {
     });
   }
 
-  getWebhookSettings(private_settings, targetEntity) {
-
+  getWebhookSettings(
+    private_settings: Object,
+    targetEntity: "user" | "account"
+  ) {
     let webhooks_anytime_path;
     let webhooks_urls_path;
     let webhooks_events_path;
@@ -320,21 +379,38 @@ class SyncAgent {
       webhooks_segments_path = "webhooks_account_segments";
     }
 
-    let webhook_settings = {};
-    webhook_settings["webhook_urls"] = _.get(private_settings, webhooks_urls_path);
-    webhook_settings["webhook_events"] =  _.get(private_settings, webhooks_events_path);
-    webhook_settings["webhook_segments"] = _.get(private_settings, webhooks_segments_path);
-    webhook_settings["webhook_attributes"] = _.get(private_settings, webhooks_attributes_path);
-    webhook_settings["webhook_anytime"] =_.get(private_settings, webhooks_anytime_path);
+    const webhook_settings = {};
+    webhook_settings.webhook_urls = _.get(private_settings, webhooks_urls_path);
+    webhook_settings.webhook_events = _.get(
+      private_settings,
+      webhooks_events_path
+    );
+    webhook_settings.webhook_segments = _.get(
+      private_settings,
+      webhooks_segments_path
+    );
+    webhook_settings.webhook_attributes = _.get(
+      private_settings,
+      webhooks_attributes_path
+    );
+    webhook_settings.webhook_anytime = _.get(
+      private_settings,
+      webhooks_anytime_path
+    );
 
     return webhook_settings;
   }
 
-  sendPayload(payload: {}, targetEntity: "user" | "account", loggingContext: null, entityMatches: []) {
-    const matchedEvents = entityMatches["entityMatchedEvents"];
+  sendPayload(
+    payload: Object,
+    targetEntity: "user" | "account",
+    loggingContext: Object,
+    entityMatches: Object
+  ) {
+    const matchedEvents = entityMatches.entityMatchedEvents;
 
     // Event: Send once for each matching event.
-    if (matchedEvents.length) {
+    if (matchedEvents && matchedEvents.length) {
       return Promise.map(matchedEvents, event => {
         this.metric.increment("ship.outgoing.events");
         this.hullClient.logger.debug("notification.send", loggingContext);
@@ -347,13 +423,13 @@ class SyncAgent {
     return this.callWebhookUrls(targetEntity, payload);
   }
 
-  getLoggingContext(webhook_settings, entityMatches) {
-    const matchedEvents = entityMatches["entityMatchedEvents"];
-    const matchedAttributes = entityMatches["entityMatchedAttributes"];
-    const matchedEnteredSegments = entityMatches["entityMatchedEnteredSegments"];
-    const matchedLeftSegments = entityMatches["entityMatchedLeftSegments"];
-    const filteredSegments = entityMatches["entityFilteredSegments"];
-    const webhooks_anytime = webhook_settings["webhook_anytime"];
+  getLoggingContext(webhook_settings: Object, entityMatches: Object) {
+    const matchedEvents = entityMatches.entityMatchedEvents;
+    const matchedAttributes = entityMatches.entityMatchedAttributes;
+    const matchedEnteredSegments = entityMatches.entityMatchedEnteredSegments;
+    const matchedLeftSegments = entityMatches.entityMatchedLeftSegments;
+    const filteredSegments = entityMatches.entityFilteredSegments;
+    const webhooks_anytime = webhook_settings.webhook_anytime;
 
     return {
       matchedEvents,

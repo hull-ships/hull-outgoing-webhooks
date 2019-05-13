@@ -2,18 +2,17 @@ const { expect } = require("chai");
 const Minihull = require("minihull");
 const MiniApplication = require("mini-application");
 const _ = require("lodash");
-
 const bootstrap = require("./support/bootstrap");
-const examplePayload = require("../fixtures/account-change-name.json");
+const examplePayload = require("../fixtures/user-event");
 
-describe("account test - attribute attribute change", () => {
+describe("user test - attribute change", () => {
   let minihull;
   let server;
   let externalApi;
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8045, timeout: 2500000 });
+    server = bootstrap({ port: 8040, timeout: 250000 });
     externalApi = new MiniApplication();
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {
@@ -22,7 +21,7 @@ describe("account test - attribute attribute change", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8046), externalApi.listen(8047)]);
+    return Promise.all([minihull.listen(8019), externalApi.listen(8041)]);
   });
 
   afterEach(done => {
@@ -34,14 +33,14 @@ describe("account test - attribute attribute change", () => {
   it(
     "should return next",
     function() {
-      examplePayload.connector.private_settings.webhooks_account_urls = [
-        "http://localhost:8047/endpoint_ok"
+      examplePayload.connector.private_settings.webhooks_urls = [
+        "http://localhost:8041/endpoint_ok"
       ];
       return minihull
         .smartNotifyConnector(
           examplePayload.connector,
-          "http://localhost:8045/smart-notifier",
-          "account:update",
+          "http://localhost:8040/smart-notifier",
+          "user:update",
           examplePayload.messages
         )
         .then(
@@ -50,16 +49,7 @@ describe("account test - attribute attribute change", () => {
               .get("incoming.0")
               .value();
             console.log(JSON.stringify(firstSentPayload));
-
-            expect(
-              _.get(firstSentPayload, "body.changes.account.name")[0]
-            ).to.equal("TMP-1");
-            expect(
-              _.get(firstSentPayload, "body.changes.account.name")[1]
-            ).to.equal("TMP Account Name");
-            expect(_.get(firstSentPayload, "body.account.name")).to.equal(
-              "SomeHullCompany"
-            );
+            expect(_.get(firstSentPayload, "body.event")).to.equal("Event1");
 
             expect(res.body.flow_control.type).to.equal("next");
             expect(res.statusCode).to.equal(200);

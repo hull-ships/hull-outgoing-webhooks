@@ -13,7 +13,7 @@ describe("account test - attribute attribute change", () => {
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8015, timeout: 2500000 });
+    server = bootstrap({ port: 8055, timeout: 2500000 });
     externalApi = new MiniApplication();
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {
@@ -22,7 +22,7 @@ describe("account test - attribute attribute change", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8016), externalApi.listen(8017)]);
+    return Promise.all([minihull.listen(8016), externalApi.listen(8057)]);
   });
 
   afterEach(done => {
@@ -35,12 +35,12 @@ describe("account test - attribute attribute change", () => {
     "should return next",
     function() {
       examplePayload.connector.private_settings.webhooks_account_urls = [
-        "http://localhost:8017/endpoint_ok"
+        "http://localhost:8057/endpoint_ok"
       ];
       return minihull
         .smartNotifyConnector(
           examplePayload.connector,
-          "http://localhost:8015/smart-notifier",
+          "http://localhost:8055/smart-notifier",
           "account:update",
           examplePayload.messages
         )

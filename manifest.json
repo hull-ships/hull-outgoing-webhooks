@@ -165,17 +165,41 @@
       "default": [],
       "type": "array",
       "format": "trait"
+    }
+  ],
+  "settings_sections": [
+    {
+      "title": "Requests",
+      "description": "",
+      "properties": [
+        "private_settings.throttle_rate",
+        "private_settings.throttle_per_rate",
+        "private_settings.concurrency"
+      ]
     },
     {
-      "name": "webhooks_account_events",
-      "title": "Send account when events triggered",
-      "default": [],
-      "type": "array",
-      "format": "event"
+      "title": "Users",
+      "description": "",
+      "properties": [
+        "private_settings.webhooks_urls",
+        "private_settings.webhooks_anytime",
+        "private_settings.webhooks_segments",
+        "private_settings.webhooks_events",
+        "private_settings.webhooks_attributes"
+      ]
+    },
+    {
+      "title": "Accounts",
+      "description": "",
+      "properties": [
+        "private_settings.webhooks_account_urls",
+        "private_settings.webhooks_account_anytime",
+        "private_settings.webhooks_account_segments",
+        "private_settings.webhooks_account_attributes"
+      ]
     }
   ],
   "deployment_settings": [],
-  "resources": [],
   "readme": "readme.md",
   "ui": false,
   "resources": [],
