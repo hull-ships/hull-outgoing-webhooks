@@ -6,16 +6,6 @@
   "version": "0.3.1",
   "private_settings":[
     {
-      "name": "webhooks_urls",
-      "title": "Webhooks URLs",
-      "default": [],
-      "type": "array",
-      "format": "table",
-      "items": {
-        "type": "string"
-      }
-    },
-    {
       "name": "throttle_rate",
       "title": "Requests rate limit",
       "description": "Number of requests done every 1 second, the same rate limit will be applied separately to each webhook url above",
@@ -38,18 +28,28 @@
       "type": "number"
     },
     {
+      "name": "webhooks_header",
+      "title": "Send User",
+      "type": "string",
+      "format": "title"
+    },
+    {
+      "name": "webhooks_urls",
+      "title": "User Webhooks URLs",
+      "default": [],
+      "type": "array",
+      "format": "table",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
       "name": "synchronized_segments",
-      "title": "Filtered Segments",
+      "title": "User Filtered Segments",
       "description": "Global filter. Only send if user matches one of these segments",
       "default": [],
       "type": "array",
       "format": "segment"
-    },
-    {
-      "name": "webhooks_header",
-      "title": "Send conditions",
-      "type": "string",
-      "format": "title"
     },
     {
       "name": "webhooks_anytime",
@@ -99,10 +99,116 @@
       "default": [],
       "type": "array",
       "format": "event"
+    },
+    {
+      "name": "webhooks_account_header",
+      "title": "Send Account",
+      "type": "string",
+      "format": "title"
+    },
+    {
+      "name": "webhooks_account_urls",
+      "title": "Account Webhooks URLs",
+      "default": [],
+      "type": "array",
+      "format": "table",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "synchronized_account_segments",
+      "title": "Account Filtered Segments",
+      "description": "Global filter. Only send if account matches one of these segments",
+      "default": [],
+      "type": "array",
+      "format": "accountSegment"
+    },
+    {
+      "name": "webhooks_account_anytime",
+      "title": "Send anytime account is updated",
+      "type": "boolean",
+      "format": "checkbox",
+      "default": false
+    },
+    {
+      "name": "webhooks_account_segments",
+      "title": "Send account when entering and/or leaving segments",
+      "type": "array",
+      "format": "table",
+      "default": [{ "segment": "", "channel": "" }],
+      "items": {
+        "type": "object",
+        "required": [ "channel", "segment"],
+        "properties": {
+          "segment": {
+            "title": "Segment Name",
+            "type": "string",
+            "format": "accountSegment"
+          },
+          "entered": {
+            "title": "Send on enter",
+            "type": "boolean",
+            "format": "checkbox"
+          },
+          "left": {
+            "title": "Send on leave",
+            "type": "boolean",
+            "format": "checkbox"
+          }
+        }
+      }
+    },
+    {
+      "name": "webhooks_account_events",
+      "title": "Send account when events triggered",
+      "default": [],
+      "type": "array",
+      "format": "hidden"
+    },
+    {
+      "name": "webhooks_account_attributes",
+      "title": "Send account when attributes change",
+      "default": [],
+      "type": "array",
+      "format": "trait"
+    }
+  ],
+  "settings_sections": [
+    {
+      "title": "Requests",
+      "description": "",
+      "properties": [
+        "private_settings.throttle_rate",
+        "private_settings.throttle_per_rate",
+        "private_settings.concurrency"
+      ]
+    },
+    {
+      "title": "Users",
+      "description": "",
+      "properties": [
+        "private_settings.synchronized_segments",
+        "private_settings.webhooks_urls",
+        "private_settings.webhooks_anytime",
+        "private_settings.webhooks_segments",
+        "private_settings.webhooks_events",
+        "private_settings.webhooks_attributes"
+      ]
+    },
+    {
+      "title": "Accounts",
+      "description": "",
+      "properties": [
+        "private_settings.synchronized_account_segments",
+        "private_settings.webhooks_account_urls",
+        "private_settings.webhooks_account_anytime",
+        "private_settings.webhooks_account_segments",
+        "private_settings.webhooks_account_attributes"
+      ]
     }
   ],
   "deployment_settings": [],
-  "resources": [],
   "readme": "readme.md",
   "ui": false,
   "resources": [],
@@ -116,6 +222,7 @@
             "ship:update",
             "users_segment:update",
             "accounts_segment:update",
+            "account:update",
             "segment:update"
           ]
         }

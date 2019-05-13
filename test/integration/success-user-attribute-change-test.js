@@ -1,18 +1,18 @@
 const { expect } = require("chai");
 const Minihull = require("minihull");
 const MiniApplication = require("mini-application");
-
+const _ = require("lodash");
 const bootstrap = require("./support/bootstrap");
-const examplePayload = require("../fixtures/10-users.json");
+const examplePayload = require("../fixtures/user-change-attribute");
 
-describe("request feature allowing to call external API", () => {
+describe("user test - attribute change", () => {
   let minihull;
   let server;
   let externalApi;
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8009, timeout: 25000 });
+    server = bootstrap({ port: 8018, timeout: 250000 });
     externalApi = new MiniApplication();
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {
@@ -21,7 +21,7 @@ describe("request feature allowing to call external API", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8010), externalApi.listen(8011)]);
+    return Promise.all([minihull.listen(8019), externalApi.listen(8020)]);
   });
 
   afterEach(done => {
@@ -34,12 +34,12 @@ describe("request feature allowing to call external API", () => {
     "should return next",
     function() {
       examplePayload.connector.private_settings.webhooks_urls = [
-        "http://localhost:8011/endpoint_ok"
+        "http://localhost:8020/endpoint_ok"
       ];
       return minihull
         .smartNotifyConnector(
           examplePayload.connector,
-          "http://localhost:8009/smart-notifier",
+          "http://localhost:8018/smart-notifier",
           "user:update",
           examplePayload.messages
         )
@@ -48,7 +48,13 @@ describe("request feature allowing to call external API", () => {
             const firstSentPayload = externalApi.requests
               .get("incoming.0")
               .value();
-            console.log(firstSentPayload.body.user.traits);
+            console.log(JSON.stringify(firstSentPayload));
+            expect(_.get(firstSentPayload, "body.changes.user.traits_outreach/custom1")[0]).to.equal("c1-v");
+            expect(_.get(firstSentPayload, "body.changes.user.traits_outreach/custom1")[1]).to.equal("c1-value");
+            expect(_.get(firstSentPayload, "body.changes.user.username")[0]).to.equal(null);
+            expect(_.get(firstSentPayload, "body.changes.user.username")[1]).to.equal("andyhull565");
+
+
             expect(res.body.flow_control.type).to.equal("next");
             expect(res.statusCode).to.equal(200);
             expect(true).to.be.true;
