@@ -181,6 +181,7 @@
       "title": "Users",
       "description": "",
       "properties": [
+        "private_settings.synchronized_segments",
         "private_settings.webhooks_urls",
         "private_settings.webhooks_anytime",
         "private_settings.webhooks_segments",
@@ -192,6 +193,7 @@
       "title": "Accounts",
       "description": "",
       "properties": [
+        "private_settings.synchronized_account_segments",
         "private_settings.webhooks_account_urls",
         "private_settings.webhooks_account_anytime",
         "private_settings.webhooks_account_segments",

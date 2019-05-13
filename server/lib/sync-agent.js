@@ -137,7 +137,8 @@ class SyncAgent {
         webhook_settings,
         synchronized_segments,
         entity,
-        targetEntity
+        targetEntity,
+        message
       )
     ) {
       return Promise.resolve();
@@ -274,7 +275,8 @@ class SyncAgent {
     webhook_settings: Object,
     synchronized_segments: Array<string>,
     entity: Object,
-    targetEntity: "user" | "account"
+    targetEntity: "user" | "account",
+    message: Object
   ): boolean {
     const webhook_events = webhook_settings.webhook_events;
     const webhook_segments = webhook_settings.webhook_segments;
