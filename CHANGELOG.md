@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.4
+- account integration support
+
+## v0.3.3
+- upgrade hull-node to overcame batch endpoint failure
+
+## v0.3.2
+- improve documentation
+- add `account` when processing batch extracts
+
 ## v0.3.1
 - add `message_id` param to `outgoing.user.start` log line
 
