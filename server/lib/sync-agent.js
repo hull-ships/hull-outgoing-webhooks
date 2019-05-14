@@ -382,7 +382,9 @@ class SyncAgent {
     }
 
     const webhook_settings = {};
-    webhook_settings.webhook_urls = _.compact(_.get(private_settings, webhooks_urls_path) || []);
+    webhook_settings.webhook_urls = _.compact(
+      _.get(private_settings, webhooks_urls_path) || []
+    );
     webhook_settings.webhook_events =
       _.get(private_settings, webhooks_events_path) || [];
     webhook_settings.webhook_segments =
