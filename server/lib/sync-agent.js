@@ -130,12 +130,7 @@ class SyncAgent {
     );
 
     if (
-      !this.isConfigured(
-        synchronized_segments,
-        entity,
-        targetEntity,
-        message
-      )
+      !this.isConfigured(synchronized_segments, entity, targetEntity, message)
     ) {
       return Promise.resolve();
     }
@@ -149,12 +144,7 @@ class SyncAgent {
         account
       };
 
-      return this.sendPayload(
-        payload,
-        targetEntity,
-        null,
-        {}
-      );
+      return this.sendPayload(payload, targetEntity, null, {});
     }
 
     if (!_.intersection(synchronized_segments, entityInSegments).length) {
@@ -171,9 +161,7 @@ class SyncAgent {
       changes,
       targetEntity
     );
-    const shouldSendMessage = this.shouldSendMessage(
-      entityMatches
-    );
+    const shouldSendMessage = this.shouldSendMessage(entityMatches);
 
     if (shouldSendMessage) {
       const payload = {
@@ -184,9 +172,7 @@ class SyncAgent {
         changes
       };
 
-      const loggingContext = this.getLoggingContext(
-        entityMatches
-      );
+      const loggingContext = this.getLoggingContext(entityMatches);
       return this.sendPayload(
         payload,
         targetEntity,
