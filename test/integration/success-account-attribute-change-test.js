@@ -35,7 +35,9 @@ describe("account test - attribute attribute change", () => {
     "should return next",
     function() {
       examplePayload.connector.private_settings.webhooks_account_urls = [
-        "http://localhost:8057/endpoint_ok"
+        "http://localhost:8057/endpoint_ok",
+        null,
+        undefined
       ];
       return minihull
         .smartNotifyConnector(

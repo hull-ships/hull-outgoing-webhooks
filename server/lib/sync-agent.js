@@ -382,19 +382,13 @@ class SyncAgent {
     }
 
     const webhook_settings = {};
-    webhook_settings.webhook_urls = _.get(private_settings, webhooks_urls_path);
-    webhook_settings.webhook_events = _.get(
-      private_settings,
-      webhooks_events_path
-    );
-    webhook_settings.webhook_segments = _.get(
-      private_settings,
-      webhooks_segments_path
-    );
-    webhook_settings.webhook_attributes = _.get(
-      private_settings,
-      webhooks_attributes_path
-    );
+    webhook_settings.webhook_urls = _.compact(_.get(private_settings, webhooks_urls_path) || []);
+    webhook_settings.webhook_events =
+      _.get(private_settings, webhooks_events_path) || [];
+    webhook_settings.webhook_segments =
+      _.get(private_settings, webhooks_segments_path) || [];
+    webhook_settings.webhook_attributes =
+      _.get(private_settings, webhooks_attributes_path) || [];
     webhook_settings.webhook_anytime = _.get(
       private_settings,
       webhooks_anytime_path

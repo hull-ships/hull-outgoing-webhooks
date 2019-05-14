@@ -102,13 +102,11 @@
         "global-synchronized-segment-id-1"
       ],
       "webhooks_account_anytime": false,
-      "webhooks_account_segments": [],
       "webhooks_account_attributes": [
         "account.domain",
         "account.name",
         "account.outreach/custom1"
       ],
-      "webhooks_account_events": [],
       "throttle_rate": 10,
       "throttle_per_rate": 5000
     },
