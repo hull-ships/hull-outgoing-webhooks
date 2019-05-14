@@ -92,7 +92,6 @@
       "webhooks_anytime": false,
       "webhooks_segments": [],
       "webhooks_attributes": ["name", "last_name", "traits_outreach/custom1"],
-      "webhooks_events": [],
       "throttle_rate": 10,
       "throttle_per_rate": 5000
     },
