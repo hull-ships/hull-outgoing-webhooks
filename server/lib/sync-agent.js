@@ -269,8 +269,10 @@ class SyncAgent {
     if (
       !this.connector ||
       !webhook_urls.length ||
+      !synchronized_segments ||
       !synchronized_segments.length ||
-      (!entity || !entity.id)
+      !entity ||
+      !entity.id
     ) {
       this.hullClient.logger.debug(`outgoing.${targetEntity}.error`, message);
       if (targetEntity === "user") {
