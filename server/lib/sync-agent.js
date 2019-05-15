@@ -126,7 +126,8 @@ class SyncAgent {
 
     const synchronized_segments = _.get(
       private_settings,
-      synchronized_segments_path
+      synchronized_segments_path,
+      []
     );
 
     if (
@@ -268,7 +269,7 @@ class SyncAgent {
     if (
       !this.connector ||
       !webhook_urls.length ||
-      !synchronized_segments ||
+      !synchronized_segments.length ||
       (!entity || !entity.id)
     ) {
       this.hullClient.logger.debug(`outgoing.${targetEntity}.error`, message);
@@ -278,7 +279,8 @@ class SyncAgent {
           user: !!entity,
           ship: !!this.connector,
           userId: entity && entity.id,
-          webhooks_urls: !!webhook_urls
+          webhooks_urls: webhook_urls,
+          synchronized_segments
         });
       } else if (targetEntity === "account") {
         this.hullClient.logger.error(`outgoing.${targetEntity}.error`, {
@@ -286,7 +288,8 @@ class SyncAgent {
           account: !!entity,
           ship: !!this.connector,
           accountId: entity && entity.id,
-          webhooks_urls: !!webhook_urls
+          webhooks_urls: webhook_urls,
+          synchronized_segments
         });
       }
       return false;
