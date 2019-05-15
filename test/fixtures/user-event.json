@@ -1,0 +1,139 @@
+{
+  "configuration": {
+    "id": "32923832",
+    "organization": "orgId.hullbeta.io",
+    "secret": "secret"
+  },
+  "channel": "user:update",
+  "messages": [
+    {
+      "message_id": "asdfasdfasdfasdfasdf",
+      "matchesFilter": true,
+      "changes": {
+        "is_new": false,
+        "account": {},
+        "account_segments": {},
+        "segments": {},
+        "user": {}
+      },
+      "account": {},
+      "account_segments": {},
+      "segments": [
+        {
+          "id": "user-segment-1-id",
+          "name": "UserSegment1",
+          "updated_at": "2019-05-01T11:58:56Z",
+          "type": "users_segment",
+          "created_at": "2019-05-01T11:58:56Z"
+        }
+      ],
+      "events": [
+        {
+          "properties": {
+            "PropertyName": "property",
+            "event": "Event1"
+          },
+          "event_id": "event-id-1",
+          "user_id": "5cc8c32f03f8929f9e000725",
+          "event_source": "track",
+          "app_name": "Processor",
+          "event": "Event1",
+          "event_type": "track",
+          "context": {
+            "useragent": "Hull Node Client",
+            "device": {
+              "name": "Other"
+            },
+            "os": {
+              "name": "Other",
+              "version": ""
+            },
+            "browser": {
+              "name": "Other"
+            },
+            "location": {
+              "country": "US",
+              "city": "Mountain View",
+              "timezone": "America/Los_Angeles",
+              "longitude": -122.0839,
+              "latitude": 37.3861,
+              "region": "CA",
+              "countryname": "United States",
+              "regionname": "California",
+              "zipcode": "94035"
+            },
+            "ip": "123.456.78.90"
+          },
+          "anonymous_id": null,
+          "ship_id": null,
+          "created_at": "2019-05-13T16:23:15Z",
+          "session_id": null,
+          "app_id": "app-id-1"
+        }
+      ],
+      "user": {
+        "traits_outreach/id": 184823,
+        "id": "5cc8c32f03f8929f9e000725",
+        "email": "andy@hull.com",
+        "name": "Andy Hull",
+        "traits_outreach/created_by_webhook": true,
+        "anonymous_ids": [
+          "outreach:184823"
+        ],
+        "domain": "hull.com",
+        "last_name": "Hull",
+        "indexed_at": "2019-05-01T12:52:09+00:00",
+        "first_name": "Andy",
+        "traits_outreach/custom1": "c1-v",
+        "created_at": "2019-04-30T21:50:39Z",
+        "is_approved": false,
+        "segment_ids": [
+          "user-segment-1-id"
+        ]
+      }
+    }
+  ],
+  "notification_id": "26c4c5ab-37ee-482b-a0de-2e28e2f8672b",
+  "connector": {
+    "id": "5ac74fe8745cc3e861000004",
+    "settings": {},
+    "manifest": {
+      "name": "Outgoing Webhooks",
+      "version": "0.2.11",
+      "subscriptions": [
+        {
+          "url": "/smart-notifier"
+        }
+      ],
+      "tags": [
+        "outgoing",
+        "oneColumn",
+        "batch",
+        "smart-notifier"
+      ]
+    },
+    "type": "ship",
+    "name": "https://michaloo-outgoing-webhooks.eu.ngrok.io",
+    "private_settings": {
+      "webhooks_account_urls": [
+        "http://localhost:8005/endpoint_ok"
+      ],
+      "concurrency": 10,
+      "synchronized_segments": [
+        "user-segment-1-id",
+        "global-synchronized-segment-id-1"
+      ],
+      "webhooks_anytime": false,
+      "webhooks_segments": [],
+      "webhooks_attributes": ["name", "last_name", "traits_outreach/custom1"],
+      "webhooks_events": [
+        "Event1"
+      ],
+      "throttle_rate": 10,
+      "throttle_per_rate": 5000
+    },
+    "source_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/",
+    "manifest_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/manifest.json"
+  }
+}
+

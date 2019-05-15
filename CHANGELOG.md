@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.4
+- account integration support
+
 ## v0.3.3
 - upgrade hull-node to overcame batch endpoint failure
 

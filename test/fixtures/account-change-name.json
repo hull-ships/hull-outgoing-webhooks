@@ -1,0 +1,111 @@
+{
+  "configuration": {
+    "id": "5ac74fe8745cc3e861000004",
+    "organization": "224bbaa3.hullbeta.io",
+    "secret": "d894cf870a91eb15080856df5da8004c"
+  },
+  "channel": "user:update",
+  "messages": [
+    {
+      "message_id": "97b6d06a4ae33b5d270720b6f6e149f48ab6f16e",
+      "matchesFilter": true,
+      "changes": {
+        "is_new": false,
+        "account": {
+          "name": [
+            "TMP-1",
+            "TMP Account Name"
+          ],
+          "updated_at": [
+            "2019-04-30T17:48:43Z",
+            "2019-04-30T19:42:16Z"
+          ]
+        },
+        "account_segments": {}
+      },
+      "account": {
+        "0": "Hello",
+        "outreach/createdat": "2018-09-20T18:32:22.000Z",
+        "outreach/updated_at": "2018-09-26T19:08:00Z",
+        "id": "5bd329d4e2bcf3eeaf000068",
+        "outreach/tag_0": "somehullcompanytag",
+        "outreach/created_at": "2018-09-20T18:32:22Z",
+        "outreach/name": "SomeHullCompany",
+        "name": "SomeHullCompany",
+        "outreach/domain": "somehullcompany.com",
+        "updated_at": "2019-04-09T19:37:42Z",
+        "anonymous_ids": [
+          "outreach:1",
+          "1",
+          "tmpId123"
+        ],
+        "domain": "somehullcompany.com",
+        "indexed_at": "2019-04-09T19:38:12+00:00",
+        "outreach/id": 1,
+        "created_at": "2018-10-26T14:51:00Z",
+        "outreach/companytype": "",
+        "outreach/custom_1": "it's a hull company, but we don't know too much more",
+        "outreach/custom1": "it is a hull company",
+        "outreach/tag_1": "somehullcompanytag2",
+        "tmpattribute": "test"
+      },
+      "account_segments": [
+        {
+          "id": "segment-id-1",
+          "name": "SomeHullCompanySegment",
+          "updated_at": "2019-04-08T20:41:54Z",
+          "type": "accounts_segment",
+          "created_at": "2019-04-08T20:41:54Z"
+        },
+        {
+          "id": "some-other-segment-id",
+          "name": "SomeOtherSegment",
+          "updated_at": "2019-04-08T20:41:54Z",
+          "type": "accounts_segment",
+          "created_at": "2019-04-08T20:41:54Z"
+        }
+      ]
+    }
+  ],
+  "notification_id": "26c4c5ab-37ee-482b-a0de-2e28e2f8672b",
+  "connector": {
+    "id": "5ac74fe8745cc3e861000004",
+    "settings": {},
+    "manifest": {
+      "name": "Outgoing Webhooks",
+      "version": "0.2.11",
+      "subscriptions": [
+        {
+          "url": "/smart-notifier"
+        }
+      ],
+      "tags": [
+        "outgoing",
+        "oneColumn",
+        "batch",
+        "smart-notifier"
+      ]
+    },
+    "type": "ship",
+    "name": "https://michaloo-outgoing-webhooks.eu.ngrok.io",
+    "private_settings": {
+      "webhooks_account_urls": [
+        "http://localhost:8015/endpoint_ok"
+      ],
+      "concurrency": 10,
+      "synchronized_account_segments": [
+        "segment-id-1",
+        "global-synchronized-segment-id-1"
+      ],
+      "webhooks_account_anytime": false,
+      "webhooks_account_segments": [],
+      "webhooks_account_attributes": ["account.name", "account.domain"],
+      "webhooks_account_events": [],
+      "throttle_rate": 10,
+      "throttle_per_rate": 5000
+    },
+    "source_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/",
+    "manifest_url": "https://michaloo-outgoing-webhooks.eu.ngrok.io/manifest.json"
+  }
+}
+
