@@ -49,7 +49,7 @@ describe("user test - attribute change", () => {
               .get("incoming.0")
               .value();
             console.log(JSON.stringify(firstSentPayload));
-            expect(_.get(firstSentPayload, "body.event")).to.equal("Event1");
+            expect(_.get(firstSentPayload, "body.event.event")).to.equal("Event1");
 
             expect(res.body.flow_control.type).to.equal("next");
             expect(res.statusCode).to.equal(200);
