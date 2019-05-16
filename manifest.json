@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch", "smart-notifier"],
   "picture": "picture.png",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "private_settings":[
     {
       "name": "throttle_rate",
@@ -63,7 +63,7 @@
       "title": "Send User when entering and/or leaving segments",
       "type": "array",
       "format": "table",
-      "default": [{ "segment": "", "channel": "" }],
+      "default": [{ "segment": "" }],
       "items": {
         "type": "object",
         "required": [ "segment"],
@@ -136,10 +136,10 @@
       "title": "Send account when entering and/or leaving segments",
       "type": "array",
       "format": "table",
-      "default": [{ "segment": "", "channel": "" }],
+      "default": [{ "segment": "" }],
       "items": {
         "type": "object",
-        "required": [ "channel", "segment"],
+        "required": [ "segment"],
         "properties": {
           "segment": {
             "title": "Segment Name",

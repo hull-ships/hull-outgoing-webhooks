@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.6
+- removing multiple channels in manifest
+
 ## v0.3.5
 - removed a faulty required field validation in manifest
 
