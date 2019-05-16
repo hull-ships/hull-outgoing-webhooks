@@ -2,7 +2,7 @@ const getEntityMatchedEvents = require("../../server/util/get-entity-matched-eve
 const _ = require("lodash");
 
 describe("get matched events for entity", () => {
-  const notifyEvents = ["Event1", "Event2"];
+  const notifyEvents = ["Event1", "Event2", "Event4", "Event5", "Event6"];
   const notifyEventsEmpty = [];
   const triggeredEventsEmpty = [];
   const triggeredEvents = [
