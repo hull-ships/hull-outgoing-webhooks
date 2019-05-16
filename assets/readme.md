@@ -16,7 +16,7 @@ entity event occurrence and/or segment change given that the entity belongs to a
 
 ## Configuring the Webhooks connector
 
-There are two sections per entity in the settings to define which users or accounts will be sent as POST webhooks.
+There are two sections per entity in the settings to define which users or accounts to send as POST webhooks.
 
 ### 1. Global Filter
 
