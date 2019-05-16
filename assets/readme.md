@@ -46,7 +46,7 @@ A payload will consist of these elements:
   "account": "The entire account associated with the user with all it's attributes",
   "segments": "Every segment the user belongs to, as objects containing unique segment ids",
   "account_segments": "Every segment the account belongs to",
-  "changes": "Every change that caused this user to be recomputed",
+  "changes": "Every change that caused this user or account to be recomputed",
   "event": "The event that triggered the send, if any" // optional
 }
 ```
