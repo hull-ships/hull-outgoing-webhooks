@@ -5,7 +5,7 @@ const _ = require("lodash");
 const bootstrap = require("./support/bootstrap");
 const examplePayload = require("../fixtures/user-event-no-matches");
 
-describe("user test - attribute change", () => {
+describe("user test - no event matches", () => {
   let minihull;
   let server;
   let externalApi;
