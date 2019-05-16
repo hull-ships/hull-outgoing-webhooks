@@ -1,6 +1,13 @@
 # Hull Webhooks
 
-This Connector sends user updates and events as Webhooks
+The Outgoing Webhooks Connector sends a payload for an entity (user or account) if an event or change has been registered. 
+For the user entity, payloads can be sent on event occurrences, attribute changes, and/or segment changes. 
+For the account entity, payloads can be sent on attribute changes and/or segment changes. 
+Both entities require that a global filter of segments be defined. 
+This list is used to filter out any user or account that does not belong to a listed segment. 
+If the user or account belongs to a defined segment, any changes or events on the entity will be checked as configured 
+to determine if a payload should be sent. However, there is the option to send the payload regardless of an 
+entity event occurrence and/or segment change given that the entity belongs to a defined segment
 
 ##  Installing
 
@@ -9,29 +16,37 @@ This Connector sends user updates and events as Webhooks
 
 ## Configuring the Webhooks connector
 
-There are two sections in Hull's Settings tab to help you define which users will be sent as POST webhooks.
+There are two sections per entity in the settings to define which users or accounts to send as POST webhooks.
 
-### The first section is a global filter for which users will be allowed to be sent.
+### 1. Global Filter
 
-It defines who will be sent. An empty list sends no one. To start, create a User segment defining who should be sent. This is a global filter, the conditions below will only be checked only if the User matches this filter.
+This filter defines the segments that an entity must belong to in order to be sent. 
+An empty list will not send any entity. 
+Any additional conditions defined will only be checked if the entity matches this filter.
 
-### The Second section defines additional conditions to send a user.
+### 2. Additional Conditions
 
-Users will be sent as soon as one of these conditions match.
+User payloads can be sent as soon as one of these conditions match:
 
 - On any update (if activated)
 - When entering and/or leaving a given segment
 - When a specific property changes.
 - When a specific event is performed.
 
-When one or more of these conditions are fullfilled, a complete payload comprised of:
+Account payloads can be sent as soon as one of these conditions match:
 
+- On any update (if activated)
+- When entering and/or leaving a given segment
+- When a specific property changes.
+
+A payload will consist of these elements:
 ```js
 {
-  "user": "The Entire User profile with all attributes",
-  "account": "The Entire Account associated with the user with all it's attributes",
-  "segments": "Every segment the User belongs to, as objects containing unique Segment IDs",
-  "changes": "Every change that caused this user to be recomputed",
+  "user": "The entire user profile with all attributes",
+  "account": "The entire account associated with the user with all it's attributes",
+  "segments": "Every segment the user belongs to, as objects containing unique segment ids",
+  "account_segments": "Every segment the account belongs to",
+  "changes": "Every change that caused this user or account to be recomputed",
   "event": "The event that triggered the send, if any" // optional
 }
 ```
@@ -55,6 +70,15 @@ Example Payload:
       /* ... */
     }
   },
+  "account_segments": [
+    {
+      "id": "58a2e94433311e76110091b6",
+      "name": "AccountSegment",
+      "updated_at": "2017-11-10T15:49:59Z",
+      "type": "accounts_segment",
+      "created_at": "2017-11-10T15:49:59Z"
+    }
+  ]
   "changes": {
     "is_new": false,
     "segments": {
