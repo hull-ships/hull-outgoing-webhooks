@@ -2,7 +2,7 @@ const getEntityMatchedEvents = require("../../server/util/get-entity-matched-eve
 const _ = require("lodash");
 
 describe("get matched events for entity", () => {
-  const notifyEvents = ["Event1", "Event2", "Event4", "Event5", "Event6"];
+  const notifyEvents = ["Event1", "Event2", "Event3", "Event4", "Event5"];
   const notifyEventsEmpty = [];
   const triggeredEventsEmpty = [];
   const triggeredEvents = [
@@ -42,7 +42,7 @@ describe("get matched events for entity", () => {
       user_id: "5cc8c32f03f8929f9e000725",
       event_source: "track",
       app_name: "Processor",
-      event: "Event3",
+      event: "Event6",
       event_type: "track",
       context: {},
       anonymous_id: null,
