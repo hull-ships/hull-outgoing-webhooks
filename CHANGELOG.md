@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.5
+- removed a faulty required field validation in manifest
+
 ## v0.3.4
 - account integration support
 
