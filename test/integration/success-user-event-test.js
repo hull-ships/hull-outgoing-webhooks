@@ -48,8 +48,16 @@ describe("user test - attribute change", () => {
             const firstSentPayload = externalApi.requests
               .get("incoming.0")
               .value();
-            console.log(JSON.stringify(firstSentPayload));
+            const secondSentPayload = externalApi.requests
+              .get("incoming.1")
+              .value();
+            const thirdSentPayload = externalApi.requests
+              .get("incoming.2")
+              .value();
+
             expect(_.get(firstSentPayload, "body.event.event")).to.equal("Event1");
+            expect(_.get(secondSentPayload, "body.event.event")).to.equal("Event2");
+            expect(thirdSentPayload).to.equal(undefined);
 
             expect(res.body.flow_control.type).to.equal("next");
             expect(res.statusCode).to.equal(200);
