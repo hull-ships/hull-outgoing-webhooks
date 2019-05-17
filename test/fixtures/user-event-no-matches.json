@@ -73,7 +73,7 @@
         {
           "properties": {
             "PropertyName": "property",
-            "event": "Event1"
+            "event": "Event2"
           },
           "event_id": "event-id-2",
           "user_id": "5cc8c32f03f8929f9e000725",
@@ -169,7 +169,7 @@
       "webhooks_segments": [],
       "webhooks_attributes": ["name", "last_name", "traits_outreach/custom1"],
       "webhooks_events": [
-        "Event1"
+        "Event3"
       ],
       "throttle_rate": 10,
       "throttle_per_rate": 5000
