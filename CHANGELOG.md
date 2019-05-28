@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.7
+- support account batches
+
 ## v0.3.6
 - removing multiple channels in manifest
 
