@@ -141,8 +141,9 @@ class SyncAgent {
     if (isBatch) {
       const payload = {
         user,
-        entityInSegments,
-        account
+        account,
+        segments,
+        account_segments
       };
 
       return this.sendPayload(payload, targetEntity, null, {});
