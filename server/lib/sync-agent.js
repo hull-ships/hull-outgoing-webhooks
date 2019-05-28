@@ -218,8 +218,7 @@ class SyncAgent {
 
     const matchedAttributes = getEntityMatchedAttributeChanges(
       webhook_attributes,
-      changes,
-      targetEntity
+      changes
     );
 
     const entityMatches = {};
