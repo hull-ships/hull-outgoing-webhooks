@@ -20,6 +20,16 @@ function server(app) {
       handlers: notificationsConfiguration
     })
   );
+  app.use(
+    "/batch-accounts",
+    notifHandler({
+      accountHandlerOptions: {
+        groupTraits: true,
+        batchSize: 100
+      },
+      handlers: notificationsConfiguration
+    })
+  );
   app.all("/status", statusHandler);
 
   return app;

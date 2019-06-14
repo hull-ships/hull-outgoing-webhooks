@@ -10,10 +10,16 @@ const {
 const { version } = require("../../package.json");
 
 function webhook(
-  { smartNotifierResponse, url, hull, payload = {}, metric }: Object,
+  { ctx, url, hull, payload = {}, metric }: Object,
   throttle: Object,
   targetEntity: "user" | "account"
 ) {
+  if (!_.isNil(url)) {
+    url = url.trim();
+  }
+  const maxNumRetries = process.env.MAX_RETRIES || 5;
+  const numRetries = _.get(ctx, "notification.kraken.retries", 0);
+  const smartNotifierResponse = _.get(ctx, "smartNotifierResponse");
   let asTargetEntity;
   if (targetEntity === "user") {
     asTargetEntity = hull.asUser(
@@ -63,7 +69,11 @@ function webhook(
         message: "See error param for further details about the exact error."
       };
 
-      if (error.status === 429 || error.status >= 500) {
+      const retryWebhook =
+        numRetries < maxNumRetries &&
+        (error.status === 429 || error.status >= 500);
+
+      if (retryWebhook) {
         // smartNotifierResponse could be nil if we are consuming a Batch.
         if (smartNotifierResponse && smartNotifierResponse.setFlowControl) {
           smartNotifierResponse.setFlowControl({

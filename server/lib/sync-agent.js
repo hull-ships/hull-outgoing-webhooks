@@ -19,7 +19,7 @@ const webhook = require("./webhook");
 class SyncAgent {
   // TODO: replace all of those generic types with new coming from hull libraries
   metric: Object;
-  smartNotifierResponse: ?Object;
+  ctx: ?Object;
   hullClient: Object;
   connector: THullConnector;
   throttlePool: {
@@ -30,7 +30,7 @@ class SyncAgent {
 
   constructor(ctx: THullReqContext, targetEntity: "account" | "user") {
     this.metric = ctx.metric;
-    this.smartNotifierResponse = ctx.smartNotifierResponse;
+    this.ctx = ctx;
     this.hullClient = ctx.client;
     this.connector = ctx.ship;
     const { private_settings = {} } = this.connector;
@@ -141,8 +141,9 @@ class SyncAgent {
     if (isBatch) {
       const payload = {
         user,
-        entityInSegments,
-        account
+        account,
+        segments,
+        account_segments
       };
 
       return this.sendPayload(payload, targetEntity, null, {});
@@ -331,7 +332,7 @@ class SyncAgent {
       const throttle = this.throttlePool[url];
       return webhook(
         {
-          smartNotifierResponse: this.smartNotifierResponse,
+          ctx: this.ctx,
           metric: this.metric,
           hull: this.hullClient,
           url,
