@@ -34,7 +34,7 @@ describe("request feature allowing to call external API", () => {
     "should return next",
     function() {
       examplePayload.connector.private_settings.webhooks_urls = [
-        "http://localhost:8011/endpoint_ok"
+        "   http://localhost:8011/endpoint_ok   "
       ];
       return minihull
         .smartNotifyConnector(

@@ -14,6 +14,9 @@ function webhook(
   throttle: Object,
   targetEntity: "user" | "account"
 ) {
+  if (!_.isNil(url)) {
+    url = url.trim();
+  }
   const maxNumRetries = process.env.MAX_RETRIES || 5;
   const numRetries = _.get(ctx, "notification.kraken.retries", 0);
   const smartNotifierResponse = _.get(ctx, "smartNotifierResponse");
