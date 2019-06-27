@@ -23,7 +23,9 @@ function statusCheck(req, res) {
 
   if (!_.size(webhooks_urls)) {
     status = "warning";
-    messages.push("No user webhooks configured. Connector won't send anything for the user.");
+    messages.push(
+      "No user webhooks configured. Connector won't send anything for the user."
+    );
   }
 
   if (!_.size(webhooks_account_urls)) {
@@ -35,7 +37,9 @@ function statusCheck(req, res) {
 
   if (!_.size(synchronized_segments)) {
     status = "warning";
-    messages.push("No user segments are listed. Connector won't send anything for the user.");
+    messages.push(
+      "No user segments are listed. Connector won't send anything for the user."
+    );
   }
 
   if (!_.size(synchronized_account_segments)) {
