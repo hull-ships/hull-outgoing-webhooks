@@ -47,7 +47,7 @@ class SyncAgent {
       },
       {}
     );
-    this.isBatch = ctx.notification.is_export;
+    this.isBatch = ctx && ctx.notification && ctx.notification.is_export;
   }
 
   /**
