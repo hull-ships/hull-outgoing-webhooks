@@ -3,16 +3,16 @@ const Minihull = require("minihull");
 const MiniApplication = require("mini-application");
 const _ = require("lodash");
 const bootstrap = require("./support/bootstrap");
-const examplePayload = require("../fixtures/user-event");
+const examplePayload = require("../fixtures/user-event-no-matches");
 
-describe("user test - attribute change", () => {
+describe("user test - no event matches", () => {
   let minihull;
   let server;
   let externalApi;
 
   beforeEach(() => {
     minihull = new Minihull();
-    server = bootstrap({ port: 8040, timeout: 250000 });
+    server = bootstrap({ port: 8065, timeout: 250000 });
     externalApi = new MiniApplication();
 
     externalApi.stubApp("/endpoint_ok").respond((req, res) => {
@@ -21,7 +21,7 @@ describe("user test - attribute change", () => {
       }, 100);
     });
 
-    return Promise.all([minihull.listen(8061), externalApi.listen(8041)]);
+    return Promise.all([minihull.listen(8066), externalApi.listen(8067)]);
   });
 
   afterEach(done => {
@@ -34,12 +34,12 @@ describe("user test - attribute change", () => {
     "should return next",
     function() {
       examplePayload.connector.private_settings.webhooks_urls = [
-        "http://localhost:8041/endpoint_ok"
+        "http://localhost:8067/endpoint_ok"
       ];
       return minihull
         .smartNotifyConnector(
           examplePayload.connector,
-          "http://localhost:8040/smart-notifier",
+          "http://localhost:8065/smart-notifier",
           "user:update",
           examplePayload.messages
         )
@@ -48,18 +48,8 @@ describe("user test - attribute change", () => {
             const firstSentPayload = externalApi.requests
               .get("incoming.0")
               .value();
-            const secondSentPayload = externalApi.requests
-              .get("incoming.1")
-              .value();
-            const thirdSentPayload = externalApi.requests
-              .get("incoming.2")
-              .value();
-
-            expect(_.get(firstSentPayload, "body.event.event")).to.equal("Event1");
-            expect(_.get(secondSentPayload, "body.event.event")).to.equal("Event2");
-            expect(thirdSentPayload).to.equal(undefined);
-
-            expect(res.body.flow_control.type).to.equal("next");
+            console.log(JSON.stringify(firstSentPayload));
+            expect(firstSentPayload).to.equal(undefined);
             expect(res.statusCode).to.equal(200);
             expect(true).to.be.true;
           },

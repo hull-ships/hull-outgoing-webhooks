@@ -1,6 +1,6 @@
 {
   "name": "hull-outgoing-webhooks",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Send data to webhooks",
   "homepage": "https://github.com/hull-ships/hull-outgoing-webhooks",
   "repository": {

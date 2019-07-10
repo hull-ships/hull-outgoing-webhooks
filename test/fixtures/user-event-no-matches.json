@@ -39,7 +39,31 @@
           "app_name": "Processor",
           "event": "Event1",
           "event_type": "track",
-          "context": {},
+          "context": {
+            "useragent": "Hull Node Client",
+            "device": {
+              "name": "Other"
+            },
+            "os": {
+              "name": "Other",
+              "version": ""
+            },
+            "browser": {
+              "name": "Other"
+            },
+            "location": {
+              "country": "US",
+              "city": "Mountain View",
+              "timezone": "America/Los_Angeles",
+              "longitude": -122.0839,
+              "latitude": 37.3861,
+              "region": "CA",
+              "countryname": "United States",
+              "regionname": "California",
+              "zipcode": "94035"
+            },
+            "ip": "123.456.78.90"
+          },
           "anonymous_id": null,
           "ship_id": null,
           "created_at": "2019-05-13T16:23:15Z",
@@ -57,7 +81,31 @@
           "app_name": "Processor",
           "event": "Event2",
           "event_type": "track",
-          "context": {},
+          "context": {
+            "useragent": "Hull Node Client",
+            "device": {
+              "name": "Other"
+            },
+            "os": {
+              "name": "Other",
+              "version": ""
+            },
+            "browser": {
+              "name": "Other"
+            },
+            "location": {
+              "country": "US",
+              "city": "Mountain View",
+              "timezone": "America/Los_Angeles",
+              "longitude": -122.0839,
+              "latitude": 37.3861,
+              "region": "CA",
+              "countryname": "United States",
+              "regionname": "California",
+              "zipcode": "94035"
+            },
+            "ip": "123.456.78.90"
+          },
           "anonymous_id": null,
           "ship_id": null,
           "created_at": "2019-05-13T16:23:15Z",
@@ -121,7 +169,7 @@
       "webhooks_segments": [],
       "webhooks_attributes": ["name", "last_name", "traits_outreach/custom1"],
       "webhooks_events": [
-        "Event1", "Event2", "Event3", "Event4", "Event5"
+        "Event3"
       ],
       "throttle_rate": 10,
       "throttle_per_rate": 5000
