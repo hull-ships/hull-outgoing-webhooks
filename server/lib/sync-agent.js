@@ -90,7 +90,7 @@ class SyncAgent {
     context: THullReqContext,
     targetEntity: "user" | "account",
     message: THullUserUpdateMessage | THullAccountUpdateMessage
-  ): boolean {
+  ): Promise<*> {
     const { private_settings = {} } = this.connector;
     const isBatch = this.isBatch;
 
@@ -136,8 +136,8 @@ class SyncAgent {
 
     if (isBatch) {
       const payload = {
-        user,
-        account,
+        user: this.hullClient.utils.groupTraits(user),
+        account: this.hullClient.utils.groupTraits(account),
         segments,
         account_segments
       };
