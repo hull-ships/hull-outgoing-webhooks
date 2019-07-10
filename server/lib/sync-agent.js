@@ -47,11 +47,7 @@ class SyncAgent {
       },
       {}
     );
-    this.isBatch = this.checkIsBatch(ctx);
-  }
-
-  checkIsBatch(ctx: THullReqContext): boolean {
-    return ctx.options.url && ctx.options.format && ctx.options.object_type;
+    this.isBatch = ctx && ctx.notification && ctx.notification.is_export;
   }
 
   /**
