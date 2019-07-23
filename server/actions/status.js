@@ -17,14 +17,14 @@ function statusCheck(req, res) {
     !_.size(synchronized_segments) &&
     !_.size(synchronized_account_segments)
   ) {
-    status = "warning";
+    status = "ok";
     messages.push(
       "No user or account segments are listed. Connector won't send any payload."
     );
   }
 
   if (!_.size(webhooks_urls) && !_.size(webhooks_account_urls)) {
-    status = "warning";
+    status = "ok";
     messages.push(
       "No user webhooks configured. Connector won't send any payload."
     );
