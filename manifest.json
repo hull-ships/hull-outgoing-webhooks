@@ -3,7 +3,7 @@
   "description": "Send Hull Users updates as Webhooks",
   "tags": ["outgoing", "oneColumn", "batch", "batch-accounts", "smart-notifier", "kraken-exports"],
   "picture": "picture.png",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "private_settings":[
     {
       "name": "throttle_rate",

@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.9
+- updated status to take away warnings that were not bad
+
 ## v0.3.8
 - use kraken exports for batches
 
