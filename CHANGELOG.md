@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.8
+- use kraken exports for batches
+
 ## v0.3.7
 - support account batches
 
