@@ -33,3 +33,5 @@ tmp
 webpack-bundle-report.txt
 yarn-debug.log*
 yarn-error.log*
+
+.idea
