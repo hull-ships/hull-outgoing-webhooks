@@ -233,11 +233,9 @@
       }
     }
   ],
-  "schedules": [
-    {
-      "url": "/status",
-      "type": "cron",
-      "value": "*/5 * * * *"
-    }
-  ]
+  "status": {
+    "url": "/status",
+    "type": "interval",
+    "value": "60"
+  }
 }
