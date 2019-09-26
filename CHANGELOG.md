@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.3.10
+- added support for kraken filtering
+
 ## v0.3.9
 - updated status to take away warnings that were not bad
 
