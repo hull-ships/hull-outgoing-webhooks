@@ -272,7 +272,7 @@ class SyncAgent {
     ) {
       this.hullClient.logger.debug(`outgoing.${targetEntity}.error`, message);
       if (targetEntity === "user") {
-        this.hullClient.logger.error(`outgoing.${targetEntity}.error`, {
+        this.hullClient.logger.debug(`outgoing.${targetEntity}.error`, {
           message: "Missing user setting",
           user: !!entity,
           ship: !!this.connector,
@@ -281,7 +281,7 @@ class SyncAgent {
           synchronized_segments
         });
       } else if (targetEntity === "account") {
-        this.hullClient.logger.error(`outgoing.${targetEntity}.error`, {
+        this.hullClient.logger.debug(`outgoing.${targetEntity}.error`, {
           message: "Missing account setting",
           account: !!entity,
           ship: !!this.connector,
