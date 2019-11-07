@@ -146,7 +146,7 @@ class SyncAgent {
     }
 
     if (!_.intersection(synchronized_segments, entityInSegments).length) {
-      asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
+      asTargetEntity.logger.debug(`outgoing.${targetEntity}.skip`, {
         reason: `${targetEntity} does not match filtered segments`
       });
       return Promise.resolve();
@@ -179,7 +179,7 @@ class SyncAgent {
       );
     }
 
-    asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
+    asTargetEntity.logger.debug(`outgoing.${targetEntity}.skip`, {
       reason: `${targetEntity} did not match any conditions`
     });
 
@@ -299,7 +299,7 @@ class SyncAgent {
         : this.hullClient.asAccount(entity);
 
     if (!synchronized_segments.length) {
-      asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
+      asTargetEntity.logger.debug(`outgoing.${targetEntity}.skip`, {
         reason: "No Segments configured. All Users will be skipped"
       });
       return false;
@@ -310,7 +310,7 @@ class SyncAgent {
       !webhook_segments.length &&
       !webhook_attributes.length
     ) {
-      asTargetEntity.logger.info(`outgoing.${targetEntity}.skip`, {
+      asTargetEntity.logger.debug(`outgoing.${targetEntity}.skip`, {
         reason:
           "No Events, Segments or Attributes configured. No Webhooks will be sent"
       });
