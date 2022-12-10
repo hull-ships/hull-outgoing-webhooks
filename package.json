@@ -67,7 +67,7 @@
     "classnames": "^2.2.6",
     "css": "^2.2.4",
     "css-loader": "^0.28.11",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "file-loader": "^1.1.11",
     "happypack": "^5.0.1",
     "hull": "^0.13.23",
